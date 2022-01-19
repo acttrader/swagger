@@ -303,7 +303,7 @@ timeInForce enum:
         "origQty": 10000,
         "executedQty": 0,
         "status": "REJECTED",
-        "reaon": "lifetime expired",
+        "reason": "lifetime expired",
     }
 }
 
