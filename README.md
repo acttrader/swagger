@@ -7,10 +7,10 @@
 
 ``` json
 {
-    "event": "newordersingle",                  //[STRING, Mandatory]
-    "requestId": "ID",                          //[STRING, Mandatory]
+    "event": "newordersingle", // [STRING, Mandatory]
+    "requestId": "ID",         // [STRING, Mandatory]
     "payload": {
-        "symbol": "EURUSD",                     //[STRING, Mandatory] 
+        "symbol": "EURUSD",                     // [STRING, Mandatory] 
         "side": "BUY",                          // [ENUM, Mandatory]
         "type": "LIMIT",                        // [ENUM, Mandatory]
         "price": 1.2345,                        // [DECIMAL, Mandatory for LIMIT and STOP_LIMIT orders]
@@ -18,7 +18,7 @@
         "quantity": 10000,                      // [DECIMAL, Mandatory]
         "clientOrderId": "my first order",      // [STRING] 
         "timeInForce": "AON",                   // [ENUM, Mandatory]
-        "lifeTime": "2022-03-19T07:22:00.000Z", // [DATE, order lifetime in UTC timezone] 
+        "lifeTime": "2022-04-23T18:25:43.511Z", // [STRING, order lifetime in UTC timezone] 
         "login": "user-login"                   // [STRING, Mandatory]
     }
 }
@@ -39,14 +39,14 @@ timeInForce enum:
 * FOK
 * IOC 
 
-**NEWSINGLEORDER** - response on 
+**NEWSINGLEORDER** response
 
 ``` json
 {
     "event": "newordersingle",
     "requestId": "ID",
     "payload": {
-        "orderId": 100001,
+        "orderId": 1000001,
         "clientOrderId": "my first order",
         "status": "NEW",
         "type": "LIMIT"
@@ -55,20 +55,24 @@ timeInForce enum:
 
 ```
 
-*   request to modify order
-    
+*  **MODIFYORDERSINGLE** - equest to modify order
 
 ``` json
 {
-    "event": "modifyordersingle",
-    "requestId": "ID",
+    "event": "modifyordersingle", // [STRING, Mandatory]
+    "requestId": "ID",            // [STRING, Mandatory]
     "payload": {
-        "orderId": 123123,
-        "price": 1.2345,
-        "stopPrice": 1.2345,
-        "quantity": 10000
+        "orderId": 100001,   // [LONG, Mandatory]
+        "price": 1.2345,     // [DECIMAL]
+        "stopPrice": 1.2345, // [DECIMAL]
+        "quantity": 10000    // [DECIMAL]
     }
 }
+```
+
+*  **MODIFYORDERSINGLE** response
+
+``` json
 {
     "event": "modifyordersingle",
     "requestId": "ID",
@@ -76,155 +80,178 @@ timeInForce enum:
 
 ```
 
-*   request to place OCO order
+* **NEWORDEROCO** - request to place OCO order
     
-
 ``` json
 {
  {
-    "event": "neworderoco",
-    "requestId": "ID",
+    "event": "neworderoco",  // [STRING, Mandatory]
+    "requestId": "ID",       // [STRING, Mandatory]
     "payload": {
-        "login": "user-login",
-        "lifeTime": "2022-03-19T07:22:00.000Z",
-        "symbol": "EURUSD",
-        "side": "BUY",
-        "timeInForce": "AON",
-        "quantity": 10000,
+        "login": "user-login",                  // [STRING, Mandatory]
+        "lifeTime": "2022-03-19T07:22:00.000Z", // [STRING, order lifetime in UTC timezone] 
+        "symbol": "EURUSD",                     // [STRING, Mandatory]
+        "side": "BUY",                          // [ENUM, Mandatory]
+        "timeInForce": "AON",                   // [ENUM, Mandatory]
+        "quantity": 10000,                      // [DECIMAL]
         "orders": [
             {
-                "type": "LIMIT",
-                "price": 1.2345,
-                "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP"
+                "type": "LIMIT",               // [ENUM, Mandatory]
+                "price": 1.2345,               // [DECIMAL, Mandatory for LIMIT and STOP_LIMIT]
+                "clientOrderId": "limit order" // [STRING]
             },
             {
-                "type": "STOP_LIMIT",
-                "price": 1.2345,
-                "stopPrice": 1.2345,
-                "clientOrderId": "clientorderid"
+                "type": "STOP_LIMIT",               // [ENUM, Mandatory]
+                "price": 1.2345,                    // [DECIMAL, Mandatory for LIMIT and STOP_LIMIT]
+                "stopPrice": 1.2345,                // [DECIMAL, Mandatory for STOP and STOP_LIMIT]
+                "clientOrderId": "stop-limit order" // [STRING]
             }
         ]
     }
 }
+```
+
+* **NEWORDEROCO** response
+
+``` json
 {
     "event": "neworderoco",
     "requestId": "ID",
     "payload": [
         {
-            "orderId": 12321320,
-            "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
+            "orderId": 1000001,
+            "clientOrderId": "limit order",
             "status": "NEW",
             "type": "LIMIT"
         },
         {
-            "orderId": 12321321,
-            "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
+            "orderId": 1000002,
+            "clientOrderId": "stop-limit order",
             "status": "NEW",
             "type": "STOP_LIMIT"
         }
     ]
 }
-
 ```
 
-*   request to get all pending conditional orders (LIMIT, STOP)
-    
+* **ORDERS** - request to get all pending conditional orders (LIMIT, STOP)
+
+``` json
+{
+    "event": "orders", // [STRING, Mandatory]
+    "requestId": "ID"  // [STRING, Mandatory]
+}
+```
+* **ORDERS** response
 
 ``` json
 {
     "event": "orders",
-    "requestId": "ID"
-}
-{
-    "event": "orders",
     "payload": [
         {
-            "symbol": "BTCUSDT",
-            "type": "MARKET",
-            "orderId": 28,
-            "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
-            "transactTime": 1507725176595,
-            "price": 0.00000000,
-            "origQty": 10,
-            "executedQty": 10,
-            "cummulativeQuoteQty": 1.2344,
-            "status": "FILLED",
-            "timeInForce": "GTC",
-            "type": "MARKET",
-            "side": "SELL"
+            "orderId": 1000001,
+            "symbol": "EURUSD",
+            "type": "LIMIT",
+            "side": "SELL",
+            "clientOrderId": "my first order",
+            "price": 1.2345,
+            "origQty": 10000,      // original quantity
+            "executedQty": 10000,  // executed quantity 
+            "status": "NEW",
+            "timeInForce": "AON",
+            "lifeTime": "2022-04-23T18:25:43.511Z",
         },
         {
-            "symbol": "BTCUSDT",
-            "type": "MARKET",
-            "orderId": 29,
-            "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
-            "transactTime": 1507725176595,
-            "price": 1.234,
+            "orderId": 1000002,
+            "symbol": "EURUSD",
+            "type": "STOP",
+            "side": "SELL",
+            "clientOrderId": "my second order",
+            "stopPrice": 1.2345,
             "origQty": 10,
             "executedQty": 10,
-            "status": "CANCELED",
-            "timeInForce": "GTC",
-            "type": "MARKET",
-            "side": "SELL"
+            "status": "NEW",
+            "timeInForce": "AON",
+            "lifeTime": "2022-04-23T18:25:43.511Z",
+        },
+        {
+            "orderId": 1000003,
+            "symbol": "EURUSD",
+            "type": "STOP_LIMIT",
+            "side": "SELL",
+            "clientOrderId": "my third order",
+            "price": 1.0345,
+            "stopPrice": 1.2345,
+            "origQty": 10,
+            "executedQty": 10,
+            "status": "NEW",
+            "timeInForce": "AON",
+            "lifeTime": "2022-04-23T18:25:43.511Z",
         }
     ]
 }
 
 ```
 
-*   request to get particular order
+*  **ORDERSTATUS** - request to get particular order
     
+``` json
+{
+    "event": "orderstatus", // [STRING, Mandatory]
+    "requestId": "ID",      // [STRING, Mandatory]
+    "payload": {
+        "orderId": 1000001  // [LONG, Mandatory]
+    }
+}
+```
 
+* **ORDERSTATUS** response
 ``` json
 {
     "event": "orderstatus",
     "requestId": "ID",
     "payload": {
-        "orderId": 123123
-    }
-}
-{
-    "event": "orderstatus",
-    "requestId": "ID",
-    "payload": {
-        "symbol": "BTCUSDT",
-        "type": "MARKET",
-        "orderId": 28,
-        "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
-        "transactTime": 1507725176595,
-        "price": 1.12312,
-        "origQty": 10,
-        "executedQty": 10,
+        "symbol": "EURUSD",
+        "type": "LIMIT",
+        "side": "BUY",
+        "orderId": 1000001,
+        "lifeTime": "2022-05-23T18:25:43.511Z",
+        "clientOrderId": "my first order",
+        "transactTime": "2022-04-23T18:25:43.511Z",
+        "price": 1.2345,
+        "origQty": 10000,
+        "executedQty": 10000,
         "status": "FILLED",
-        "timeInForce": "GTC",
-        "type": "MARKET",
-        "side": "SELL",
+        "timeInForce": "AON",
         "fills": [
             {
-                "price": 4000,
-                "qty": 5.00000000
+                "price": 1.2345,
+                "qty": 5000
             },
             {
-                "price": 3999,
-                "qty": 5
-            },
+                "price": 1.2344,
+                "qty": 5000
+            }
         ]
     }
 }
 
 ```
 
-*   request to cancel particular order
-    
+*  **ORDERCANCEL** - request to cancel particular order
 
 ``` json
 {
-    "event": "ordercancel",
-    "requestId": "ID",
+    "event": "ordercancel",  // [STRING, Mandatory]
+     "requestId": "ID",      // [STRING, Mandatory]
     "payload": {
-        "orderId": 123123
+        "orderId": 1000001 // [LONG, Mandatory]
     }
 }
+```
+*  **ORDERCANCEL** response
+
+``` json
 {
     "event": "ordercancel",
     "requestId": "ID",
@@ -232,33 +259,58 @@ timeInForce enum:
 
 ```
 
-*   execution message
-    
+*   **EXECUTION** message examples
 
 ``` json
 {
-    "event": "execution",
+    "event": "execution",                               // [STRING]
     "payload": {
-        "symbol": "BTCUSDT",
+        "symbol": "EURUSD",
         "type": "MARKET",
-        "orderId": 28,
-        "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
-        "transactTime": 1507725176595,
-        "price": 1.1323,
-        "origQty": 10,
-        "executedQty": 10,
+        "side": "SELL",
+        "orderId": 1000001,
+        "clientOrderId": "my order",
+        "transactTime":  "2022-04-23T18:25:43.511Z",
+        "origQty": 10000,
+        "executedQty": 10000,
         "status": "FILLED",
-        "timeInForce": "GTC",
-        "type": "MARKET",
-        "side": "SELL"
+        "timeInForce": "AON",
+        "fills": [
+            {
+                "price": 1.2345,
+                "qty": 5000
+            },
+            {
+                "price": 1.2344,
+                "qty": 5000
+            }
+        ]
+    }
+}
+
+{
+    "event": "execution",                               // [STRING]
+    "payload": {
+        "symbol": "EURUSD",
+        "type": "LIMIT",
+        "side": "SELL",
+        "orderId": 1000001,
+        "clientOrderId": "my order",
+        "timeInForce": "AON",
+        "lifeTime":  "2022-04-23T18:25:43.511Z",
+        "transactTime":  "2022-04-23T18:25:43.511Z",
+        "price": 1.2345,
+        "origQty": 10000,
+        "executedQty": 0,
+        "status": "REJECTED",
+        "reaon": "lifetime expired",
     }
 }
 
 ```
 
-*   error response
+*   **ERROR** response
     
-
 ``` json
 {
     "event": "error",
@@ -268,5 +320,4 @@ timeInForce enum:
         "error": "error message"
     }
 }
-
 ```
