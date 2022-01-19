@@ -22,12 +22,13 @@
         "login": "user-login"                   // [STRING, Mandatory]
     }
 }
+```
 
 side enumeration:  
 *SELL
 *BUY
 
-
+``` json
 {
     "event": "newordersingle",
     "requestId": "ID",
