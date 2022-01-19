@@ -2,7 +2,7 @@
 
 **requests**:
 
-*   request to place single order
+*  **NEWORDERSINGLE** - request to place single order
     
 
 ``` json
@@ -16,7 +16,7 @@
         "price": 1.2345,                        // [DECIMAL, Mandatory for LIMIT and STOP_LIMIT orders]
         "stopPrice": 1.2345,                    // [DECIMAL, Mandatory for STOP and STOP_LIMIT orders]
         "quantity": 10000,                      // [DECIMAL, Mandatory]
-        "clientOrderId": "string",              // [STRING] 
+        "clientOrderId": "my first order",      // [STRING] 
         "timeInForce": "AON",                   // [ENUM, Mandatory]
         "lifeTime": "2022-03-19T07:22:00.000Z", // [DATE, order lifetime in UTC timezone] 
         "login": "user-login"                   // [STRING, Mandatory]
@@ -24,9 +24,22 @@
 }
 ```
 
-side enumeration:  
-*SELL
-*BUY
+side enum:  
+* SELL
+* BUY
+  
+type enum:
+* MARKET
+* LIMIT
+* STOP
+* STOP_LIMIT
+  
+timeInForce enum:
+* AON
+* FOK
+* IOC 
+
+**NEWSINGLEORDER** - response on 
 
 ``` json
 {
@@ -34,7 +47,9 @@ side enumeration:
     "requestId": "ID",
     "payload": {
         "orderId": 100001,
-        "status": "NEW"
+        "clientOrderId": "my first order",
+        "status": "NEW",
+        "type": "LIMIT"
     }
 }
 
