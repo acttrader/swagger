@@ -7,8 +7,8 @@
 
 ``` json
 {
-    "event": "newordersingle", # [STRING, Mandatory]
-    "requestId": "ID",         // [STRING, Mandatory]
+    "event": "newordersingle", #STRING, Mandatory
+    "requestId": "ID",         // STRING, Mandatory
     "payload": {
         "symbol": "EURUSD",                     // [STRING, Mandatory] 
         "side": "BUY",                          // [ENUM, Mandatory]
