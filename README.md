@@ -7,7 +7,7 @@
 
 ``` json
 {
-    "event": "newordersingle", // [STRING, Mandatory]
+    "event": "newordersingle", # [STRING, Mandatory]
     "requestId": "ID",         // [STRING, Mandatory]
     "payload": {
         "symbol": "EURUSD",                     // [STRING, Mandatory] 
@@ -207,7 +207,7 @@ timeInForce enum:
 
 * **ORDERSTATUS** response
   
-  
+
 ``` json
 {
     "event": "orderstatus",
