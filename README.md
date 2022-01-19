@@ -206,6 +206,8 @@ timeInForce enum:
 ```
 
 * **ORDERSTATUS** response
+  
+  
 ``` json
 {
     "event": "orderstatus",
