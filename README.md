@@ -22,6 +22,12 @@
         "login": "user-login"                   // [STRING, Mandatory]
     }
 }
+
+side enumeration:  
+*SELL
+*BUY
+
+
 {
     "event": "newordersingle",
     "requestId": "ID",
