@@ -7,19 +7,19 @@
 
 ``` json
 {
-    "event": "newordersingle", #STRING, Mandatory
-    "requestId": "ID",         // STRING, Mandatory
+    "event": "newordersingle", #STRING,Mandatory
+    "requestId": "ID",         #STRING,Mandatory
     "payload": {
-        "symbol": "EURUSD",                     // [STRING, Mandatory] 
-        "side": "BUY",                          // [ENUM, Mandatory]
-        "type": "LIMIT",                        // [ENUM, Mandatory]
-        "price": 1.2345,                        // [DECIMAL, Mandatory for LIMIT and STOP_LIMIT orders]
-        "stopPrice": 1.2345,                    // [DECIMAL, Mandatory for STOP and STOP_LIMIT orders]
-        "quantity": 10000,                      // [DECIMAL, Mandatory]
-        "clientOrderId": "my first order",      // [STRING] 
-        "timeInForce": "AON",                   // [ENUM, Mandatory]
-        "lifeTime": "2022-04-23T18:25:43.511Z", // [STRING, order lifetime in UTC timezone] 
-        "login": "user-login"                   // [STRING, Mandatory]
+        "symbol": "EURUSD",                     #STRING,Mandatory 
+        "side": "BUY",                          #ENUM,Mandatory
+        "type": "LIMIT",                        #ENUM,Mandatory
+        "price": 1.2345,                        #DECIMAL,Mandatory for LIMIT and STOP_LIMIT
+        "stopPrice": 1.2345,                    #DECIMAL,Mandatory for STOP and STOP_LIMIT
+        "quantity": 10000,                      #DECIMAL,Mandatory
+        "clientOrderId": "my first order",      #STRING 
+        "timeInForce": "AON",                   #ENUM,Mandatory
+        "lifeTime": "2022-04-23T18:25:43.511Z", #STRING, order lifetime in UTC timezone
+        "login": "user-login"                   #STRING, Mandatory
     }
 }
 ```
