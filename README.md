@@ -2,8 +2,26 @@
 
 **requests**:
 
-*  **NEWORDERSINGLE** - request to place single order
-    
+
+  [NEWORDERSINGLE](#newordersingle) 
+
+  [MODIFYORDERSINGLE](#modifyordersingle) 
+
+  [NEWORDEROCO](#neworderoco) 
+
+  [ORDERS](#orders) 
+
+  [ORDERSTATUS](#orderstatus) 
+
+  [ORDERCANCEL](#ordercancel) 
+
+  [EXECUTION](#execution) 
+
+  [ERROR](#error) 
+
+
+#### NEWORDERSINGLE 
+request to place single order    
 
 ``` json
 {
@@ -18,8 +36,8 @@
         "quantity": 10000,                      #DECIMAL,Mandatory
         "clientOrderId": "my first order",      #STRING 
         "timeInForce": "AON",                   #ENUM,Mandatory
-        "lifeTime": "2022-04-23T18:25:43.511Z", #STRING, order lifetime in UTC timezone
-        "login": "user-login"                   #STRING, Mandatory
+        "tillTime": "2022-04-23T18:25:43.511Z", #STRING, order lifetime in UTC timezone
+        "login": 123456                         #LONG, Mandatory
     }
 }
 ```
@@ -39,7 +57,7 @@ timeInForce enum:
 * FOK
 * IOC 
 
-**NEWSINGLEORDER** response
+response
 
 ``` json
 {
@@ -55,8 +73,8 @@ timeInForce enum:
 
 ```
 
-*  **MODIFYORDERSINGLE** - equest to modify order
-
+#### MODIFYORDERSINGLE
+request to modify order
 ``` json
 {
     "event": "modifyordersingle", // [STRING, Mandatory]
@@ -70,7 +88,7 @@ timeInForce enum:
 }
 ```
 
-*  **MODIFYORDERSINGLE** response
+response
 
 ``` json
 {
@@ -80,7 +98,8 @@ timeInForce enum:
 
 ```
 
-* **NEWORDEROCO** - request to place OCO order
+#### NEWORDEROCO
+request to place OCO order
     
 ``` json
 {
@@ -88,8 +107,8 @@ timeInForce enum:
     "event": "neworderoco",  // [STRING, Mandatory]
     "requestId": "ID",       // [STRING, Mandatory]
     "payload": {
-        "login": "user-login",                  // [STRING, Mandatory]
-        "lifeTime": "2022-03-19T07:22:00.000Z", // [STRING, order lifetime in UTC timezone] 
+        "login": 123456,                        // [LONG, Mandatory]
+        "tillTime": "2022-03-19T07:22:00.000Z", // [STRING, order lifetime in UTC timezone] 
         "symbol": "EURUSD",                     // [STRING, Mandatory]
         "side": "BUY",                          // [ENUM, Mandatory]
         "timeInForce": "AON",                   // [ENUM, Mandatory]
@@ -111,7 +130,7 @@ timeInForce enum:
 }
 ```
 
-* **NEWORDEROCO** response
+response
 
 ``` json
 {
@@ -134,7 +153,8 @@ timeInForce enum:
 }
 ```
 
-* **ORDERS** - request to get all pending conditional orders (LIMIT, STOP)
+#### ORDERS
+request to get all pending conditional orders (LIMIT, STOP)
 
 ``` json
 {
@@ -142,7 +162,7 @@ timeInForce enum:
     "requestId": "ID"  // [STRING, Mandatory]
 }
 ```
-* **ORDERS** response
+response
 
 ``` json
 {
@@ -193,7 +213,8 @@ timeInForce enum:
 
 ```
 
-*  **ORDERSTATUS** - request to get particular order
+#### ORDERSTATUS
+request to get particular order
     
 ``` json
 {
@@ -204,9 +225,7 @@ timeInForce enum:
     }
 }
 ```
-
-* **ORDERSTATUS** response
-  
+response
 
 ``` json
 {
@@ -240,7 +259,8 @@ timeInForce enum:
 
 ```
 
-*  **ORDERCANCEL** - request to cancel particular order
+#### ORDERCANCEL
+request to cancel particular order
 
 ``` json
 {
@@ -251,7 +271,7 @@ timeInForce enum:
     }
 }
 ```
-*  **ORDERCANCEL** response
+response
 
 ``` json
 {
@@ -261,7 +281,8 @@ timeInForce enum:
 
 ```
 
-*   **EXECUTION** message examples
+#### EXECUTION
+message examples
 
 ``` json
 {
@@ -311,7 +332,8 @@ timeInForce enum:
 
 ```
 
-*   **ERROR** response
+#### ERROR
+message example
     
 ``` json
 {
