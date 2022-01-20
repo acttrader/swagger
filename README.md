@@ -3,21 +3,14 @@
 **requests**:
 
 
-  [NEWORDERSINGLE](#newordersingle) 
-
-  [MODIFYORDERSINGLE](#modifyordersingle) 
-
-  [NEWORDEROCO](#neworderoco) 
-
-  [ORDERS](#orders) 
-
-  [ORDERSTATUS](#orderstatus) 
-
-  [ORDERCANCEL](#ordercancel) 
-
-  [EXECUTION](#execution) 
-
-  [ERROR](#error) 
+* [NEWORDERSINGLE](#newordersingle) 
+* [MODIFYORDERSINGLE](#modifyordersingle) 
+* [NEWORDEROCO](#neworderoco) 
+* [ORDERS](#orders) 
+* [ORDERSTATUS](#orderstatus) 
+* [ORDERCANCEL](#ordercancel) 
+* [EXECUTION](#execution) 
+* [ERROR](#error) 
 
 
 #### NEWORDERSINGLE 
