@@ -172,7 +172,7 @@ response
             "executedQty": 10000,  // executed quantity 
             "status": "NEW",
             "timeInForce": "AON",
-            "lifeTime": "2022-04-23T18:25:43.511Z",
+            "tillTime": "2022-04-23T18:25:43.511Z",
         },
         {
             "orderId": 1000002,
@@ -185,7 +185,7 @@ response
             "executedQty": 10,
             "status": "NEW",
             "timeInForce": "AON",
-            "lifeTime": "2022-04-23T18:25:43.511Z",
+            "tillTime": "2022-04-23T18:25:43.511Z",
         },
         {
             "orderId": 1000003,
@@ -199,7 +199,7 @@ response
             "executedQty": 10,
             "status": "NEW",
             "timeInForce": "AON",
-            "lifeTime": "2022-04-23T18:25:43.511Z",
+            "tillTime": "2022-04-23T18:25:43.511Z",
         }
     ]
 }
@@ -229,7 +229,7 @@ response
         "type": "LIMIT",
         "side": "BUY",
         "orderId": 1000001,
-        "lifeTime": "2022-05-23T18:25:43.511Z",
+        "tillTime": "2022-05-23T18:25:43.511Z",
         "clientOrderId": "my first order",
         "transactTime": "2022-04-23T18:25:43.511Z",
         "price": 1.2345,
@@ -257,8 +257,8 @@ request to cancel particular order
 
 ``` json
 {
-    "event": "ordercancel",  // [STRING, Mandatory]
-     "requestId": "ID",      // [STRING, Mandatory]
+    "event": "ordercancel", // [STRING, Mandatory]
+    "requestId": "ID",      // [STRING, Mandatory]
     "payload": {
         "orderId": 1000001 // [LONG, Mandatory]
     }
@@ -313,7 +313,7 @@ message examples
         "orderId": 1000001,
         "clientOrderId": "my order",
         "timeInForce": "AON",
-        "lifeTime":  "2022-04-23T18:25:43.511Z",
+        "tillTime":  "2022-04-23T18:25:43.511Z",
         "transactTime":  "2022-04-23T18:25:43.511Z",
         "price": 1.2345,
         "origQty": 10000,
