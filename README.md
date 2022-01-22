@@ -73,10 +73,11 @@ request to modify order
     "event": "modifyordersingle", // [STRING, Mandatory]
     "requestId": "ID",            // [STRING, Mandatory]
     "payload": {
-        "orderId": 100001,   // [LONG, Mandatory]
-        "price": 1.2345,     // [DECIMAL]
-        "stopPrice": 1.2345, // [DECIMAL]
-        "quantity": 10000    // [DECIMAL]
+        "orderId": 1000001,          // [LONG, Mandatory if clientOrderId is empty]
+        "clientOrderId": "my order", // [STRING]
+        "price": 1.2345,             // [DECIMAL]
+        "stopPrice": 1.2345,         // [DECIMAL]
+        "quantity": 10000            // [DECIMAL]
     }
 }
 ```
@@ -214,7 +215,8 @@ request to get particular order
     "event": "orderstatus", // [STRING, Mandatory]
     "requestId": "ID",      // [STRING, Mandatory]
     "payload": {
-        "orderId": 1000001  // [LONG, Mandatory]
+        "orderId": 1000001,          // [LONG, Mandatory if clientOrderId is empty]
+        "clientOrderId": "my order"  // [STRING]
     }
 }
 ```
@@ -260,7 +262,8 @@ request to cancel particular order
     "event": "ordercancel", // [STRING, Mandatory]
     "requestId": "ID",      // [STRING, Mandatory]
     "payload": {
-        "orderId": 1000001 // [LONG, Mandatory]
+        "orderId": 1000001,          // [LONG, Mandatory if clientOrderId is empty]
+        "clientOrderId": "my order"  // [STRING]
     }
 }
 ```
