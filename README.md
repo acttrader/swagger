@@ -66,6 +66,13 @@ response
 
 ```
 
+status enum:
+* NEW
+* REJECTED
+* FILLED
+* PARTIAL_FILL
+
+
 #### MODIFYORDERSINGLE
 request to modify order
 ``` json
@@ -148,12 +155,15 @@ response
 ```
 
 #### ORDERS
-request to get all pending conditional orders (LIMIT, STOP)
+request to get all pending conditional orders (LIMIT, STOP) plus closed from fromTime 
 
 ``` json
 {
-    "event": "orders", // [STRING, Mandatory]
-    "requestId": "ID"  // [STRING, Mandatory]
+    "event": "orders",  // [STRING, Mandatory]
+    "requestId": "ID",  // [STRING, Mandatory]
+    "payload": {
+       "fromTime" : "2022-01-01T22:33:44.555Z"
+   }
 }
 ```
 response
@@ -233,7 +243,7 @@ response
         "orderId": 1000001,
         "tillTime": "2022-05-23T18:25:43.511Z",
         "clientOrderId": "my first order",
-        "transactTime": "2022-04-23T18:25:43.511Z",
+        "transactTime": "2022-04-23T18:25:43.511Z", // transaction time in UTC timezone
         "price": 1.2345,
         "origQty": 10000,
         "executedQty": 10000,
@@ -282,14 +292,14 @@ message examples
 
 ``` json
 {
-    "event": "execution",                               // [STRING]
+    "event": "execution",                             // [STRING]
     "payload": {
         "symbol": "EURUSD",
         "type": "MARKET",
         "side": "SELL",
         "orderId": 1000001,
         "clientOrderId": "my order",
-        "transactTime":  "2022-04-23T18:25:43.511Z",
+        "transactTime":  "2022-04-23T18:25:43.511Z",  // transaction time in UTC timezone
         "origQty": 10000,
         "executedQty": 10000,
         "status": "FILLED",
@@ -308,7 +318,7 @@ message examples
 }
 
 {
-    "event": "execution",                               // [STRING]
+    "event": "execution",                            // [STRING]
     "payload": {
         "symbol": "EURUSD",
         "type": "LIMIT",
@@ -317,12 +327,12 @@ message examples
         "clientOrderId": "my order",
         "timeInForce": "AON",
         "tillTime":  "2022-04-23T18:25:43.511Z",
-        "transactTime":  "2022-04-23T18:25:43.511Z",
+        "transactTime":  "2022-04-23T18:25:43.511Z", // transaction time in UTC timezone
         "price": 1.2345,
         "origQty": 10000,
         "executedQty": 0,
         "status": "REJECTED",
-        "reason": "lifetime expired",
+        "reason": "lifetime expired",                // [STRING] reject reason
     }
 }
 
