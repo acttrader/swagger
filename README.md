@@ -60,7 +60,8 @@ response
         "orderId": 1000001,
         "clientOrderId": "my first order",
         "status": "NEW",
-        "type": "LIMIT"
+        "type": "LIMIT",
+        "login": 123456 
     }
 }
 
@@ -142,13 +143,17 @@ response
             "orderId": 1000001,
             "clientOrderId": "limit order",
             "status": "NEW",
-            "type": "LIMIT"
+            "type": "LIMIT",
+            "login": 123456 
+
         },
         {
             "orderId": 1000002,
             "clientOrderId": "stop-limit order",
             "status": "NEW",
-            "type": "STOP_LIMIT"
+            "type": "STOP_LIMIT",
+            "login": 123456 
+
         }
     ]
 }
@@ -346,6 +351,7 @@ message example
     "event": "error",
     "requestId": "ID",
     "payload": {
+        "event": "request event name", // request event, could be empty
         "code": 123345,
         "error": "error message"
     }
