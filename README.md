@@ -322,6 +322,11 @@ message examples
     }
 }
 
+reason enum:
+* OCO_CANCELED // order rejected after OCO pair order was pended
+* CANCELED         // order canceled by user 
+* LIFETIME_EXPIRED // order rejected by lifetime expiration
+
 {
     "event": "execution",                            // [STRING]
     "payload": {
@@ -344,7 +349,7 @@ message examples
 ```
 
 #### ERROR
-message example
+message examples
     
 ``` json
 {
@@ -354,6 +359,30 @@ message example
         "event": "request event name", // request event, could be empty
         "code": 123345,
         "error": "error message"
+    }
+}
+```
+
+``` json
+{
+    "event": "error",
+    "requestId": "ID",
+    "payload": {
+        "event": "ordercancel", 
+        "code": 400,
+        "error": "ORDER_NOT_EXISTS"
+    }
+}
+```
+
+``` json
+{
+    "event": "error",
+    "requestId": "ID",
+    "payload": {
+        "event": "ordercancel", 
+        "code": 401,
+        "error": "ORDER_ALREADY_CLOSED"
     }
 }
 ```
