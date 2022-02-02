@@ -323,8 +323,7 @@ message examples
 }
 
 reason enum:
-* OCO_CANCELED // order rejected after OCO pair order was pended
-* CANCELED         // order canceled by user 
+* OCO_CONDITION // order rejected after OCO order was triggered
 * LIFETIME_EXPIRED // order rejected by lifetime expiration
 
 {
