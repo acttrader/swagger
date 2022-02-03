@@ -36,6 +36,7 @@ status enum:
 * REJECTED
 * FILLED
 * PARTIAL_FILL
+* CANCELED
 
 reason enum:
 * OCO_CONDITION     // order rejected after OCO order was triggered
