@@ -40,6 +40,7 @@ status enum:
 reason enum:
 * OCO_CONDITION     // order rejected after OCO order was triggered
 * LIFETIME_EXPIRED  // order rejected by lifetime expiration
+* USER              // order closed by user
   
 
 #### NEWORDERSINGLE 
