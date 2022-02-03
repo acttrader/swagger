@@ -11,7 +11,36 @@
 * [ORDERCANCEL](#ordercancel) 
 * [EXECUTION](#execution) 
 * [ERROR](#error) 
+* [ENUMS](#enums) 
 
+
+##### ENUMS
+
+side enum:  
+* SELL
+* BUY
+  
+type enum:
+* MARKET
+* LIMIT
+* STOP
+* STOP_LIMIT
+  
+timeInForce enum:
+* AON
+* FOK
+* IOC 
+
+status enum:
+* NEW
+* REJECTED
+* FILLED
+* PARTIAL_FILL
+
+reason enum:
+* OCO_CONDITION     // order rejected after OCO order was triggered
+* LIFETIME_EXPIRED  // order rejected by lifetime expiration
+  
 
 #### NEWORDERSINGLE 
 request to place single order    
@@ -35,21 +64,6 @@ request to place single order
 }
 ```
 
-side enum:  
-* SELL
-* BUY
-  
-type enum:
-* MARKET
-* LIMIT
-* STOP
-* STOP_LIMIT
-  
-timeInForce enum:
-* AON
-* FOK
-* IOC 
-
 response
 
 ``` json
@@ -66,13 +80,6 @@ response
 }
 
 ```
-
-status enum:
-* NEW
-* REJECTED
-* FILLED
-* PARTIAL_FILL
-
 
 #### MODIFYORDERSINGLE
 request to modify order
@@ -322,10 +329,6 @@ message examples
     }
 }
 
-reason enum:
-* OCO_CONDITION // order rejected after OCO order was triggered
-* LIFETIME_EXPIRED // order rejected by lifetime expiration
-
 {
     "event": "execution",                            // [STRING]
     "payload": {
@@ -340,7 +343,7 @@ reason enum:
         "price": 1.2345,
         "origQty": 10000,
         "executedQty": 0,
-        "status": "REJECTED",
+        "status": "CANCELED",
         "reason": "lifetime expired",                // [STRING] reject reason
     }
 }
