@@ -105,13 +105,15 @@ response
 {
     "event": "modifyordersingle",
     "requestId": "ID",
+    "payload": {
+        "orderId": 1000001,
+        "clientOrderId": "my order",
+        "price": 1.2345,         
+        "stopPrice": 1.2345,     
+        "quantity": 10000       
+    }
 }
 ```
-
-notes
-
-* As a result you will get execution message with current order state.
-
 
 #### NEWORDEROCO
 request to place OCO order
@@ -301,12 +303,14 @@ response
 {
     "event": "ordercancel",
     "requestId": "ID",
+     "payload": {
+        "orderId": 1000001,    
+        "clientOrderId": "my order",
+        "status": "CANCELED",
+        "reason": "USER"
+    }
 }
 ```
-
-notes
-
-* As a result you will get execution message with current order state.
 
 #### EXECUTION
 message examples
