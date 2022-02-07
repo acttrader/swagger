@@ -94,7 +94,8 @@ request to modify order
         "clientOrderId": "my order", // [STRING]
         "price": 1.2345,             // [DECIMAL]
         "stopPrice": 1.2345,         // [DECIMAL]
-        "quantity": 10000            // [DECIMAL]
+        "quantity": 10000,            // [DECIMAL]
+        "tillTime": "2022-04-23T18:25:43.511Z" // [STRING, pass "" if you want to reset tillTime]
     }
 }
 ```
@@ -110,7 +111,8 @@ response
         "clientOrderId": "my order",
         "price": 1.2345,         
         "stopPrice": 1.2345,     
-        "quantity": 10000       
+        "quantity": 10000,
+        "tillTime": "2022-04-23T18:25:43.511Z"       
     }
 }
 ```
