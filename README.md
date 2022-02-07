@@ -106,8 +106,12 @@ response
     "event": "modifyordersingle",
     "requestId": "ID",
 }
-
 ```
+
+notes
+
+* As a result you will get execution message with current order state.
+
 
 #### NEWORDEROCO
 request to place OCO order
@@ -298,8 +302,11 @@ response
     "event": "ordercancel",
     "requestId": "ID",
 }
-
 ```
+
+notes
+
+* As a result you will get execution message with current order state.
 
 #### EXECUTION
 message examples
