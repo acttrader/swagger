@@ -387,7 +387,6 @@ message examples
     "requestId": "ID",
     "payload": {
         "event": "ordercancel", 
-        "code": 400,
         "error": "ORDER_NOT_EXISTS"
     }
 }
@@ -399,7 +398,6 @@ message examples
     "requestId": "ID",
     "payload": {
         "event": "ordercancel", 
-        "code": 401,
         "error": "ORDER_ALREADY_CLOSED"
     }
 }
