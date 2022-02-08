@@ -30,6 +30,7 @@ timeInForce enum:
 * AON
 * FOK
 * IOC 
+* TPI  #take profit immediately, only for LIMIT orders
 
 status enum:
 * NEW
