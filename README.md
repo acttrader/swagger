@@ -96,7 +96,8 @@ request to modify order
         "price": 1.2345,             // [DECIMAL]
         "stopPrice": 1.2345,         // [DECIMAL]
         "quantity": 10000,            // [DECIMAL]
-        "tillTime": "2022-04-23T18:25:43.511Z" // [STRING, pass "" if you want to reset tillTime]
+        "tillTime": "2022-04-23T18:25:43.511Z", // [STRING, pass "" if you want to reset tillTime]
+        "clientOrderIdValue": "new value" // [STRING, new value to set]
     }
 }
 ```
@@ -194,6 +195,7 @@ response
 ``` json
 {
     "event": "orders",
+    "requestId": "ID",
     "payload": [
         {
             "orderId": 1000001,
