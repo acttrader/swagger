@@ -50,19 +50,20 @@ request to place single order
 
 ``` json
 {
-    "event": "newordersingle", #STRING,Mandatory
-    "requestId": "ID",         #STRING,Mandatory
+    "event": "newordersingle", // [STRING,Mandatory]
+    "requestId": "ID",         // [STRING,Mandatory]
     "payload": {
-        "symbol": "EURUSD",                     #STRING,Mandatory 
-        "side": "BUY",                          #ENUM,Mandatory
-        "type": "LIMIT",                        #ENUM,Mandatory
-        "price": 1.2345,                        #DECIMAL,Mandatory for LIMIT and STOP_LIMIT
-        "stopPrice": 1.2345,                    #DECIMAL,Mandatory for STOP and STOP_LIMIT
-        "quantity": 10000,                      #DECIMAL,Mandatory
-        "clientOrderId": "my first order",      #STRING 
-        "timeInForce": "AON",                   #ENUM,Mandatory
-        "tillTime": "2022-04-23T18:25:43.511Z", #STRING, order lifetime in UTC timezone
-        "login": 123456                         #LONG, Mandatory
+        "symbol": "EURUSD",                     // [STRING,Mandatory] 
+        "side": "BUY",                          // [ENUM,Mandatory]
+        "type": "LIMIT",                        // [ENUM,Mandatory]
+        "price": 1.2345,                        // [DECIMAL,Mandatory for LIMIT and STOP_LIMIT]
+        "stopPrice": 1.2345,                    // [DECIMAL,Mandatory for STOP and STOP_LIMIT]
+        "quantity": 10000,                      // [DECIMAL,Mandatory]
+        "clientOrderId": "my first order",      // [STRING] 
+        "timeInForce": "AON",                   // [ENUM,Mandatory]
+        "tillTime": "2022-04-23T18:25:43.511Z", // [STRING, order lifetime in UTC timezone]
+        "login": 123456,                        // [LONG, Mandatory]
+        "note": "tp"                            // [STRING] 
     }
 }
 ```
@@ -138,13 +139,15 @@ request to place OCO order
             {
                 "type": "LIMIT",               // [ENUM, Mandatory]
                 "price": 1.2345,               // [DECIMAL, Mandatory for LIMIT and STOP_LIMIT]
-                "clientOrderId": "limit order" // [STRING]
+                "clientOrderId": "limit order", // [STRING]
+                "note": "tp"                    // [STRING] 
             },
             {
                 "type": "STOP_LIMIT",               // [ENUM, Mandatory]
                 "price": 1.2345,                    // [DECIMAL, Mandatory for LIMIT and STOP_LIMIT]
                 "stopPrice": 1.2345,                // [DECIMAL, Mandatory for STOP and STOP_LIMIT]
-                "clientOrderId": "stop-limit order" // [STRING]
+                "clientOrderId": "stop-limit order",// [STRING]
+                "note": "sl"                        // [STRING] 
             }
         ]
     }
