@@ -92,13 +92,14 @@ request to modify order
     "event": "modifyordersingle", // [STRING, Mandatory]
     "requestId": "ID",            // [STRING, Mandatory]
     "payload": {
-        "orderId": 1000001,          // [LONG, Mandatory if clientOrderId is empty]
-        "clientOrderId": "my order", // [STRING]
-        "price": 1.2345,             // [DECIMAL]
-        "stopPrice": 1.2345,         // [DECIMAL]
-        "quantity": 10000,            // [DECIMAL]
+        "orderId": 1000001,                     // [LONG, Mandatory if clientOrderId is empty]
+        "clientOrderId": "my order",            // [STRING]
+        "price": 1.2345,                        // [DECIMAL]
+        "stopPrice": 1.2345,                    // [DECIMAL]
+        "quantity": 10000,                      // [DECIMAL]
         "tillTime": "2022-04-23T18:25:43.511Z", // [STRING, pass "" if you want to reset tillTime]
-        "clientOrderIdValue": "new value" // [STRING, new value to set]
+        "clientOrderIdValue": "new value",      // [STRING, new value to set]
+        "note": "tp"                            // [STRING] 
     }
 }
 ```
@@ -300,8 +301,9 @@ request to cancel particular order
     "event": "ordercancel", // [STRING, Mandatory]
     "requestId": "ID",      // [STRING, Mandatory]
     "payload": {
-        "orderId": 1000001,          // [LONG, Mandatory if clientOrderId is empty]
-        "clientOrderId": "my order"  // [STRING]
+        "orderId": 1000001,           // [LONG, Mandatory if clientOrderId is empty]
+        "clientOrderId": "my order",  // [STRING]
+        "note": "sl"                  // [STRING] 
     }
 }
 ```
