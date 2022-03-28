@@ -183,7 +183,7 @@ response
 ```
 
 #### ORDERS
-request to get all pending conditional orders (LIMIT, STOP) plus closed from fromTime 
+request to get all currently pending conditional orders (LIMIT, STOP),  plus filled and cancelled conditional orders from fromTime
 
 ``` json
 {
