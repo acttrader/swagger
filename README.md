@@ -12,8 +12,6 @@
 * [EXECUTION](#execution) 
 * [ERROR](#error) 
 * [ENUMS](#enums) 
-* [EXECUTEORDERSINGLE](#executeordersingle) 
-
 
 
 ##### ENUMS
@@ -410,45 +408,4 @@ message examples
         "error": "ORDER_ALREADY_CLOSED"
     }
 }
-```
-
-#### EXECUTEORDERSINGLE 
-execute single order    
-
-``` json
-{
-    "event": "executeordersingle", // [STRING,Mandatory]
-    "requestId": "ID",             // [STRING,Mandatory]
-    "payload": {
-        "orderId": 1000001         // [LONG, Mandatory if clientOrderId is empty]
-    }
-}
-```
-
-response
-
-``` json
-{
-    "event": "executeordersingle",
-    "requestId": "ID",
-    "payload": {
-       "symbol": "EURUSD",
-        "type": "STOP",
-        "side": "SELL",
-        "orderId": 1000001,
-        "clientOrderId": "my order",
-        "transactTime":  "2022-04-23T18:25:43.511Z",  // transaction time in UTC timezone
-        "origQty": 10000,
-        "executedQty": 10000,
-        "status": "FILLED",
-        "timeInForce": "AON",
-        "fills": [
-            {
-                "price": 1.2345,
-                "qty": 10000
-            }
-        ]
-    }
-}
-
 ```
