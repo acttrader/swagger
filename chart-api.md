@@ -26,7 +26,7 @@ response
 ```
 
 #### SYMBOLS 
-get all symbols for particular exhange    
+get all symbols for particular exchange    
 
 request
 
