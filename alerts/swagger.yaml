@@ -29,7 +29,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/httpResponce'
+                $ref: '#/components/schemas/response'
           description: An unexpected error response.
       security:
         - Bearer: []
@@ -51,12 +51,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Alert'
+                $ref: '#/components/schemas/AlertId'
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/httpResponce'
+                $ref: '#/components/schemas/response'
           description: An unexpected error response.
       security:
        - Bearer: []
@@ -84,7 +84,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/httpResponce'
+                $ref: '#/components/schemas/response'
           description: An unexpected error response.
       security:
         - Bearer: []
@@ -117,7 +117,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/httpResponce'
+                $ref: '#/components/schemas/response'
           description: An unexpected error response.
       security:
         - Bearer: []
@@ -193,7 +193,7 @@ components:
             price: 1.5678
             side: -1
             commentary:
-    httpResponce:
+    response:
       example:
         code: 40001
         message: INVALID_ARGUMENT
