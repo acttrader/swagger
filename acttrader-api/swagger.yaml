@@ -1,16 +1,16 @@
 openapi: 3.0.0
 info:
-  title: Startegies API - OpenAPI 3.0
+  title: ActTrader API - OpenAPI 3.0
   description: |-
-    This is a Strategy Server based on the OpenAPI 3.0 specification.  
+    This is a ActTrader API based on the OpenAPI 3.0 specification.  
   version: '1.0'
 servers:
   # Added by API Auto Mocking Plugin
   - description:
-    url: https://strategies.acttrader.com/api/
+    url: https://schema.acttrader.com/api/
 tags:
   - name: strategy
-    description: Everything about your Strategies
+    description: Everything about ActTrader API
 paths:
   /strategy:
     post:
