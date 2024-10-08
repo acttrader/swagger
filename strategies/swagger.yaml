@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info:
+  title: Startegies API - OpenAPI 3.1
+  description: |-
+    This is a Strategy Server based on the OpenAPI 3.0 specification.  
+  version: '1.0'
+servers:
+  # Added by API Auto Mocking Plugin
+  - description:
+    url: https://strategies.acttrader.com/api/
+tags:
+  - name: strategy
+    description: Everything about your Strategies
+paths:
+  /strategy:
+    post:
+      tags:
+        - strategy
+      summary: Add a new strategy
+      description: Add a new strategy
+      operationId: addStrategy
+      requestBody:
+        description: Create a new strategy in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddStrategy'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Strategy'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/httpResponce'
+          description: An unexpected error response.
+      security:
+       - Bearer: []
+    get:
+      tags:
+        - strategy
+      summary: Get all strategies
+      description: Get all strategies list
+      operationId: getStrategyList
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StrategyList'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/httpResponce'
+          description: An unexpected error response.
+      security:
+        - Bearer: []
+  /stratey/{id}:
+    put:
+      tags:
+        - strategy
+      summary: Update strategy by ID
+      description: update strategy
+      operationId: updateStrategy
+      parameters:
+        - name: id
+          in: path
+          description: ID of the strategy that needs to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new strategy in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddStrategy'
+        required: true
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Strategy not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/httpResponce'
+          description: An unexpected error response.
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - strategy
+      summary: Delete strategy by ID
+      operationId: deleteStrategy
+      parameters:
+        - name: id
+          in: path
+          description: ID of the strategy that needs to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful operation
+      security:
+        - Bearer: []
+components:
+  schemas:
+    AddStrategy:
+      required:
+        - name
+        - data
+      type: object
+      properties:
+        name:
+          type: string
+          example: sample_stochastic_macd
+        payload:
+          type: string
+          example: <strategy>...</strategy>
+          xml:
+            wrapped: true   
+            
+    Strategy:
+      type: object
+      
+      example: 
+        id: 10
+        name: stohastic
+        payload: <strategy>...</strategy>
+        
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        payload:
+          type: string
+          
+    StrategyList:
+      type: object
+      properties:
+        stratagies:
+          items: 
+            $ref: '#/components/schemas/Strategy'
+          type: array
+        code: 
+          type: integer
+        message:
+          type: string
+      example:
+        stratagies:
+          - id: 100
+            name: stohastic
+            payload: <strategy>...</strategy>
+          - id: 101
+            name: stohastic02
+            payload: <strategy>...</strategy>
+        
+    httpResponce:
+      example:
+        code: 40001
+        message: INVALID_ARGUMENT
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      type: object
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
