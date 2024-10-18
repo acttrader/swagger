@@ -7,177 +7,139 @@ info:
 servers:
   # Added by API Auto Mocking Plugin
   - description: sandbox endpoint
-    url: https://schema.acttrader.com/api/
+    url: http://stest-01.sysfx.com:10013/
 tags:
-  - name: strategy
-    description: Everything about ActTrader API
+  - name: accounts
+    description: Everything about account ActTrader API
 paths:
-  /strategy:
-    post:
-      tags:
-        - strategy
-      summary: Add a new strategy
-      description: Add a new strategy
-      operationId: addStrategy
-      requestBody:
-        description: Create a new strategy in the store
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddStrategy'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Strategy'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/httpResponce'
-          description: An unexpected error response.
-      security:
-       - Bearer: []
+  /accounts:
     get:
       tags:
-        - strategy
-      summary: Get all strategies
-      description: Get all strategies list
-      operationId: getStrategyList
+        - accounts
+      summary: method to get accounts
+      description: Get accounts list
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StrategyList'
+                $ref: '#/components/schemas/AccountList'
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/httpResponce'
+                $ref: '#/components/schemas/errorResponce'
           description: An unexpected error response.
       security:
         - Bearer: []
-  /stratey/{id}:
-    put:
+  /shifts:
+    get:
       tags:
-        - strategy
-      summary: Update strategy by ID
-      description: update strategy
-      operationId: updateStrategy
-      parameters:
-        - name: id
-          in: path
-          description: ID of the strategy that needs to be deleted
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        description: Create a new strategy in the store
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddStrategy'
-        required: true
-      responses:
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Strategy not found
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/httpResponce'
-          description: An unexpected error response.
-      security:
-        - Bearer: []
-    delete:
-      tags:
-        - strategy
-      summary: Delete strategy by ID
-      operationId: deleteStrategy
-      parameters:
-        - name: id
-          in: path
-          description: ID of the strategy that needs to be deleted
-          required: true
-          schema:
-            type: integer
-            format: int32
+        - accounts
+      summary: method to get shifts
+      description: Get trader shifts
       responses:
         '200':
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shifts'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponce'
+          description: An unexpected error response.
       security:
         - Bearer: []
 components:
   schemas:
-    AddStrategy:
-      required:
-        - name
-        - data
-      type: object
-      properties:
-        name:
-          type: string
-          example: sample_stochastic_macd
-        payload:
-          type: string
-          example: <strategy>...</strategy>
-          xml:
-            wrapped: true   
-            
-    Strategy:
+    Account:
       type: object
       
       example: 
-        id: 10
-        name: stohastic
-        payload: <strategy>...</strategy>
+        accountId: 10
+        balance: '10001.01'
+        currency: USD
         
       properties:
-        id:
+        accountId:
           type: integer
-        name:
+        balance:
           type: string
-        payload:
+        currency:
           type: string
           
-    StrategyList:
+    AccountList:
       type: object
       properties:
-        stratagies:
+        data:
           items: 
-            $ref: '#/components/schemas/Strategy'
+            $ref: '#/components/schemas/Account'
           type: array
-        code: 
-          type: integer
-        message:
-          type: string
+        success: 
+          type: boolean
       example:
-        stratagies:
+        success: true
+        data:
           - id: 100
-            name: stohastic
-            payload: <strategy>...</strategy>
+            balance: '10000.01'
+            currency: USD
           - id: 101
-            name: stohastic02
-            payload: <strategy>...</strategy>
+            balance: '10000.01'
+            currency: EUR
+
+    Shift:
+      type: object
+      
+      example: 
+        instrument_id: 10
+        bid: '0.01'
+        ask: '0.01'
+        distance: '0.01'
         
-    httpResponce:
-      example:
-        code: 40001
-        message: INVALID_ARGUMENT
       properties:
-        code:
-          format: int32
+        instrument_id:
           type: integer
-        message:
+        bid:
           type: string
+        ask:
+          type: string
+        distance:
+          type: string
+
+    Shifts:
+      type: object
+      properties:
+        data:
+          items: 
+            $ref: '#/components/schemas/Shift'
+          type: array
+        success: 
+          type: boolean
+      example:
+        success: true
+        data:
+          - instrument_id: 1
+            bid: '0.01'
+            ask: '0.01'
+            distance: '0.01'
+          - instrument_id: 3
+            bid: '0.01'
+            ask: '0.01'
+            distance: '0.01'
+
+    errorResponce:
+      example:
+        success: false
+        error: LOAD_FAILED
+      properties:
+        success:
+          type: boolean
+        error:
+           type: string
       type: object
   securitySchemes:
     Bearer:
