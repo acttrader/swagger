@@ -156,6 +156,9 @@ components:
         commentary:
           type: string
           example: alert commentary
+        sellbuy:
+          type: string
+          example: SELL
     AlertId:
       type: object
       properties:
@@ -174,6 +177,9 @@ components:
         commentary:
           type: string
           example: alert commentary
+        sellbuy:
+          type: string
+          example: SELL
     AlertsList:
       type: object
       properties:
@@ -188,11 +194,13 @@ components:
             price: 1.2345
             side: 1
             commentary: alert commentary
+            sb: BUY
           - id: 101
             instrument: GBPUSD
             price: 1.5678
             side: -1
             commentary:
+            sellbuy: SELL
     response:
       example:
         code: 40001
