@@ -6,17 +6,23 @@ info:
   version: '1.0'
 servers:
   # Added by API Auto Mocking Plugin
-  - description: sandbox endpoint
+  - description: test.3 platform endpoint
     url: http://stest-01.sysfx.com:10013/
+  - description: test.5 platform endpoint
+    url: http://stest-01.sysfx.com:10113/
 tags:
-  - name: accounts
-    description: Everything about account ActTrader API
+  - name: Instruments
+    description: ""
+  - name: Operations
+    description: ""
+  - name: Users
+    description: ""
 paths:
   /accounts:
     get:
       tags:
-        - accounts
-      summary: method to get accounts
+        - Users
+      summary: method to get user accounts
       description: Get accounts list
       responses:
         '200':
@@ -36,8 +42,8 @@ paths:
   /shifts:
     get:
       tags:
-        - accounts
-      summary: method to get shifts
+        - Users
+      summary: method to get user shifts
       description: Get trader shifts
       parameters:
       - name: "userid"
@@ -65,6 +71,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Shifts'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponce'
+          description: An unexpected error response.
+      security:
+        - Bearer: []
+
+  /instruments:
+    get:
+      tags:
+        - Instruments
+      summary: method to get all instruments
+      description: Get trader instruments
+      parameters:
+      - name: "instrument_id"
+        in: query
+        description: "Numeric ID of the instrument"
+        required: false
+        schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instruments'
         default:
           content:
             application/json:
@@ -150,6 +185,59 @@ components:
             ask: '0.01'
             distance: '0.01'
 
+    Instrument:
+      type: object
+      
+      example: 
+        instrument_id: 10
+        instrument_name: EUR/USD
+        market_currency: EUR
+        base_currency: USD
+        contract_size: '100000'
+        point_size: '0.0001'
+        precision: '0.00001'
+        
+      properties:
+        instrument_id:
+          type: integer
+        instrument_name:
+          type: string
+        market_currency:
+          type: string
+        base_currency:
+          type: string
+        contract_size:
+          type: string
+        point_size:
+          type: string
+        precision:
+          type: string
+    Instruments:
+      type: object
+      properties:
+        data:
+          items: 
+            $ref: '#/components/schemas/Instrument'
+          type: array
+        success: 
+          type: boolean
+      example:
+        success: true
+        data:
+          - instrument_id: 1
+            instrument_name: 'EUR/USD'
+            market_currency: 'EUR'
+            base_currency: 'USD'
+            contract_size: '10000'
+            point_size: '0.0001'
+            precision: '0.00001'
+          - instrument_id: 2
+            instrument_name: 'GBP/USD'
+            market_currency: 'GBP'
+            base_currency: 'USD'
+            contract_size: '10000'
+            point_size: '0.0001'
+            precision: '0.00001'
     errorResponce:
       example:
         success: false
