@@ -156,7 +156,7 @@ components:
         commentary:
           type: string
           example: alert commentary
-        sellbuy:
+        sb:
           type: string
           example: S
     AlertId:
@@ -177,7 +177,7 @@ components:
         commentary:
           type: string
           example: alert commentary
-        sellbuy:
+        sb:
           type: string
           example: S
     AlertsList:
@@ -200,7 +200,7 @@ components:
             price: 1.5678
             side: -1
             commentary:
-            sellbuy: S
+            sb: S
     response:
       example:
         code: 40001
