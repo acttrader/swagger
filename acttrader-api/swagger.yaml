@@ -39,6 +39,25 @@ paths:
         - accounts
       summary: method to get shifts
       description: Get trader shifts
+      parameters:
+      - name: "userid"
+        in: query
+        description: "Numeric ID of the user"
+        required: false
+        schema:
+            type: integer
+      - name: "instrumentid"
+        in: query
+        description: "Numeric ID of the instrument"
+        required: false
+        schema:
+            type: integer
+      - name: "instrumentname"
+        in: query
+        description: "Name of the instrument"
+        required: false
+        schema:
+            type: string
       responses:
         '200':
           description: Successful operation
