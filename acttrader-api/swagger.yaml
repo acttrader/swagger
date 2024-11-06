@@ -108,6 +108,59 @@ paths:
           description: An unexpected error response.
       security:
         - Bearer: []
+
+  /trades:
+    get:
+      tags:
+        - Operations
+      summary: method to get all open positions
+      description: Get trader positions
+      parameters:
+      - name: "account"
+        in: query
+        description: "Numeric ID of the account"
+        required: false
+        schema:
+            type: integer
+      - name: "trader"
+        in: query
+        description: "Numeric ID of the trader"
+        required: false
+        schema:
+            type: integer
+      - name: "from"
+        in: query
+        description: "from date"
+        required: false
+        schema:
+            type: string
+      - name: "till"
+        in: query
+        description: "till date"
+        required: false
+        schema:
+            type: string
+      - name: "uuid"
+        in: query
+        description: "next page uuid"
+        required: false
+        schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Positions'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponce'
+          description: An unexpected error response.
+      security:
+        - Bearer: []
 components:
   schemas:
     Account:
@@ -212,6 +265,7 @@ components:
           type: string
         precision:
           type: string
+
     Instruments:
       type: object
       properties:
@@ -238,6 +292,77 @@ components:
             contract_size: '10000'
             point_size: '0.0001'
             precision: '0.00001'
+
+    Position:
+      type: object
+      example: 
+        tradeId: 10
+        ticketId: 11
+        accountId: 2
+        pairId: 1
+        amount: '10000'
+        price: '1.1234'
+        side: 'B'
+        commission: '1.12'
+        interest: '1.12'
+        openTime: '2021-06-08T02:00:03Z'
+        pl: '0.00001'
+        commentary: "open position commentary"
+
+      properties:
+        tradeId:
+          type: integer
+        ticketId:
+          type: integer
+        accountId:
+          type: integer
+        pairId:
+          type: integer
+        amount: 
+          type: string
+        price: 
+          type: string
+        side:
+          type: string
+        commission:
+          type: string
+        interest:
+          type: string
+        openTime:
+           type: string
+        pl:
+          type: string
+        commentary:
+          type: string
+    Positions:
+      type: object
+      example:
+        success: true
+        data:
+          - tradeId: 7860208
+            ticketId: 7860208
+            accountId: 486
+            pairId: 3
+            amount: '1000'
+            price: '109.545'
+            side: 'B'
+            commission: '0'
+            interest: '3.2625'
+            openTime: '2021-06-10T19:30:33Z'
+            pl: '123.21'
+            commentary: 'text commentary'
+          - tradeId: 7902689
+            ticketId: 7902689
+            accountId: 573
+            pairId: 6
+            amount: '10000'
+            price: '142.005'
+            side: 'S'
+            commission: '-0.1'
+            interest: '-14.3'
+            openTime: '2022-09-22T09:56:48Z'
+            pl: '-12.32'
+            commentary: 'text commentary'
     errorResponce:
       example:
         success: false
