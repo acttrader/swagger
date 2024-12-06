@@ -62,7 +62,7 @@ paths:
           description: An unexpected error response.
       security:
         - Bearer: []
-  /stratey/{id}:
+  /strategy/{id}:
     put:
       tags:
         - strategy
