@@ -7,25 +7,56 @@ info:
 servers:
   # Added by API Auto Mocking Plugin
   - description: sandbox endpoint
-    url: https://strategies.acttrader.com/api/
+    url: https://strategies.acttrader.com/
 tags:
-  - name: strategy
+  - name: strategies
     description: Everything about your Strategies
+  - name: launches
+    description: Everything about your Launches
 paths:
   /strategy:
     post:
       tags:
-        - strategy
+        - strategies
       summary: Add a new strategy
-      description: Add a new strategy
+      description: Add a new strategy. Payload is a base64 encoded XML document.
       operationId: addStrategy
       requestBody:
         description: Create a new strategy in the store
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddStrategy'
+              $ref: '#/components/schemas/PostStrategy'
         required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostStrategyResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+      security:
+       - Bearer: []
+  /strategy/{id}:
+    get:
+      tags:
+        - strategies
+      summary: Get strategy by ID
+      description: Get strategy by ID
+      parameters:
+        - name: id
+          in: path
+          description: strategy Id
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
           description: Successful operation
@@ -37,16 +68,76 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/httpResponce'
+                $ref: '#/components/schemas/ErrorResponse'
           description: An unexpected error response.
       security:
-       - Bearer: []
+        - Bearer: []
+    put:
+      tags:
+        - strategies
+      summary: Update strategy by ID
+      description: update strategy
+      operationId: updateStrategy
+      parameters:
+        - name: id
+          in: path
+          description: strategy Id to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new strategy in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostStrategy'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - strategies
+      summary: Delete strategy by ID
+      operationId: deleteStrategy
+      parameters:
+        - name: id
+          in: path
+          description: startegy Id to delete
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+      security:
+        - Bearer: []
+  /strategies:
     get:
       tags:
-        - strategy
+        - strategies
       summary: Get all strategies
-      description: Get all strategies list
-      operationId: getStrategyList
+      description: Strategies list
+      operationId: addStrategy
+    
       responses:
         '200':
           description: Successful operation
@@ -58,72 +149,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/httpResponce'
+                $ref: '#/components/schemas/ErrorResponse'
           description: An unexpected error response.
       security:
-        - Bearer: []
-  /strategy/{id}:
-    put:
-      tags:
-        - strategy
-      summary: Update strategy by ID
-      description: update strategy
-      operationId: updateStrategy
-      parameters:
-        - name: id
-          in: path
-          description: ID of the strategy that needs to be deleted
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        description: Create a new strategy in the store
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddStrategy'
-        required: true
-      responses:
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Strategy not found
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/httpResponce'
-          description: An unexpected error response.
-      security:
-        - Bearer: []
-    delete:
-      tags:
-        - strategy
-      summary: Delete strategy by ID
-      operationId: deleteStrategy
-      parameters:
-        - name: id
-          in: path
-          description: ID of the strategy that needs to be deleted
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Successful operation
-      security:
-        - Bearer: []
+       - Bearer: []
   /launch/{id}:
     get:
       tags: 
-       - strategy
+       - launches
       summary: Launch the strategy
       parameters:
         - name: id
           in: path
-          description: ID of the strategy that needs to be deleted
+          description: ID of the strategy that needs to be launched
           required: true
           schema:
             type: integer
@@ -133,16 +171,60 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/httpResponce'
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+      security:
+        - Bearer: []
+  /stop/{id}:
+    get:
+      tags: 
+       - launches
+      summary: Stop the laucnh
+      parameters:
+        - name: id
+          in: path
+          description: ID of the launch that needs to be stopped
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+      security:
+        - Bearer: []
+  /launches/{id}:
+    get:
+      tags: 
+       - launches
+      summary: Launches list
+      parameters:
+        - name: id
+          in: path
+          description: ID of the strategy
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
           description: An unexpected error response.
       security:
         - Bearer: []
 components:
   schemas:
-    AddStrategy:
+    PostStrategy:
       required:
         - name
-        - data
+        - payload
       type: object
       properties:
         name:
@@ -150,57 +232,39 @@ components:
           example: sample_stochastic_macd
         payload:
           type: string
-          example: <strategy>...</strategy>
-          xml:
-            wrapped: true   
-            
+          example: PHN0cmF0ZWd5PgogIDx2YXJpYWJsZXM+CiAgICA8dmFyIG5hbWU9ImNvdW50ZXIiIHZhbHVlPSIwIi8+CiAgPC92YXJpYWJsZXM+CiAgPHJ1bGVzPgogICAgPHJ1bGUgdXNlX2l0ZXJhdGlvbnM9InRydWUiIGl0ZXJhdGlvbnM9IjEiPgogICAgICA8Y29uZGl0aW9ucz4KICAgICAgICA8Y29uZGl0aW9uPgogICAgICAgICAgPG9iamVjdDEgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25NYXJrZXRPcmRlciIgbWFya2V0PSJHQlBVU0QiIGJ1eV9zZWxsPSJTIiBxdWFudGl0eT0iMTAwIiBub3RpZnk9IlRydWUiIHJlYWxfdHJhZGU9ImZhbHNlIi8+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25MaW1pdE9yZGVyIiBtYXJrZXQ9IkdCUFVTRCIgYnV5X3NlbGw9IkIiIHF1YW50aXR5PSIxMDAiIHJhdGU9IjAuMDAwMSIgbm90aWZ5PSJUcnVlIiByZWFsX3RyYWRlPSJmYWxzZSIvPgogICAgICAgIDxhY3Rpb24gdHlwZT0iQWN0aW9uU2V0VmFyaWFibGUiIHZhcl9uYW1lPSJjb3VudGVyIiB2YXJfdmFsdWU9IjEiLz4KICAgICAgICA8YWN0aW9uIHR5cGU9IkFjdGlvbk5vdGlmaWNhdGlvbiIgbWVzc2FnZT0iTm90aWZpY2F0aW9uIG1lc3NhZ2UiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICAgIDxydWxlIHVzZV9pdGVyYXRpb25zPSJ0cnVlIiBpdGVyYXRpb25zPSIyIj4KICAgICAgPGNvbmRpdGlvbnM+CiAgICAgICAgPGNvbmRpdGlvbj4KICAgICAgICAgIDxvYmplY3QxIHR5cGU9IlZhcmlhYmxlIiB2YXJfbmFtZT0iY291bnRlciIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMSIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25TdG9wU3RyYXRlZ3kiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICA8L3J1bGVzPgo8L3N0cmF0ZWd5Pg==
+    PostStrategyResponse:
+      type: object
+      example: 
+        success: true
+        result: 
+          id: 101
+          name: stochastic
     Strategy:
       type: object
-      
-      example: 
-        id: 10
-        name: stohastic
-        payload: <strategy>...</strategy>
-        
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        payload:
-          type: string
-          
+      example:
+        success: true
+        result: PHN0cmF0ZWd5PgogIDx2YXJpYWJsZXM+CiAgICA8dmFyIG5hbWU9ImNvdW50ZXIiIHZhbHVlPSIwIi8+CiAgPC92YXJpYWJsZXM+CiAgPHJ1bGVzPgogICAgPHJ1bGUgdXNlX2l0ZXJhdGlvbnM9InRydWUiIGl0ZXJhdGlvbnM9IjEiPgogICAgICA8Y29uZGl0aW9ucz4KICAgICAgICA8Y29uZGl0aW9uPgogICAgICAgICAgPG9iamVjdDEgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25NYXJrZXRPcmRlciIgbWFya2V0PSJHQlBVU0QiIGJ1eV9zZWxsPSJTIiBxdWFudGl0eT0iMTAwIiBub3RpZnk9IlRydWUiIHJlYWxfdHJhZGU9ImZhbHNlIi8+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25MaW1pdE9yZGVyIiBtYXJrZXQ9IkdCUFVTRCIgYnV5X3NlbGw9IkIiIHF1YW50aXR5PSIxMDAiIHJhdGU9IjAuMDAwMSIgbm90aWZ5PSJUcnVlIiByZWFsX3RyYWRlPSJmYWxzZSIvPgogICAgICAgIDxhY3Rpb24gdHlwZT0iQWN0aW9uU2V0VmFyaWFibGUiIHZhcl9uYW1lPSJjb3VudGVyIiB2YXJfdmFsdWU9IjEiLz4KICAgICAgICA8YWN0aW9uIHR5cGU9IkFjdGlvbk5vdGlmaWNhdGlvbiIgbWVzc2FnZT0iTm90aWZpY2F0aW9uIG1lc3NhZ2UiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICAgIDxydWxlIHVzZV9pdGVyYXRpb25zPSJ0cnVlIiBpdGVyYXRpb25zPSIyIj4KICAgICAgPGNvbmRpdGlvbnM+CiAgICAgICAgPGNvbmRpdGlvbj4KICAgICAgICAgIDxvYmplY3QxIHR5cGU9IlZhcmlhYmxlIiB2YXJfbmFtZT0iY291bnRlciIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMSIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25TdG9wU3RyYXRlZ3kiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICA8L3J1bGVzPgo8L3N0cmF0ZWd5Pg==
     StrategyList:
       type: object
-      properties:
-        stratagies:
-          items: 
-            $ref: '#/components/schemas/Strategy'
-          type: array
-        code: 
-          type: integer
-        message:
-          type: string
       example:
-        stratagies:
+        success: true
+        result:
           - id: 100
             name: stohastic
-            payload: <strategy>...</strategy>
           - id: 101
-            name: stohastic02
-            payload: <strategy>...</strategy>
-        
-    httpResponce:
-      example:
-        code: 40001
-        message: INVALID_ARGUMENT
-      properties:
-        code:
-          format: int32
-          type: integer
-        message:
-          type: string
+            name: stohastic_CMA
+    Success:
       type: object
+      example:
+        success: true
+    ErrorResponse:
+      type: object
+      example:
+        success: false
+        message: error description
+        errorId: NKbVEzkD
+        errorCode: ERROR_CODE
   securitySchemes:
     Bearer:
       type: http
