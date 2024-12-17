@@ -144,7 +144,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StrategyList'
+                $ref: '#/components/schemas/Strategies'
         default:
           content:
             application/json:
@@ -158,6 +158,7 @@ paths:
       tags: 
        - launches
       summary: Launch the strategy
+      description: Launch the strategy
       parameters:
         - name: id
           in: path
@@ -166,7 +167,55 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: instrument
+          in: query
+          description: instrument name
+          required: true
+          schema:
+            type: string
+            format: string
+        - name: interval
+          in: query
+          description: interval name (1m, 5m, 15m, 30m, 1h, 4h, 8h, 1day)
+          required: true
+          schema:
+            type: string
+            format: string
+        - name: backtesting
+          in: query
+          description: backtesting flag (Y or N)
+          required: true
+          schema:
+            type: string
+            format: string
+        - name: account
+          in: query
+          description: account Id
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: startInterval
+          in: query
+          description: start interval date (example 202409010101)
+          required: false
+          schema:
+            type: string
+            format: string   
+        - name: endInterval
+          in: query
+          description: end interval date (example 202412010101)
+          required: false
+          schema:
+            type: string
+            format: string     
       responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Launch'
         default:
           content:
             application/json:
@@ -189,6 +238,12 @@ paths:
             type: integer
             format: int64
       responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
         default:
           content:
             application/json:
@@ -201,16 +256,22 @@ paths:
     get:
       tags: 
        - launches
-      summary: Launches list
+      summary: Strategy launches list
       parameters:
         - name: id
           in: path
-          description: ID of the strategy
+          description: strategy Id
           required: true
           schema:
             type: integer
             format: int64
       responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Launches'
         default:
           content:
             application/json:
@@ -245,7 +306,7 @@ components:
       example:
         success: true
         result: PHN0cmF0ZWd5PgogIDx2YXJpYWJsZXM+CiAgICA8dmFyIG5hbWU9ImNvdW50ZXIiIHZhbHVlPSIwIi8+CiAgPC92YXJpYWJsZXM+CiAgPHJ1bGVzPgogICAgPHJ1bGUgdXNlX2l0ZXJhdGlvbnM9InRydWUiIGl0ZXJhdGlvbnM9IjEiPgogICAgICA8Y29uZGl0aW9ucz4KICAgICAgICA8Y29uZGl0aW9uPgogICAgICAgICAgPG9iamVjdDEgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25NYXJrZXRPcmRlciIgbWFya2V0PSJHQlBVU0QiIGJ1eV9zZWxsPSJTIiBxdWFudGl0eT0iMTAwIiBub3RpZnk9IlRydWUiIHJlYWxfdHJhZGU9ImZhbHNlIi8+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25MaW1pdE9yZGVyIiBtYXJrZXQ9IkdCUFVTRCIgYnV5X3NlbGw9IkIiIHF1YW50aXR5PSIxMDAiIHJhdGU9IjAuMDAwMSIgbm90aWZ5PSJUcnVlIiByZWFsX3RyYWRlPSJmYWxzZSIvPgogICAgICAgIDxhY3Rpb24gdHlwZT0iQWN0aW9uU2V0VmFyaWFibGUiIHZhcl9uYW1lPSJjb3VudGVyIiB2YXJfdmFsdWU9IjEiLz4KICAgICAgICA8YWN0aW9uIHR5cGU9IkFjdGlvbk5vdGlmaWNhdGlvbiIgbWVzc2FnZT0iTm90aWZpY2F0aW9uIG1lc3NhZ2UiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICAgIDxydWxlIHVzZV9pdGVyYXRpb25zPSJ0cnVlIiBpdGVyYXRpb25zPSIyIj4KICAgICAgPGNvbmRpdGlvbnM+CiAgICAgICAgPGNvbmRpdGlvbj4KICAgICAgICAgIDxvYmplY3QxIHR5cGU9IlZhcmlhYmxlIiB2YXJfbmFtZT0iY291bnRlciIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMSIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25TdG9wU3RyYXRlZ3kiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICA8L3J1bGVzPgo8L3N0cmF0ZWd5Pg==
-    StrategyList:
+    Strategies:
       type: object
       example:
         success: true
@@ -254,6 +315,35 @@ components:
             name: stohastic
           - id: 101
             name: stohastic_CMA
+    Launch:
+      type: object
+      example: 
+        success: true
+        result: 
+          id: 101
+    Launches:
+      type: object
+      example:
+        success: true
+        result:
+          - launchId: 100 
+            strategyId: 101
+            instrument: GBPUSD
+            interval: 1h
+            backtesting: false
+            startTime: 2024-12-10T12:00:33.123631Z
+            endTime: 2024-12-10T12:02:00.181652Z
+            accountId: 11
+            errorMessage: ACTION_STOP_STRATEGY
+          - launchId: 101
+            strategyId: 101
+            instrument: GBPUSD
+            interval: 1h
+            backtesting: true
+            startTime: 2024-12-10T12:00:33.123631Z
+            endTime: 2024-12-10T12:02:00.181652Z
+            startInterval: 2024-09-01T01:01:00Z
+            endInterval: 2024-12-01T01:01:00Z
     Success:
       type: object
       example:
