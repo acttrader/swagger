@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Startegies API - OpenAPI 3.0
+  title: Startegies API
   description: |-
     This is a Strategy Server based on the OpenAPI 3.0 specification.  
   version: '1.0'
@@ -252,19 +252,36 @@ paths:
           description: An unexpected error response.
       security:
         - Bearer: []
-  /launches/{id}:
+  /launches:
     get:
       tags: 
        - launches
       summary: Strategy launches list
       parameters:
-        - name: id
-          in: path
-          description: strategy Id
+        - name: strategy_id
+          in: query
           required: true
-          schema:
+          description: ID of strategy 
+          example: 1
+          schema: 
             type: integer
             format: int64
+        - name: from
+          in: query
+          required: false
+          description: Start time of the period
+          example: 2024-11-20T14:20:00Z
+          schema:
+            type: string
+            format: date-time
+        - name: till
+          in: query
+          required: false
+          description: End time of the period
+          example: 2024-11-20T14:20:00Z
+          schema:
+            type: string
+            format: date-time
       responses:
         '200':
           description: Successful operation
