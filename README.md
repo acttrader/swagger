@@ -1,9 +1,9 @@
-**ActTrader protocol description**
+**ActTrader API description**
 
 **Content**:
 
-
-- [Authorization Service](pages/auth-service.html)
-- [Alerts service](alerts/)  (under construction)
-- [Clearing Service](pages/clearing-service.html)
-- [Charting Service](pages/chart-service.html)  (under construction)
+- [Authorization](auth/)(under constraction)
+- [ActTrader api](acttrader-api/)
+- [Alerts](alerts/)
+- [Strategies](strategies/) 
+- [Charts](charts/) (under constraction)
