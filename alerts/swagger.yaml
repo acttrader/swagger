@@ -33,6 +33,22 @@ paths:
           description: An unexpected error response.
       security:
         - Bearer: []
+    delete:
+      tags:
+        - ActTrader alerts
+      summary: Delete all alerts
+      operationId: deleteAlerts
+      responses:
+        '200':
+          description: Successful operation
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+          description: An unexpected error response.
+      security:
+        - Bearer: []
   /alert:
     post:
       tags:
