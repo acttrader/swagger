@@ -1,0 +1,224 @@
+openapi: 3.0.0
+info:
+  title: Portfolios API
+  description: |-
+    This is a Portfolios Server based on the OpenAPI 3.0 specification.  
+  version: '1.0'
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: sandbox endpoint
+    url: https://portfolios.acttrader.com/
+tags:
+  - name: portfolios
+    description: Everything about your Portfolios
+  - name: symbols
+    description: Price sources and symbols
+paths:
+  /portfolios:
+    get:
+      tags:
+        - portfolios
+      summary: Get all portfolios
+      description: Portfolios list
+      operationId: addPortfolio
+    
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolios'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+  /portfolio:
+    post:
+      tags:
+        - portfolios
+      summary: Add a new portfolio
+      description: Add a new portfolio.
+      operationId: addPortfolio
+      requestBody:
+        description: Create a new portfolio in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostPortfolio'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostPortfolioResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+
+  /portfolio/{id}:
+    get:
+      tags:
+        - portfolios
+      summary: Get portfolio by ID
+      description: Get portfolio by ID
+      parameters:
+        - name: id
+          in: path
+          description: portfolio Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolio'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+    put:
+      tags:
+        - portfolios
+      summary: Update portfolio by ID
+      description: update portfolio
+      operationId: updatePortfolio
+      parameters:
+        - name: id
+          in: path
+          description: portfolio Id to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new strategy in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostPortfolio'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+    delete:
+      tags:
+        - portfolios
+      summary: Delete portfolio by ID
+      operationId: deletePortfolio
+      parameters:
+        - name: id
+          in: path
+          description: portfolio Id to delete
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+  /symbols:
+    get:
+      tags:
+        - symbols
+      summary: Get all sources and symbols
+      description: Symbol list
+      operationId: addPortfolio
+    
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolios'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error response.
+components:
+  schemas:
+    PostPortfolio:
+      required:
+        - name
+        - payload
+      type: object
+      properties:
+        name:
+          type: string
+          example: sample_stochastic_macd
+        payload:
+          type: string
+          example: PHN0cmF0ZWd5PgogIDx2YXJpYWJsZXM+CiAgICA8dmFyIG5hbWU9ImNvdW50ZXIiIHZhbHVlPSIwIi8+CiAgPC92YXJpYWJsZXM+CiAgPHJ1bGVzPgogICAgPHJ1bGUgdXNlX2l0ZXJhdGlvbnM9InRydWUiIGl0ZXJhdGlvbnM9IjEiPgogICAgICA8Y29uZGl0aW9ucz4KICAgICAgICA8Y29uZGl0aW9uPgogICAgICAgICAgPG9iamVjdDEgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25NYXJrZXRPcmRlciIgbWFya2V0PSJHQlBVU0QiIGJ1eV9zZWxsPSJTIiBxdWFudGl0eT0iMTAwIiBub3RpZnk9IlRydWUiIHJlYWxfdHJhZGU9ImZhbHNlIi8+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25MaW1pdE9yZGVyIiBtYXJrZXQ9IkdCUFVTRCIgYnV5X3NlbGw9IkIiIHF1YW50aXR5PSIxMDAiIHJhdGU9IjAuMDAwMSIgbm90aWZ5PSJUcnVlIiByZWFsX3RyYWRlPSJmYWxzZSIvPgogICAgICAgIDxhY3Rpb24gdHlwZT0iQWN0aW9uU2V0VmFyaWFibGUiIHZhcl9uYW1lPSJjb3VudGVyIiB2YXJfdmFsdWU9IjEiLz4KICAgICAgICA8YWN0aW9uIHR5cGU9IkFjdGlvbk5vdGlmaWNhdGlvbiIgbWVzc2FnZT0iTm90aWZpY2F0aW9uIG1lc3NhZ2UiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICAgIDxydWxlIHVzZV9pdGVyYXRpb25zPSJ0cnVlIiBpdGVyYXRpb25zPSIyIj4KICAgICAgPGNvbmRpdGlvbnM+CiAgICAgICAgPGNvbmRpdGlvbj4KICAgICAgICAgIDxvYmplY3QxIHR5cGU9IlZhcmlhYmxlIiB2YXJfbmFtZT0iY291bnRlciIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMSIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25TdG9wU3RyYXRlZ3kiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICA8L3J1bGVzPgo8L3N0cmF0ZWd5Pg==
+    PostPortfolioResponse:
+      type: object
+      example: 
+        success: true
+        result: 
+          id: 101
+          name: stochastic
+    Portfolio:
+      type: object
+      example:
+        success: true
+        result: PHN0cmF0ZWd5PgogIDx2YXJpYWJsZXM+CiAgICA8dmFyIG5hbWU9ImNvdW50ZXIiIHZhbHVlPSIwIi8+CiAgPC92YXJpYWJsZXM+CiAgPHJ1bGVzPgogICAgPHJ1bGUgdXNlX2l0ZXJhdGlvbnM9InRydWUiIGl0ZXJhdGlvbnM9IjEiPgogICAgICA8Y29uZGl0aW9ucz4KICAgICAgICA8Y29uZGl0aW9uPgogICAgICAgICAgPG9iamVjdDEgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25NYXJrZXRPcmRlciIgbWFya2V0PSJHQlBVU0QiIGJ1eV9zZWxsPSJTIiBxdWFudGl0eT0iMTAwIiBub3RpZnk9IlRydWUiIHJlYWxfdHJhZGU9ImZhbHNlIi8+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25MaW1pdE9yZGVyIiBtYXJrZXQ9IkdCUFVTRCIgYnV5X3NlbGw9IkIiIHF1YW50aXR5PSIxMDAiIHJhdGU9IjAuMDAwMSIgbm90aWZ5PSJUcnVlIiByZWFsX3RyYWRlPSJmYWxzZSIvPgogICAgICAgIDxhY3Rpb24gdHlwZT0iQWN0aW9uU2V0VmFyaWFibGUiIHZhcl9uYW1lPSJjb3VudGVyIiB2YXJfdmFsdWU9IjEiLz4KICAgICAgICA8YWN0aW9uIHR5cGU9IkFjdGlvbk5vdGlmaWNhdGlvbiIgbWVzc2FnZT0iTm90aWZpY2F0aW9uIG1lc3NhZ2UiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICAgIDxydWxlIHVzZV9pdGVyYXRpb25zPSJ0cnVlIiBpdGVyYXRpb25zPSIyIj4KICAgICAgPGNvbmRpdGlvbnM+CiAgICAgICAgPGNvbmRpdGlvbj4KICAgICAgICAgIDxvYmplY3QxIHR5cGU9IlZhcmlhYmxlIiB2YXJfbmFtZT0iY291bnRlciIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMSIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25TdG9wU3RyYXRlZ3kiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICA8L3J1bGVzPgo8L3N0cmF0ZWd5Pg==
+    Portfolios:
+      type: object
+      example:
+          - id: 6
+            name: CRYPTO.portfolio
+            divider: "10000"
+            symbols: 
+              - source: BINANCE
+                symbol: BTCUSDT
+                weight: "1"
+              - source: BINANCE
+                symbol: LTCUSDT
+                weight: "5"
+              - source: BINANCE
+                symbol: XRPUSDT
+                weight: "10000"
+    Success:
+      type: object
+      example:
+        success: true
+    ErrorResponse:
+      type: object
+      example:
+        success: false
+        message: error description
+        errorId: NKbVEzkD
+        errorCode: ERROR_CODE
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
