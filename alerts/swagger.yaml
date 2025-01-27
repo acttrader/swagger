@@ -175,6 +175,9 @@ components:
         sb:
           type: string
           example: S
+        triggered:
+          type: string
+          example: "2025-01-27T17:01:02"
     AlertId:
       type: object
       properties:
@@ -196,6 +199,9 @@ components:
         sb:
           type: string
           example: S
+        triggered:
+          type: string
+          example: "2025-01-27T17:01:02"
     AlertsList:
       type: object
       properties:
@@ -211,12 +217,14 @@ components:
             side: 1
             commentary: alert commentary
             sb: B
+            triggered: "2025-01-27T17:01:02"
           - id: 101
             instrument: GBPUSD
             price: 1.5678
             side: -1
             commentary:
             sb: S
+            triggered: null
     response:
       example:
         code: 40001
