@@ -29,12 +29,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Portfolios'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error response.
   /portfolio:
     post:
       tags:
@@ -55,14 +49,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostPortfolioResponse'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error response.
-
+                $ref: '#/components/schemas/PostPortfolioResponce'
+        
   /portfolio/{id}:
     get:
       tags:
@@ -83,13 +71,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Portfolio'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error response.
+                $ref: '#/components/schemas/PostPortfolioResponce'
     put:
       tags:
         - portfolios
@@ -117,13 +99,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Success'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error response.
+                $ref: '#/components/schemas/PostPortfolioResponce'
     delete:
       tags:
         - portfolios
@@ -159,38 +135,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Symbols'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error response.
 components:
   schemas:
     PostPortfolio:
-      required:
-        - name
-        - payload
-      type: object
-      properties:
-        name:
-          type: string
-          example: sample_stochastic_macd
-        payload:
-          type: string
-          example: PHN0cmF0ZWd5PgogIDx2YXJpYWJsZXM+CiAgICA8dmFyIG5hbWU9ImNvdW50ZXIiIHZhbHVlPSIwIi8+CiAgPC92YXJpYWJsZXM+CiAgPHJ1bGVzPgogICAgPHJ1bGUgdXNlX2l0ZXJhdGlvbnM9InRydWUiIGl0ZXJhdGlvbnM9IjEiPgogICAgICA8Y29uZGl0aW9ucz4KICAgICAgICA8Y29uZGl0aW9uPgogICAgICAgICAgPG9iamVjdDEgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25NYXJrZXRPcmRlciIgbWFya2V0PSJHQlBVU0QiIGJ1eV9zZWxsPSJTIiBxdWFudGl0eT0iMTAwIiBub3RpZnk9IlRydWUiIHJlYWxfdHJhZGU9ImZhbHNlIi8+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25MaW1pdE9yZGVyIiBtYXJrZXQ9IkdCUFVTRCIgYnV5X3NlbGw9IkIiIHF1YW50aXR5PSIxMDAiIHJhdGU9IjAuMDAwMSIgbm90aWZ5PSJUcnVlIiByZWFsX3RyYWRlPSJmYWxzZSIvPgogICAgICAgIDxhY3Rpb24gdHlwZT0iQWN0aW9uU2V0VmFyaWFibGUiIHZhcl9uYW1lPSJjb3VudGVyIiB2YXJfdmFsdWU9IjEiLz4KICAgICAgICA8YWN0aW9uIHR5cGU9IkFjdGlvbk5vdGlmaWNhdGlvbiIgbWVzc2FnZT0iTm90aWZpY2F0aW9uIG1lc3NhZ2UiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICAgIDxydWxlIHVzZV9pdGVyYXRpb25zPSJ0cnVlIiBpdGVyYXRpb25zPSIyIj4KICAgICAgPGNvbmRpdGlvbnM+CiAgICAgICAgPGNvbmRpdGlvbj4KICAgICAgICAgIDxvYmplY3QxIHR5cGU9IlZhcmlhYmxlIiB2YXJfbmFtZT0iY291bnRlciIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMSIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25TdG9wU3RyYXRlZ3kiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICA8L3J1bGVzPgo8L3N0cmF0ZWd5Pg==
-    PostPortfolioResponse:
-      type: object
-      example: 
-        success: true
-        result: 
-          id: 101
-          name: stochastic
-    Portfolio:
       type: object
       example:
-        success: true
-        result: PHN0cmF0ZWd5PgogIDx2YXJpYWJsZXM+CiAgICA8dmFyIG5hbWU9ImNvdW50ZXIiIHZhbHVlPSIwIi8+CiAgPC92YXJpYWJsZXM+CiAgPHJ1bGVzPgogICAgPHJ1bGUgdXNlX2l0ZXJhdGlvbnM9InRydWUiIGl0ZXJhdGlvbnM9IjEiPgogICAgICA8Y29uZGl0aW9ucz4KICAgICAgICA8Y29uZGl0aW9uPgogICAgICAgICAgPG9iamVjdDEgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMCIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25NYXJrZXRPcmRlciIgbWFya2V0PSJHQlBVU0QiIGJ1eV9zZWxsPSJTIiBxdWFudGl0eT0iMTAwIiBub3RpZnk9IlRydWUiIHJlYWxfdHJhZGU9ImZhbHNlIi8+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25MaW1pdE9yZGVyIiBtYXJrZXQ9IkdCUFVTRCIgYnV5X3NlbGw9IkIiIHF1YW50aXR5PSIxMDAiIHJhdGU9IjAuMDAwMSIgbm90aWZ5PSJUcnVlIiByZWFsX3RyYWRlPSJmYWxzZSIvPgogICAgICAgIDxhY3Rpb24gdHlwZT0iQWN0aW9uU2V0VmFyaWFibGUiIHZhcl9uYW1lPSJjb3VudGVyIiB2YXJfdmFsdWU9IjEiLz4KICAgICAgICA8YWN0aW9uIHR5cGU9IkFjdGlvbk5vdGlmaWNhdGlvbiIgbWVzc2FnZT0iTm90aWZpY2F0aW9uIG1lc3NhZ2UiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICAgIDxydWxlIHVzZV9pdGVyYXRpb25zPSJ0cnVlIiBpdGVyYXRpb25zPSIyIj4KICAgICAgPGNvbmRpdGlvbnM+CiAgICAgICAgPGNvbmRpdGlvbj4KICAgICAgICAgIDxvYmplY3QxIHR5cGU9IlZhcmlhYmxlIiB2YXJfbmFtZT0iY291bnRlciIvPgogICAgICAgICAgPG9iamVjdDIgdHlwZT0iTnVtYmVyIiB2YWx1ZT0iMSIvPgogICAgICAgICAgPG9wZXJhdG9yIHR5cGU9IkVxdWFsIi8+CiAgICAgICAgPC9jb25kaXRpb24+CiAgICAgIDwvY29uZGl0aW9ucz4KICAgICAgPGFjdGlvbnM+CiAgICAgICAgPGFjdGlvbiB0eXBlPSJBY3Rpb25TdG9wU3RyYXRlZ3kiLz4KICAgICAgPC9hY3Rpb25zPgogICAgPC9ydWxlPiAgICAKICA8L3J1bGVzPgo8L3N0cmF0ZWd5Pg==
+        name: CRYPTO.portfolio
+        divider: "10000"
+        symbols: 
+          - source: BINANCE
+            symbol: BTCUSDT
+            weight: "1"
+          - source: BINANCE
+            symbol: LTCUSDT
+            weight: "5"
+          - source: BINANCE
+            symbol: XRPUSDT
+            weight: "10000"
     Portfolios:
       type: object
       example:
@@ -207,13 +168,29 @@ components:
               - source: BINANCE
                 symbol: XRPUSDT
                 weight: "10000"
+    PostPortfolioResponce:
+      type: object
+      example:
+          id: 6
+          name: CRYPTO.portfolio
+          divider: "10000"
+          symbols: 
+            - source: BINANCE
+              symbol: BTCUSDT
+              weight: "1"
+            - source: BINANCE
+              symbol: LTCUSDT
+              weight: "5"
+            - source: BINANCE
+              symbol: XRPUSDT
+              weight: "10000"
     Symbols:
       type: object
       example:
-          - Source: ONEZERO
-            Symbols: [EURUSD, GBPUSD, GBPJPY]
-          - Source: BINANCE
-            Symbols: [USUALTRY, LPTBTC, ADXUSDT]
+          - source: ONEZERO
+            symbols: [EURUSD, GBPUSD, GBPJPY]
+          - source: BINANCE
+            symbols: [USUALTRY, LPTBTC, ADXUSDT]
     Success:
       type: object
       example:
