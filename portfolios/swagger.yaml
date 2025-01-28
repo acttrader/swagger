@@ -20,8 +20,7 @@ paths:
         - portfolios
       summary: Get all portfolios
       description: Portfolios list
-      operationId: addPortfolio
-    
+      operationId: getPortfolio
       responses:
         '200':
           description: Successful operation
@@ -126,8 +125,7 @@ paths:
         - symbols
       summary: Get all sources and symbols
       description: Symbol list
-      operationId: addPortfolio
-    
+      operationId: getSymbols
       responses:
         '200':
           description: Successful operation
