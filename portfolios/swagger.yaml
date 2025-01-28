@@ -193,14 +193,3 @@ components:
       type: object
       example:
         success: true
-    ErrorResponse:
-      type: object
-      example:
-        success: false
-        message: error description
-        errorId: NKbVEzkD
-        errorCode: ERROR_CODE
-  securitySchemes:
-    Bearer:
-      type: http
-      scheme: bearer
