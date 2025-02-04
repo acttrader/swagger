@@ -164,8 +164,8 @@ components:
           type: string
           example: EURUSD
         price:
-          type: number
-          example: 1.1234
+          type: string
+          example: "1.1234"
         side:
           type: number
           example: 1
@@ -188,8 +188,8 @@ components:
           type: string
           example: EURUSD
         price:
-          type: number
-          example: 1.1234
+          type: string
+          example: "1.1234"
         side:
           type: number
           example: 1
@@ -213,14 +213,14 @@ components:
         alerts:
           - id: 100
             instrument: EURUSD
-            price: 1.2345
+            price: "1.2345"
             side: 1
             commentary: alert commentary
             sb: B
             triggered: "2025-01-27T17:01:02"
           - id: 101
             instrument: GBPUSD
-            price: 1.5678
+            price: "1.5678"
             side: -1
             commentary:
             sb: S
