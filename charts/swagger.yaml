@@ -1,0 +1,583 @@
+openapi: 3.0.3
+info:
+  title: Chart API
+  version: 1.0.0
+  contact: {}
+  description: API for providing chart data and market sentiment analysis.
+servers:
+  - url: https://tfx03.acttrader.com/charts
+  - url: ws://server-address
+tags:
+  - name: Chart data
+    description: >-
+      API for providing chart data
+  - name: Analysis
+    description: >-
+      API for providing market sentiment and pivot levels
+  - name: Websocket
+    description: >-
+      Receiving chart data over WebSocket
+ 
+paths:
+
+### Chart Data ###
+#symbols
+  /symbols:
+    get:
+      tags:
+        - Chart data
+      summary: method to get symbols list
+      description: Get all symbols list
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Symbols'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponceCommon'
+  
+#candles
+  /candles:
+    get:
+      tags:
+        - Chart data
+      summary: method to get candles
+      description: Get candles
+      parameters:
+        - name: symbol
+          in: query
+          schema:
+            type: string
+            example: EURUSD
+        - name: interval
+          in: query
+          schema:
+            type: string
+            enum:
+              - 1m
+              - 3m
+              - 5m
+              - 10m
+              - 15m
+              - 30m
+              - 1h
+              - 2h
+              - 4h
+              - 8h
+              - 1day
+              - 1week
+              - 1month
+              - 1year
+            example: 5m
+            description: |-
+              1m - 1 minute 
+              3m - 3 minutes
+              5m - 5 minutes
+              10m - 10 minutes
+              15m - 15 minutes
+              30m - 30 minutes
+              1h - 1 hour
+              2h - 2 hours
+              4h - 4 hours
+              8h - 8 hours
+              1day - 1 day
+              1week - 1 week
+              1month - 1 month
+              1year - 1 year
+        - name: count
+          in: query
+          schema:
+            type: integer
+            example: ''
+        - name: from
+          in: query
+          schema:
+            type: string
+            example: '202501130000'
+          description: date-time format YYYYMMDDHHMM
+        - name: till
+          in: query
+          schema:
+            type: string
+            example: '202501131400'
+          description: date-time format YYYYMMDDHHMM
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candles'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponceCommon'
+          description: An unexpected error response.
+ 
+ ### Analysis ###
+ # pivotlevels
+  /analysis/pivotlevels:
+    get:
+      tags:
+        - Analysis
+      summary: method to get values of Pivot Points indicator.
+      description: Get values of Pivot Points indicator.
+      operationId: pivotlevels
+      parameters:
+        - name: market
+          in: query
+          schema:
+            type: string
+            example: EURUSD
+          description: Instrument name
+        - name: interval
+          in: query
+          schema:
+            type: string
+            enum:
+              - 1D
+              - 1W
+              - 1M
+            example: 1D
+          description: Chart interval
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum:
+              - classic
+              - fibonacci
+              - camarilla
+            example: classic
+          description: Type of Pivot Points indicator
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PivotLevels'
+        '400':
+          description: ''
+          content:
+            application/json:
+              examples:
+                ErrorResponceInstrumentInitializing:
+                  $ref: '#components/examples/ErrorResponceInstrumentInitializing'
+                ErrorResponceNoChartData:
+                  $ref: '#components/examples/ErrorResponceNoChartData'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponceCommon'
+          description: An unexpected error response.
+
+# marketsentiment
+  /analysis/marketsentiment:
+    get:
+      tags:
+        - Analysis
+      summary: method to get values of market sentiment
+      description: >-
+        Get values of market sentiment (bullish/bearish) calculated with 6
+        different indicators, and also values for Pivot Levels indicator.
+
+
+        There are maximum and minimum values for each indicator:
+
+
+        MA: max=5, min=-5
+
+
+        RSI: max=2, min=-2
+
+
+        MACD: max=2, min=-2
+
+
+        DMI: max=1, min=-1
+
+
+        STOCH: max=2, min=-2
+
+
+        ATR: max=1, min=-1
+      parameters:
+        - name: market
+          in: query
+          schema:
+            type: string
+            example: EURUSD
+          description: Instrument name
+        - name: interval
+          in: query
+          schema:
+            type: string
+            enum:
+              - 1D
+              - 1W
+              - 1M
+            example: 1D
+          description: Chart interval
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketSentiment'
+        '400':
+          description: ''
+          content:
+            application/json:
+              examples:
+                ErrorResponceInstrumentInitializing:
+                  $ref: '#components/examples/ErrorResponceInstrumentInitializing'
+                ErrorResponceNoChartData:
+                  $ref: '#components/examples/ErrorResponceNoChartData'
+            
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponceCommon'
+          description: An unexpected error response.
+
+### Websocket ###        
+  /ws:
+    get:
+      tags:
+        - Websocket
+      summary: ws
+      description: |-
+        Subscribe for symbol data command
+
+        ``` json
+        {"m": "subscribe", "p": ["BTC-USD", "GBPUSD", "USDJPY"]}
+         ```
+
+        Unsubscribe for symbol data command
+
+        ``` json
+        {"m": "unsubscribe", "p": ["BTC-USD", "GBPUSD", "USDJPY"]}
+
+         ```
+
+        Data examples
+
+        ``` json
+        {
+            "m": "chart",
+            "d": [
+                {
+                    "m": "BTC-USD",
+                    "interval": "1m",
+                    "time": "2023-04-28T13:10:00Z",
+                    "open": 29229.87,
+                    "high": 29229.87,
+                    "low": 29215.076,
+                    "close": 29220.907,
+                    "volume": 0,
+                    "count": 200
+                }
+            ]
+        }
+
+         ```
+
+        ``` json
+        {
+            "m": "ticker",
+            "d": [
+                {
+                    "m": "BTC-USD",
+                    "time": "2023-04-28T13:09:05.311877774Z",
+                    "bid": 29218.401,
+                    "ask": 29297.187,
+                    "day_open": 29436.923,
+                    "day_high": 29560.397,
+                    "day_low": 29111.149
+                }
+            ]
+        }
+
+         ```
+      operationId: ws
+      responses:
+        '200':
+          description: ''
+
+components:
+### Examples ###
+  examples:
+    ErrorResponceInstrumentInitializing:
+      summary: ErrorResponceInstrumentInitializing
+      description: |-
+        Description: This error occurs only on the first request for an instrument
+        when it is still in the initialization phase. This indicates that the data
+        or settings for the instrument are still being prepared for use.
+        
+        Suggested Action: Wait for the initialization to complete and retry the
+        request afterward. Subsequent requests for the same instrument should
+        proceed without this error.
+      value:
+        success: false
+        errorId: 'HQMAKqYk'
+        message: 'instrument is initialising'
+        errorCode: 'INSTRUMENT_INITIALIZING'
+        result: null
+    ErrorResponceNoChartData:
+      summary: ErrorResponceNoChartData
+      description: |-
+        This error occurs when there is not enough data available to
+        calculate indicators and renerate response for the
+        analysis/marketsentiment' request.
+        
+        Suggested Action: Contact the support team.
+      value:
+        success: false
+        errorId: 'ZxIIqvmZ'
+        message: 'not enough chart data'
+        errorCode: 'INSUFFICIENT_CHART_DATA'
+        result: null
+
+### Schemas ###
+  schemas:
+#Symbol
+    Symbol:
+      type: object
+      properties:
+        name:
+          type: string
+        bid:
+          type: number
+        ask:
+          type: number
+        volume:
+          type: number
+        high:
+          type: number
+        low:
+          type: number
+      example:
+        name: EURUSD
+        bid: 1.08767
+        ask: 1.0879699999999999
+        volume: 0
+        high: 1.09283
+        low: 1.08586
+#Candle
+    Candle:
+      type: object
+      properties:
+        time:
+          type: string
+          format: date-time
+          example: '2023-03-23T03:00:00Z'
+        open:
+          type: number
+        high:
+          type: number
+        low:
+          type: number
+        close:  
+          type: number
+        volume:
+          type: number
+        count:
+          type: number
+      example:
+        time: '2023-03-23T03:00:00Z'
+        open: 1.08941
+        high: 1.09042
+        low: 1.08917
+        close: 1.08995
+        volume: 0
+        count: 5916
+#symbols result
+    Symbols:
+      type: object
+      required:
+        - success
+        - message
+        - result
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Symbol'
+      example:
+        success: true
+        message: ''
+        result:
+        - name: EURUSD
+          bid: 1.08767
+          ask: 1.0879699999999999
+          volume: 0
+          high: 1.09283
+          low: 1.08586
+        - name: GBPUSD
+          bid: 1.23108
+          ask: 1.23138
+          volume: 0
+          high: 1.2342
+          low: 1.22627
+        
+#candles result
+    Candles:
+      type: object
+      required:
+        - success
+        - message
+        - result
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Candle'
+      example:
+        success: true
+        message: ''
+        result:
+        - time: '2023-03-23T03:00:00Z'
+          open: 1.08941
+          high: 1.09042
+          low: 1.08917
+          close: 1.08995
+          volume: 0
+          count: 5916
+        - time: '2023-03-23T04:00:00Z'
+          open: 1.08994
+          high: 1.09028
+          low: 1.08935
+          close: 1.09022
+          volume: 0
+          count: 4264
+#pivotlevels result
+    PivotLevels:
+      type: object
+      example:
+        success: true
+        message: ''
+        result:
+          success: "true"
+          message: ""
+          result: 
+            PP: "1.0407333333333335"
+            S1: "1.037166666666667"
+            S2: "1.0346333333333335"
+            S3: "1.0285333333333335"
+            R1: "1.043266666666667"
+            R2: "1.0468333333333335"
+            R3: "1.0529333333333335"
+#marketsentiment result
+    MarketSentiment:
+      type: object
+      example:
+        success: true
+        message: ''
+        result:
+          success: "true"
+          message: ""
+          result: 
+            success: "true"
+            message: ""
+            result: 
+            - ind: "MA"
+              value: "-3"
+            - ind: "RSI"
+              value: "1"
+            - ind: "MACD"
+              value: "0"
+            - ind: "DMI"
+              value: "0"
+            - ind: "STOCH"
+              value: "0"
+            - ind: "ATR"
+              value: "0"
+            - ind: "Pivot"
+              PP: "1.0407333333333335"
+              S1: "1.037166666666667"
+              S2: "1.0346333333333335"
+              S3: "1.0285333333333335"
+              R1: "1.043266666666667"
+              R2: "1.0468333333333335"
+              R3: "1.0529333333333335"
+#ErrorResponceNoChartData
+    ErrorResponceNoChartData: 
+      type: object
+      example:
+        success: false
+        errorId: 'ZxIIqvmZ'
+        message: 'not enough chart data'
+        errorCode: 'INSUFFICIENT_CHART_DATA'
+        result: null
+#ErrorResponceInstrumentInitializing
+    ErrorResponceInstrumentInitializing: 
+      type: object 
+      required:
+        - success
+        - message 
+        - errorCode
+        - result
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        errorCode:
+          type: string
+        result:
+          type: object
+      example:
+        success: false
+        errorId: 'HQMAKqYk'
+        message: 'instrument is initialising'
+        errorCode: 'INSTRUMENT_INITIALIZING'
+        result: null
+
+#ErrorResponceCommon
+    ErrorResponceCommon:
+      type: object
+      required:
+        - success
+        - message 
+        - result
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        result:
+          type: object
+      example:
+        success: false
+        message: 'Interval (1d) not found'
+        result: null
+
+
+
+  # - name: Error Responses
+  #   description: >-
+  #     The API may return the following error responses under specific
+  #     conditions. Each error response includes a unique "errorId" field, which
+  #     can be used to trace and diagnose individual occurrences of issues. The
+  #     "errorCode" is useful for determining the cause and implementing
+  #     appropriate error handling.
+ 
