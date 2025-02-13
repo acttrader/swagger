@@ -1,12 +1,12 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
   title: Chart API
   version: 1.0.0
   contact: {}
   description: API for providing chart data and market sentiment analysis.
 servers:
-  - url: https://tfx03.acttrader.com/charts
-  - url: ws://server-address
+  - url: http://s20.sysfx.com:10005
+  - url: ws://s20.sysfx.com:10005
 tags:
   - name: Chart data
     description: >-
@@ -114,6 +114,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Candles'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponce'
+              examples:
+                ErrorResponceInstrumentInitializing:
+                  $ref: '#components/examples/ErrorResponceInstrumentInitializing'
         default:
           content:
             application/json:
@@ -168,6 +177,8 @@ paths:
           description: ''
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponce'
               examples:
                 ErrorResponceInstrumentInitializing:
                   $ref: '#components/examples/ErrorResponceInstrumentInitializing'
@@ -238,6 +249,8 @@ paths:
           description: ''
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponce'  
               examples:
                 ErrorResponceInstrumentInitializing:
                   $ref: '#components/examples/ErrorResponceInstrumentInitializing'
@@ -256,64 +269,30 @@ paths:
     get:
       tags:
         - Websocket
-      summary: ws
+      summary: Websocket
       description: |-
-        Subscribe for symbol data command
-
+        To subscribe or unsubscribe from symbol data, you should send a subscribe or unsubscribe command as follows:
+        
+        _Subscribe to symbols data command:_
         ``` json
         {"m": "subscribe", "p": ["BTC-USD", "GBPUSD", "USDJPY"]}
          ```
-
-        Unsubscribe for symbol data command
-
+        _Unsubscribe from symbols data command:_
         ``` json
         {"m": "unsubscribe", "p": ["BTC-USD", "GBPUSD", "USDJPY"]}
 
          ```
+        The format of the subscribe/unsubscribe command is described in the **SubscribeUnsubscribe** schema.
 
-        Data examples
-
-        ``` json
-        {
-            "m": "chart",
-            "d": [
-                {
-                    "m": "BTC-USD",
-                    "interval": "1m",
-                    "time": "2023-04-28T13:10:00Z",
-                    "open": 29229.87,
-                    "high": 29229.87,
-                    "low": 29215.076,
-                    "close": 29220.907,
-                    "volume": 0,
-                    "count": 200
-                }
-            ]
-        }
-
-         ```
-
-        ``` json
-        {
-            "m": "ticker",
-            "d": [
-                {
-                    "m": "BTC-USD",
-                    "time": "2023-04-28T13:09:05.311877774Z",
-                    "bid": 29218.401,
-                    "ask": 29297.187,
-                    "day_open": 29436.923,
-                    "day_high": 29560.397,
-                    "day_low": 29111.149
-                }
-            ]
-        }
-
-         ```
       operationId: ws
       responses:
-        '200':
-          description: ''
+        'Websocket messages:':
+          description: 'Messages from the WebSocket server for subscribed symbols'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticker'
+              
 
 components:
 ### Examples ###
@@ -472,6 +451,35 @@ components:
 #pivotlevels result
     PivotLevels:
       type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        result:
+          type: object
+          properties:
+            PP:
+              type: string
+              format: float
+            S1:
+              type: string
+              format: float
+            S2:
+              type: string
+              format: float
+            S3:
+              type: string
+              format: float
+            R1:
+              type: string
+              format: float
+            R2:
+              type: string  
+              format: float
+            R3:
+              type: string
+              format: float
       example:
         success: true
         message: ''
@@ -489,16 +497,62 @@ components:
 #marketsentiment result
     MarketSentiment:
       type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        result:
+          type: array
+          items:
+            type: object
+            properties:
+              ind:
+                type: string
+                enum:
+                  - MA
+                  - RSI
+                  - MACD
+                  - DMI
+                  - STOCH
+                  - ATR
+                  - Pivot
+              value:
+                type: string
+                format: float
+                description: Not used for Pivot indicator
+              PP:
+                type: string
+                format: float
+                description: Used only for Pivot indicator
+              S1:
+                type: string
+                format: float
+                description: Used only for Pivot indicator
+              S2:
+                type: string
+                format: float
+                description: Used only for Pivot indicator
+              S3:
+                type: string
+                format: float
+                description: Used only for Pivot indicator
+              R1:
+                type: string
+                format: float
+                description: Used only for Pivot indicator
+              R2:
+                type: string
+                format: float
+                description: Used only for Pivot indicator
+              R3:
+                type: string
+                format: float
+                description: Used only for Pivot indicator
       example:
         success: true
         message: ''
         result:
-          success: "true"
-          message: ""
-          result: 
-            success: "true"
-            message: ""
-            result: 
             - ind: "MA"
               value: "-3"
             - ind: "RSI"
@@ -519,38 +573,68 @@ components:
               R1: "1.043266666666667"
               R2: "1.0468333333333335"
               R3: "1.0529333333333335"
-#ErrorResponceNoChartData
-    ErrorResponceNoChartData: 
+#Tick
+    Tick:
       type: object
+      properties:
+        m:
+          type: string
+          description: Symbol name
+        time:
+          type: string
+          format: date-time
+        bid:
+          type: number
+        ask:
+          type: number
+        day_open:
+          type: number
+        day_high:
+          type: number
+        day_low:
+          type: number
       example:
-        success: false
-        errorId: 'ZxIIqvmZ'
-        message: 'not enough chart data'
-        errorCode: 'INSUFFICIENT_CHART_DATA'
-        result: null
-#ErrorResponceInstrumentInitializing
-    ErrorResponceInstrumentInitializing: 
+        m: BTC-USD
+        time: '2023-04-28T13:09:05.311877774Z'
+        bid: 29218.401
+        ask: 29297.187
+        day_open: 29436.923
+        day_high: 29560.397
+        day_low: 29111.149
+#Ticker
+    Ticker:
+      type: object
+      properties:
+        m:
+          type: string
+          enum:
+            - ticker
+        d:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tick'
+#ErrorResponce
+    ErrorResponce: 
       type: object 
       required:
-        - success
-        - message 
         - errorCode
-        - result
+        - errorId
       properties:
         success:
           type: boolean
+          deprecated: true
         message:
           type: string
+          deprecated: true
         errorCode:
           type: string
-        result:
-          type: object
+        errorId:
+          type: string
       example:
         success: false
         errorId: 'HQMAKqYk'
         message: 'instrument is initialising'
         errorCode: 'INSTRUMENT_INITIALIZING'
-        result: null
 
 #ErrorResponceCommon
     ErrorResponceCommon:
@@ -558,22 +642,34 @@ components:
       required:
         - success
         - message 
-        - result
       properties:
         success:
           type: boolean
         message:
           type: string
-        result:
-          type: object
       example:
         success: false
         message: 'Interval (1d) not found'
-        result: null
 
+#Syubscribe/Unsubscribe
+    SubscribeUnsubscribe:
+      type: object
+      properties:
+        m:
+          type: string
+          enum:
+            - subscribe
+            - unsubscribe
+        p:
+          type: array
+          items:
+            type: string
+            description: Symbol name
+      example:
+        m: subscribe
+        p: [BTC-USD, GBPUSD, USDJPY]
 
-
-  # - name: Error Responses
+  ### It would be better to put this description somewere, but I don't know where ###
   #   description: >-
   #     The API may return the following error responses under specific
   #     conditions. Each error response includes a unique "errorId" field, which
