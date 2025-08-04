@@ -1,379 +1,555 @@
-openapi: 3.0.0
+definitions:
+  model.ApiInstrument:
+    properties:
+      active:
+        example: true
+        type: boolean
+      ask:
+        example: 1.2102
+        type: number
+      autochartist_id:
+        example: "1"
+        type: string
+      base_currency:
+        example: depricated
+        type: string
+      bid:
+        example: 1.2101
+        type: number
+      contract_size:
+        example: 100000
+        type: number
+      description:
+        example: Euro vs US Dollar
+        type: string
+      feed_id:
+        example: LMAX
+        type: string
+      feed_mode:
+        example: "2"
+        type: string
+      feed_url:
+        example: https://www.lmax.com/api/v1/instruments/EURUSD/feed
+        type: string
+      figi:
+        example: BBG000B9XRY4
+        type: string
+      futures_expire_dt:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      icon_id:
+        example: "1"
+        type: string
+      instrument_id:
+        example: 1
+        type: integer
+      instrument_name:
+        example: EURUSD
+        type: string
+      instrument_type:
+        example: FX
+        type: string
+      isin:
+        example: US5949181045
+        type: string
+      long_only:
+        example: true
+        type: boolean
+      market_currency:
+        example: EUR
+        type: string
+      max_amount:
+        example: 100000000
+        type: number
+      min_increment:
+        example: 0.0001
+        type: number
+      pips_shift:
+        example: 0.01
+        type: number
+      point_size:
+        example: 0.0001
+        type: number
+      point_step:
+        example: 0.0001
+        type: number
+      precision:
+        example: 4
+        type: number
+      quote_currency:
+        example: USD
+        type: string
+      shift_ask:
+        example: 0.01
+        type: number
+      shift_bid:
+        example: 0.01
+        type: number
+      short_instrument_format:
+        example: true
+        type: boolean
+      sort_order:
+        example: 1
+        type: integer
+      ticker:
+        example: EURUSD
+        type: string
+      time:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+    type: object
+  model.ApiInstruments:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiInstrument'
+        type: array
+      success:
+        example: true
+        type: boolean
+    type: object
+  model.ApiNet:
+    properties:
+      count:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiNetData'
+        type: array
+      success:
+        type: boolean
+    type: object
+  model.ApiNetData:
+    properties:
+      account_id:
+        example: 101
+        type: integer
+      amount:
+        example: 12.1
+        type: number
+      average_price:
+        example: 1023
+        type: number
+      current_price:
+        example: 124
+        type: number
+      current_value_crncy:
+        example: 124
+        type: number
+      current_value_quote:
+        example: 124
+        type: number
+      initial_value:
+        example: 1023
+        type: number
+      instrument_id:
+        example: 1
+        type: integer
+      pl_crncy:
+        example: 124
+        type: number
+      pl_lot_crncy:
+        example: 124
+        type: number
+      pl_lot_quote:
+        example: 124
+        type: number
+      pl_quote:
+        example: 124
+        type: number
+      sell_buy:
+        example: S
+        type: string
+    type: object
+  model.ApiOpenTrade:
+    properties:
+      account_id:
+        example: 101
+        type: integer
+      amount:
+        example: 10.01
+        type: number
+      commentary:
+        example: "1.2101"
+        type: string
+      commission:
+        example: 1.2101
+        type: number
+      commission2:
+        example: 1.2101
+        type: number
+      futures_swap:
+        example: 101
+        type: number
+      group_id:
+        example: 100
+        type: integer
+      initial_open_dt:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      initial_trade_id:
+        example: 101
+        type: integer
+      instrument_id:
+        example: 1
+        type: integer
+      markup:
+        example: 1.1
+        type: number
+      open_charge:
+        example: 101
+        type: number
+      open_dt:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      open_price:
+        example: 1.2101
+        type: number
+      order_parent_id:
+        example: 10123
+        type: integer
+      parent_trade_id:
+        example: 101
+        type: integer
+      primary_trade_id:
+        example: 101
+        type: integer
+      sell_buy:
+        example: S
+        type: string
+      strategy_id:
+        example: 101
+        type: integer
+      strategy_name:
+        example: AvrgMove
+        type: string
+      swap:
+        example: 1.2101
+        type: number
+      swap2:
+        example: 1.2101
+        type: number
+      trade_id:
+        example: 10124
+        type: integer
+    type: object
+  model.ApiOpenedTrades:
+    properties:
+      count:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiOpenTrade'
+        type: array
+      success:
+        type: boolean
+    type: object
+  model.ApiResponse:
+    properties:
+      data: {}
+      nextURI:
+        type: string
+      success:
+        type: boolean
+    type: object
+  model.ErrorJson:
+    properties:
+      message:
+        example: error message
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
+  model.Token:
+    properties:
+      jwt:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjE3MjE3MjEsInVzZXJfaWQiOjEsInVzZXJfdHlwZSI6IkRFQUxMIiwiYWNjb3VudF9pZCI6MX0.1234567890
+        type: string
+      refresh:
+        example: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTYyMTA5NjIsImlhdCI6MTc1MzYxODk2MiwiaXNzIjoiQUNUQVBJIiwicGxhdGZvcm0iOiJ0ZngwMyIsInJvbGUiOiJUUkFERVIiLCJ0eXBlIjoicmVmcmVzaCIsInVzZXIiOjIyMn0.rqaJV_BApFTwr80xq3_Qna6rTLkP05Y74CdVbryeQUbJRLvioS4K0afzxUwthtjWCtLxp_CvftKSz5fc9NbRAQ
+        type: string
+    type: object
 info:
-  title: ActTrader API - OpenAPI 3.0
-  description: |-
-    This is a ActTrader API based on the OpenAPI 3.0 specification.  
-  version: '1.0'
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: test.3 platform endpoint
-    url: http://stest-01.sysfx.com:10013/
-  - description: test.5 platform endpoint
-    url: http://stest-01.sysfx.com:10113/
-tags:
-  - name: Instruments
-    description: ""
-  - name: Operations
-    description: ""
-  - name: Users
-    description: ""
+  contact:
+    email: support@acttrader.com
+    name: API Support
+  description: This is a ActTrader API based on the OpenAPI 3.0 specification.
+  title: ActTrader API
+  version: "3.0"
 paths:
   /accounts:
     get:
-      tags:
-        - Users
-      summary: method to get user accounts
-      description: Get accounts list
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccountList'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorResponce'
-          description: An unexpected error response.
-      security:
-        - Bearer: []
-  /shifts:
-    get:
-      tags:
-        - Users
-      summary: method to get user shifts
-      description: Get trader shifts
+      description: Get Accounts
       parameters:
-      - name: "userid"
+      - description: Account ID
         in: query
-        description: "Numeric ID of the user"
-        required: false
-        schema:
-            type: integer
-      - name: "instrumentid"
+        name: account
+        type: integer
+      - description: Limit
         in: query
-        description: "Numeric ID of the instrument"
-        required: false
-        schema:
-            type: integer
-      - name: "instrumentname"
+        name: limit
+        type: integer
+      - description: Offset
         in: query
-        description: "Name of the instrument"
-        required: false
-        schema:
-            type: string
+        name: offset
+        type: integer
+      - description: request UUID
+        in: query
+        name: uuid
+        type: string
+      produces:
+      - application/json
       responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Shifts'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorResponce'
-          description: An unexpected error response.
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
       security:
-        - Bearer: []
-
+      - ApiKeyAuth: []
+      tags:
+      - market
+  /history:
+    get:
+      description: Get History
+      parameters:
+      - description: Account ID
+        in: query
+        name: account
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      - description: From date (2006-01-02T15:04:05)
+        in: query
+        name: from
+        type: string
+      - description: Till date (2006-01-02T15:04:05)
+        in: query
+        name: till
+        type: string
+      - description: request UUID
+        in: query
+        name: uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - market
   /instruments:
     get:
-      tags:
-        - Instruments
-      summary: method to get all instruments
-      description: Get trader instruments
+      description: Get Instruments
       parameters:
-      - name: "instrument_id"
+      - description: Instrument ID
         in: query
-        description: "Numeric ID of the instrument"
-        required: false
-        schema:
-            type: integer
+        name: instrument_id
+        type: integer
+      - description: Instrument Name
+        in: query
+        name: instrument_name
+        type: string
+      produces:
+      - application/json
       responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Instruments'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorResponce'
-          description: An unexpected error response.
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiInstruments'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
       security:
-        - Bearer: []
-
-  /trades:
+      - ApiKeyAuth: []
+      tags:
+      - market
+  /net:
     get:
-      tags:
-        - Operations
-      summary: method to get all open positions
-      description: Get trader positions
+      consumes:
+      - application/json
+      description: Get open trades net (offset) data. Available for dealers, traders,
+        administrators.
       parameters:
-      - name: "account"
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Account ID
         in: query
-        description: "Numeric ID of the account"
-        required: false
-        schema:
-            type: integer
-      - name: "trader"
-        in: query
-        description: "Numeric ID of the trader"
-        required: false
-        schema:
-            type: integer
-      - name: "from"
-        in: query
-        description: "from date"
-        required: false
-        schema:
-            type: string
-      - name: "till"
-        in: query
-        description: "till date"
-        required: false
-        schema:
-            type: string
-      - name: "uuid"
-        in: query
-        description: "next page uuid"
-        required: false
-        schema:
-            type: string
+        name: account
+        type: integer
+      produces:
+      - application/json
       responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Positions'
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorResponce'
-          description: An unexpected error response.
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiNet'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
       security:
-        - Bearer: []
-components:
-  schemas:
-    Account:
-      type: object
-      
-      example: 
-        accountId: 10
-        balance: '10001.01'
-        currency: USD
-        
-      properties:
-        accountId:
-          type: integer
-        balance:
-          type: string
-        currency:
-          type: string
-          
-    AccountList:
-      type: object
-      properties:
-        data:
-          items: 
-            $ref: '#/components/schemas/Account'
-          type: array
-        success: 
-          type: boolean
-      example:
-        success: true
-        data:
-          - id: 100
-            balance: '10000.01'
-            currency: USD
-          - id: 101
-            balance: '10000.01'
-            currency: EUR
-
-    Shift:
-      type: object
-      
-      example: 
-        instrument_id: 10
-        bid: '0.01'
-        ask: '0.01'
-        distance: '0.01'
-        
-      properties:
-        instrument_id:
-          type: integer
-        bid:
-          type: string
-        ask:
-          type: string
-        distance:
-          type: string
-
-    Shifts:
-      type: object
-      properties:
-        data:
-          items: 
-            $ref: '#/components/schemas/Shift'
-          type: array
-        success: 
-          type: boolean
-      example:
-        success: true
-        data:
-          - instrument_id: 1
-            bid: '0.01'
-            ask: '0.01'
-            distance: '0.01'
-          - instrument_id: 3
-            bid: '0.01'
-            ask: '0.01'
-            distance: '0.01'
-
-    Instrument:
-      type: object
-      
-      example: 
-        instrument_id: 10
-        instrument_name: EUR/USD
-        market_currency: EUR
-        base_currency: USD
-        contract_size: '100000'
-        point_size: '0.0001'
-        precision: '0.00001'
-        
-      properties:
-        instrument_id:
-          type: integer
-        instrument_name:
-          type: string
-        market_currency:
-          type: string
-        base_currency:
-          type: string
-        contract_size:
-          type: string
-        point_size:
-          type: string
-        precision:
-          type: string
-
-    Instruments:
-      type: object
-      properties:
-        data:
-          items: 
-            $ref: '#/components/schemas/Instrument'
-          type: array
-        success: 
-          type: boolean
-      example:
-        success: true
-        data:
-          - instrument_id: 1
-            instrument_name: 'EUR/USD'
-            market_currency: 'EUR'
-            base_currency: 'USD'
-            contract_size: '10000'
-            point_size: '0.0001'
-            precision: '0.00001'
-          - instrument_id: 2
-            instrument_name: 'GBP/USD'
-            market_currency: 'GBP'
-            base_currency: 'USD'
-            contract_size: '10000'
-            point_size: '0.0001'
-            precision: '0.00001'
-
-    Position:
-      type: object
-      example: 
-        tradeId: 10
-        ticketId: 11
-        accountId: 2
-        pairId: 1
-        amount: '10000'
-        price: '1.1234'
-        side: 'B'
-        commission: '1.12'
-        interest: '1.12'
-        openTime: '2021-06-08T02:00:03Z'
-        pl: '0.00001'
-        commentary: "open position commentary"
-
-      properties:
-        tradeId:
-          type: integer
-        ticketId:
-          type: integer
-        accountId:
-          type: integer
-        pairId:
-          type: integer
-        amount: 
-          type: string
-        price: 
-          type: string
-        side:
-          type: string
-        commission:
-          type: string
-        interest:
-          type: string
-        openTime:
-           type: string
-        pl:
-          type: string
-        commentary:
-          type: string
-    Positions:
-      type: object
-      example:
-        success: true
-        data:
-          - tradeId: 7860208
-            ticketId: 7860208
-            accountId: 486
-            pairId: 3
-            amount: '1000'
-            price: '109.545'
-            side: 'B'
-            commission: '0'
-            interest: '3.2625'
-            openTime: '2021-06-10T19:30:33Z'
-            pl: '123.21'
-            commentary: 'text commentary'
-          - tradeId: 7902689
-            ticketId: 7902689
-            accountId: 573
-            pairId: 6
-            amount: '10000'
-            price: '142.005'
-            side: 'S'
-            commission: '-0.1'
-            interest: '-14.3'
-            openTime: '2022-09-22T09:56:48Z'
-            pl: '-12.32'
-            commentary: 'text commentary'
-    errorResponce:
-      example:
-        success: false
-        error: LOAD_FAILED
-      properties:
-        success:
-          type: boolean
-        error:
-           type: string
-      type: object
-  securitySchemes:
-    Bearer:
-      type: http
-      scheme: bearer
+      - ApiKeyAuth: []
+      tags:
+      - trades
+  /shifts:
+    get:
+      description: Get Shifts
+      parameters:
+      - description: Instrument ID
+        in: query
+        name: instrument_id
+        type: integer
+      - description: Instrument Name
+        in: query
+        name: instrument_name
+        type: string
+      - description: request UUID
+        in: query
+        name: uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - market
+  /token:
+    get:
+      description: Get JWT token by login and password through Basic Auth
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Token'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      tags:
+      - authentication
+  /token/refresh:
+    get:
+      description: Refresh JWT token using refresh token
+      parameters:
+      - description: Refresh token
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Token'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - authentication
+  /trades/opened:
+    get:
+      description: Get Opened Trades
+      parameters:
+      - description: Account ID
+        in: query
+        name: account_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiOpenedTrades'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - trades
+  /transactions:
+    get:
+      description: Get Transactions
+      parameters:
+      - description: From date (2006-01-02T15:04:05)
+        in: query
+        name: from
+        type: string
+      - description: Till date (2006-01-02T15:04:05)
+        in: query
+        name: till
+        type: string
+      - description: Account ID
+        in: query
+        name: account
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - market
+swagger: "2.0"
