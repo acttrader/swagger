@@ -5,3 +5,4 @@
 - [Follow The Leader](ftl/) (under constraction)
 - [Portfolios](portfolios/)
 - [Strategies](strategies/) 
+- [FTL-zulu](ftl-zulu/) 

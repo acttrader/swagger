@@ -1,0 +1,492 @@
+definitions:
+  models.Execution:
+    properties:
+      accountId:
+        type: integer
+      error:
+        type: string
+      follower:
+        type: string
+      followerTradeId:
+        type: integer
+      leaderId:
+        type: string
+      leaderTradeId:
+        type: integer
+      lots:
+        type: number
+      market:
+        type: string
+      pl:
+        type: number
+      price:
+        type: number
+      quote:
+        type: string
+      sellbuy:
+        type: string
+      signal:
+        type: string
+      signalType:
+        type: string
+      tag:
+        type: string
+      time:
+        type: string
+    type: object
+  models.FollowRule:
+    properties:
+      active:
+        type: boolean
+      instrumentList:
+        items:
+          type: string
+        type: array
+      leaderCondOrders:
+        type: boolean
+      lotsMethod:
+        type: string
+      lotsValue:
+        type: number
+      maxLots:
+        type: number
+      maxLotsPerMarket:
+        type: number
+      reverseSignal:
+        type: boolean
+      slOnCapital:
+        type: number
+      slPips:
+        type: integer
+      slTrail:
+        type: boolean
+      tpOnCapital:
+        type: number
+      tpPips:
+        type: integer
+    type: object
+  models.Follower:
+    properties:
+      account:
+        type: integer
+      active:
+        type: boolean
+      instrumentList:
+        items:
+          type: string
+        type: array
+      investAmount:
+        type: number
+      leader:
+        type: string
+      leaderCondOrders:
+        type: boolean
+      lotsMethod:
+        type: string
+      lotsValue:
+        type: number
+      maxLots:
+        type: number
+      maxLotsPerMarket:
+        type: number
+      platform:
+        type: string
+      reverseSignal:
+        type: boolean
+      slOnCapital:
+        type: number
+      slPips:
+        type: integer
+      slTrail:
+        type: boolean
+      tpOnCapital:
+        type: number
+      tpPips:
+        type: integer
+      uuid:
+        type: string
+    type: object
+  models.FollowerSignalResponse:
+    properties:
+      error:
+        type: string
+      executionTimestamp:
+        type: string
+      follower:
+        type: string
+      followerTradeId:
+        type: integer
+      lots:
+        type: number
+      market:
+        type: string
+      price:
+        type: number
+      quote:
+        type: string
+      sellbuy:
+        type: string
+      timestamp:
+        type: string
+      type:
+        type: string
+      uuid:
+        type: string
+    type: object
+  models.Leader:
+    properties:
+      account:
+        type: integer
+      active:
+        type: boolean
+      firstName:
+        type: string
+      lastName:
+        type: string
+      platform:
+        type: string
+      uuid:
+        type: string
+    type: object
+  models.RegisterFollower:
+    properties:
+      copyLeaderPositions:
+        type: boolean
+      instrumentList:
+        items:
+          type: string
+        type: array
+      investAmount:
+        type: number
+      leader:
+        type: string
+      leaderCondOrders:
+        type: boolean
+      lotsMethod:
+        type: string
+      lotsValue:
+        type: number
+      maxLots:
+        type: number
+      maxLotsPerMarket:
+        type: number
+      platform:
+        type: string
+      reverseSignal:
+        type: boolean
+      slOnCapital:
+        type: number
+      slPips:
+        type: integer
+      slTrail:
+        type: boolean
+      tpOnCapital:
+        type: number
+      tpPips:
+        type: integer
+      trader:
+        type: integer
+    type: object
+  models.Signal:
+    properties:
+      executions:
+        items:
+          $ref: '#/definitions/models.SignalResult'
+        type: array
+      leader:
+        type: string
+      lots:
+        type: number
+      market:
+        type: string
+      price:
+        type: number
+      quote:
+        type: string
+      sellbuy:
+        type: string
+      signal:
+        type: string
+      sl:
+        type: number
+      tag:
+        type: string
+      time:
+        type: string
+      tp:
+        type: number
+      tradeId:
+        type: integer
+      trail:
+        type: number
+      type:
+        type: string
+    type: object
+  models.SignalResult:
+    properties:
+      error:
+        type: string
+      follower:
+        type: string
+      lots:
+        type: number
+      order:
+        type: integer
+      price:
+        type: number
+      sellbuy:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  models.Success:
+    properties:
+      success:
+        type: boolean
+    type: object
+info:
+  contact:
+    email: support@acttrader.com
+    name: ActTrader Support
+  description: This is a FTL API based on the OpenAPI 3.0 specification.
+  title: FTL for Zulu
+  version: "1.0"
+paths:
+  /follower/execution:
+    post:
+      consumes:
+      - application/json
+      description: Register follower execution
+      parameters:
+      - description: Execution data JSON
+        in: body
+        name: execution
+        required: true
+        schema:
+          $ref: '#/definitions/models.Execution'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Success'
+      tags:
+      - follower
+  /follower/list:
+    get:
+      description: Get followers list
+      parameters:
+      - description: leader uuid
+        in: query
+        name: leader
+        type: string
+      - description: follower uuid
+        in: query
+        name: follower
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Follower'
+            type: array
+      tags:
+      - follower
+  /follower/modify:
+    put:
+      consumes:
+      - application/json
+      description: Update follower
+      parameters:
+      - description: Follower settings JSON
+        in: body
+        name: follower
+        required: true
+        schema:
+          $ref: '#/definitions/models.FollowRule'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.FollowRule'
+      tags:
+      - follower
+  /follower/register:
+    post:
+      consumes:
+      - application/json
+      description: Register new follower
+      parameters:
+      - description: Follower settings JSON
+        in: body
+        name: follower
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterFollower'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Follower'
+      tags:
+      - follower
+  /follower/signals:
+    get:
+      description: Get follower signals
+      parameters:
+      - description: follower uuid
+        in: query
+        name: follower
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.FollowerSignalResponse'
+            type: array
+      tags:
+      - follower
+  /follower/unregsiter:
+    delete:
+      description: Unregister follower
+      parameters:
+      - description: follower uuid
+        in: query
+        name: uuid
+        required: true
+        type: string
+      - description: 'closeAccount flag: Y or N'
+        in: query
+        name: closeAccount
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Success'
+      tags:
+      - follower
+  /leader/list:
+    get:
+      description: Get leaders list
+      parameters:
+      - description: 'Active flag: Y or N'
+        in: query
+        name: active
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Leader'
+            type: array
+      tags:
+      - leader
+  /leader/register:
+    post:
+      description: Register new leader
+      parameters:
+      - description: ActTrader account ID
+        in: query
+        name: account
+        required: true
+        type: string
+      - description: Broker platform name
+        in: query
+        name: platform
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Leader'
+      tags:
+      - leader
+  /leader/signal:
+    post:
+      consumes:
+      - application/json
+      description: Register leader signal
+      parameters:
+      - description: Signal data JSON
+        in: body
+        name: signal
+        required: true
+        schema:
+          $ref: '#/definitions/models.Signal'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Signal'
+      tags:
+      - leader
+  /leader/signals:
+    get:
+      description: Get leader signals
+      parameters:
+      - description: leader uuid
+        in: query
+        name: leader
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Signal'
+            type: array
+      tags:
+      - leader
+  /leader/unregister:
+    delete:
+      description: Unregister leader
+      parameters:
+      - description: leader uuid
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Success'
+      tags:
+      - leader
+  /ws:
+    get:
+      description: WebSocket connection for real-time notifications
+      responses:
+        "101":
+          description: Switching Protocols
+          schema:
+            type: string
+      tags:
+      - websocket
+swagger: "2.0"
