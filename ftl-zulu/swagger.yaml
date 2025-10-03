@@ -1,4 +1,11 @@
 definitions:
+  models.Error:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
   models.Execution:
     properties:
       accountId:
@@ -147,6 +154,60 @@ definitions:
         type: string
       uuid:
         type: string
+    type: object
+  models.NewSignal:
+    properties:
+      leader:
+        example: 061fb59e-1585-4ce8-9a2e-73472e3f9962
+        type: string
+      lots:
+        example: 0.01
+        type: number
+      market:
+        example: EUR
+        type: string
+      price:
+        example: 1.23456
+        type: number
+      quote:
+        example: USD
+        type: string
+      sellbuy:
+        example: S
+        type: string
+      sl:
+        example: 1.23456
+        type: number
+      symbol:
+        example: EURUSD
+        type: string
+      tag:
+        example: custom tag
+        type: string
+      time:
+        example: "2021-01-01T00:00:00Z"
+        type: string
+      tp:
+        example: 1.23456
+        type: number
+      tradeId:
+        example: 1234567890
+        type: integer
+      trail:
+        example: 1.23456
+        type: number
+      type:
+        example: TRADE_OPEN
+        type: string
+    type: object
+  models.NewSignalResponse:
+    properties:
+      signal:
+        example: 8a67a268-0f9f-41dd-a88c-ed453ede218f
+        type: string
+      success:
+        example: true
+        type: boolean
     type: object
   models.RegisterFollower:
     properties:
@@ -423,8 +484,6 @@ paths:
       - leader
   /leader/signal:
     post:
-      consumes:
-      - application/json
       description: Register leader signal
       parameters:
       - description: Signal data JSON
@@ -432,14 +491,18 @@ paths:
         name: signal
         required: true
         schema:
-          $ref: '#/definitions/models.Signal'
+          $ref: '#/definitions/models.NewSignal'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Signal'
+            $ref: '#/definitions/models.NewSignalResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
       tags:
       - leader
   /leader/signals:
