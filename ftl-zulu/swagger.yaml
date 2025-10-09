@@ -14,8 +14,6 @@ definitions:
         type: string
       follower:
         type: string
-      followerTradeId:
-        type: integer
       leaderId:
         type: string
       leaderTradeId:
@@ -34,11 +32,15 @@ definitions:
         type: string
       signal:
         type: string
-      signalType:
+      symbol:
         type: string
       tag:
         type: string
       time:
+        type: string
+      tradeId:
+        type: integer
+      type:
         type: string
     type: object
   models.FollowRule:
@@ -175,27 +177,17 @@ definitions:
       sellbuy:
         example: S
         type: string
-      sl:
-        example: 1.23456
-        type: number
+      signal:
+        type: string
       symbol:
         example: EURUSD
         type: string
       tag:
         example: custom tag
         type: string
-      time:
-        example: "2021-01-01T00:00:00Z"
-        type: string
-      tp:
-        example: 1.23456
-        type: number
       tradeId:
         example: 1234567890
         type: integer
-      trail:
-        example: 1.23456
-        type: number
       type:
         example: TRADE_OPEN
         type: string
@@ -268,18 +260,14 @@ definitions:
         type: string
       signal:
         type: string
-      sl:
-        type: number
+      symbol:
+        type: string
       tag:
         type: string
       time:
         type: string
-      tp:
-        type: number
       tradeId:
         type: integer
-      trail:
-        type: number
       type:
         type: string
     type: object
