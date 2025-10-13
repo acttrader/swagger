@@ -1,4 +1,34 @@
 definitions:
+  models.AccountExecution:
+    properties:
+      accountId:
+        example: 1234567890
+        type: integer
+      lots:
+        example: 0.1
+        type: number
+      market:
+        example: EUR
+        type: string
+      price:
+        example: 1.23456
+        type: number
+      quote:
+        example: USD
+        type: string
+      sellbuy:
+        example: B
+        type: string
+      symbol:
+        example: EURUSD
+        type: string
+      tradeId:
+        example: 110101
+        type: integer
+      type:
+        example: TRADE_OPEN
+        type: string
+    type: object
   models.Error:
     properties:
       code:
@@ -300,6 +330,27 @@ info:
   title: FTL for Zulu
   version: "1.0"
 paths:
+  /account/execution:
+    post:
+      consumes:
+      - application/json
+      description: Account trade execution
+      parameters:
+      - description: Execution data JSON
+        in: body
+        name: execution
+        required: true
+        schema:
+          $ref: '#/definitions/models.AccountExecution'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Success'
+      tags:
+      - account
   /follower/execution:
     post:
       consumes:
