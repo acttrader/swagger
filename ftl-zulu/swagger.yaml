@@ -23,8 +23,8 @@ definitions:
         example: EURUSD
         type: string
       tradeId:
-        example: 110101
-        type: integer
+        example: "110101"
+        type: string
       type:
         example: TRADE_OPEN
         type: string
@@ -32,8 +32,10 @@ definitions:
   models.Error:
     properties:
       code:
+        example: 400
         type: integer
       message:
+        example: Execution failed
         type: string
     type: object
   models.Execution:
@@ -69,9 +71,18 @@ definitions:
       time:
         type: string
       tradeId:
-        type: integer
+        type: string
       type:
         type: string
+    type: object
+  models.ExecutionResponse:
+    properties:
+      actOrderId:
+        example: 11211
+        type: integer
+      success:
+        example: true
+        type: boolean
     type: object
   models.FollowRule:
     properties:
@@ -220,7 +231,7 @@ definitions:
         example: "1234567890"
         type: string
       type:
-        example: TRADE_OPEN
+        example: TRADE_CLOSE
         type: string
     type: object
   models.NewSignalResponse:
@@ -508,7 +519,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Success'
+            $ref: '#/definitions/models.ExecutionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
       tags:
       - account
   /follower/execution:
@@ -529,7 +544,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Success'
+            $ref: '#/definitions/models.ExecutionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
       tags:
       - follower
   /follower/list:
