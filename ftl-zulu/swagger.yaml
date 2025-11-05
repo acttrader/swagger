@@ -1,567 +1,611 @@
 definitions:
-  models.AccountExecution:
+  model.ApiAccount:
     properties:
-      accountId:
-        example: 1234567890
+      account_id:
+        example: 101
         type: integer
-      lots:
+      balance:
+        example: 100000
+        type: number
+      currency:
+        example: USD
+        type: string
+      trader_id:
+        example: 101
+        type: integer
+    type: object
+  model.ApiAccounts:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiAccount'
+        type: array
+      next_uri:
+        example: /accounts?uuid=b1517997-5107-42cf-8289-84f303ad50f2
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  model.ApiInstrument:
+    properties:
+      access_orders:
+        example: true
+        type: boolean
+      access_prices:
+        example: true
+        type: boolean
+      active:
+        example: true
+        type: boolean
+      ask:
+        example: 1.2102
+        type: number
+      ask_volume:
+        example: 1.01
+        type: number
+      autochartist_id:
+        example: "1"
+        type: string
+      base_currency:
+        example: depricated
+        type: string
+      bid:
+        example: 1.2101
+        type: number
+      bid_volume:
+        example: 0.101
+        type: number
+      close_charge_value:
         example: 0.1
         type: number
-      market:
-        example: EUR
-        type: string
-      price:
-        example: 1.23456
+      commission:
+        example: 0.1
         type: number
-      quote:
-        example: USD
+      commission2:
+        example: 0.1
+        type: number
+      contract_size:
+        example: 100000
+        type: number
+      dealer_range:
+        example: 0.01
+        type: number
+      description:
+        example: Euro vs US Dollar
         type: string
-      sellbuy:
-        example: B
+      end_day_bid:
+        example: 1.2101
+        type: number
+      external_ask:
+        example: 1.2102
+        type: number
+      external_bid:
+        example: 1.2101
+        type: number
+      external_rate_dt:
+        example: "2025-01-03T06:05:52Z"
         type: string
-      symbol:
+      feed_id:
+        example: LMAX
+        type: string
+      feed_mode:
+        example: "2"
+        type: string
+      feed_url:
+        example: https://www.lmax.com/api/v1/instruments/EURUSD/feed
+        type: string
+      figi:
+        example: BBG000B9XRY4
+        type: string
+      futures_expire_dt:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      high_day_ask:
+        example: 1.2101
+        type: number
+      icon_id:
+        example: "1"
+        type: string
+      instrument_id:
+        example: 1
+        type: integer
+      instrument_name:
         example: EURUSD
         type: string
-      tradeId:
-        example: "110101"
+      instrument_type:
+        example: FX
         type: string
-      type:
-        example: TRADE_OPEN
+      isin:
+        example: US5949181045
         type: string
-    type: object
-  models.Error:
-    properties:
-      code:
-        example: 400
-        type: integer
-      message:
-        example: Execution failed
-        type: string
-    type: object
-  models.Execution:
-    properties:
-      accountId:
-        type: integer
-      error:
-        type: string
-      follower:
-        type: string
-      leaderId:
-        type: string
-      leaderTradeId:
-        type: string
-      lots:
+      long_only:
+        example: true
+        type: boolean
+      low_day_bid:
+        example: 1.2102
         type: number
-      market:
-        type: string
-      pl:
+      margin_coefficient:
+        example: 0.1
         type: number
-      price:
+      margin_day_coefficient:
+        example: 1
         type: number
-      quote:
+      margin_limit1:
+        example: 1
+        type: number
+      margin_limit1_coefficient:
+        example: 1
+        type: number
+      margin_limit2:
+        example: 1
+        type: number
+      margin_limit2_coefficient:
+        example: 1
+        type: number
+      margin_percent_mode:
+        example: false
+        type: boolean
+      margin_requirement:
+        example: 0.01
+        type: number
+      market_currency:
+        example: EUR
         type: string
-      sellbuy:
+      max_amount:
+        example: 100000000
+        type: number
+      min_increment:
+        example: 0.0001
+        type: number
+      negotiation_mode:
+        example: auto
         type: string
-      signal:
-        type: string
-      symbol:
-        type: string
-      tag:
-        type: string
-      time:
-        type: string
-      tradeId:
-        type: string
-      type:
-        type: string
-    type: object
-  models.ExecutionResponse:
-    properties:
-      actOrderId:
-        example: 11211
+      open_charge_value:
+        example: 0.1
+        type: number
+      percent_charge:
+        example: false
+        type: boolean
+      percent_commission:
+        example: false
+        type: boolean
+      percent_commission2:
+        example: false
+        type: boolean
+      pips_shift:
+        example: 1
         type: integer
+      point_size:
+        example: 0.0001
+        type: number
+      point_step:
+        example: 0.0001
+        type: number
+      precision:
+        example: 0.01
+        type: number
+      price_change_delay:
+        example: 1
+        type: integer
+      quote_currency:
+        example: USD
+        type: string
+      rate_dt:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      shift_ask:
+        example: 0.01
+        type: number
+      shift_bid:
+        example: 0.01
+        type: number
+      shift_percent:
+        example: 0.1
+        type: number
+      short_instrument_format:
+        example: true
+        type: boolean
+      sort_order:
+        example: 1
+        type: integer
+      swap_ask:
+        example: 0.1
+        type: number
+      swap_bid:
+        example: 0.1
+        type: number
+      swap_mode:
+        enum:
+        - $
+        - p
+        - '%'
+        example: $
+        type: string
+      ticker:
+        example: EURUSD
+        type: string
+      tradable:
+        example: "N"
+        type: string
+      trade_step:
+        example: 0.01
+        type: number
+    type: object
+  model.ApiInstruments:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiInstrument'
+        type: array
+      next_uri:
+        example: /instruments?uuid=b1517997-5107-42cf-8289-84f303ad50f2
+        type: string
       success:
         example: true
         type: boolean
     type: object
-  models.FollowRule:
+  model.ApiJournal:
     properties:
-      active:
-        type: boolean
-      instrumentList:
-        items:
-          type: string
-        type: array
-      leaderCondOrders:
-        type: boolean
-      lotsMethod:
+      event:
         type: string
-      lotsValue:
-        type: number
-      maxLots:
-        type: number
-      maxLotsPerMarket:
-        type: number
-      reverseSignal:
-        type: boolean
-      slOnCapital:
-        type: number
-      slPips:
+      id:
         type: integer
-      slTrail:
-        type: boolean
-      tpOnCapital:
-        type: number
-      tpPips:
-        type: integer
-    type: object
-  models.Follower:
-    properties:
-      account:
-        type: integer
-      active:
-        type: boolean
-      instrumentList:
-        items:
-          type: string
-        type: array
-      investAmount:
-        type: number
-      leader:
-        type: string
-      leaderCondOrders:
-        type: boolean
-      lotsMethod:
-        type: string
-      lotsValue:
-        type: number
-      maxLots:
-        type: number
-      maxLotsPerMarket:
-        type: number
-      platform:
-        type: string
-      reverseSignal:
-        type: boolean
-      slOnCapital:
-        type: number
-      slPips:
-        type: integer
-      slTrail:
-        type: boolean
-      tpOnCapital:
-        type: number
-      tpPips:
-        type: integer
-      uuid:
-        type: string
-    type: object
-  models.FollowerSignalResponse:
-    properties:
-      error:
-        type: string
-      executionTimestamp:
-        type: string
-      follower:
-        type: string
-      followerTradeId:
-        type: string
-      lots:
-        type: number
-      market:
-        type: string
-      price:
-        type: number
-      quote:
-        type: string
-      sellbuy:
+      info:
         type: string
       timestamp:
         type: string
-      type:
-        type: string
-      uuid:
-        type: string
     type: object
-  models.Leader:
+  model.ApiJournalResponse:
     properties:
-      account:
+      count:
         type: integer
-      active:
+      data:
+        items:
+          $ref: '#/definitions/model.ApiJournal'
+        type: array
+      success:
         type: boolean
-      firstName:
-        type: string
-      lastName:
-        type: string
-      platform:
-        type: string
-      uuid:
-        type: string
     type: object
-  models.NewSignal:
+  model.ApiNet:
     properties:
-      actTradeId:
-        example: 123456789
+      count:
         type: integer
-      leader:
-        example: 061fb59e-1585-4ce8-9a2e-73472e3f9962
-        type: string
-      lots:
-        example: 0.01
-        type: number
-      market:
+      data:
+        items:
+          $ref: '#/definitions/model.ApiNetData'
+        type: array
+      success:
+        type: boolean
+    type: object
+  model.ApiNetData:
+    properties:
+      account_crncy:
         example: EUR
         type: string
-      price:
-        example: 1.23456
+      account_id:
+        example: 101
+        type: integer
+      amount:
+        example: 12.1
         type: number
-      quote:
-        example: USD
-        type: string
-      sellbuy:
+      average_price:
+        example: 1023
+        type: number
+      current_price:
+        example: 124
+        type: number
+      current_value_crncy:
+        example: 124
+        type: number
+      current_value_quote:
+        example: 124
+        type: number
+      initial_value:
+        example: 1023
+        type: number
+      instrument_id:
+        example: 1
+        type: integer
+      pl_crncy:
+        example: 124
+        type: number
+      pl_lot_crncy:
+        example: 124
+        type: number
+      pl_lot_quote:
+        example: 124
+        type: number
+      pl_quote:
+        example: 124
+        type: number
+      sell_buy:
         example: S
         type: string
-      symbol:
-        example: EURUSD
+    type: object
+  model.ApiOpenTrade:
+    properties:
+      account_id:
+        example: 101
+        type: integer
+      amount:
+        example: 10.01
+        type: number
+      commentary:
+        example: "1.2101"
         type: string
-      tag:
-        example: custom tag
+      commission:
+        example: 1.2101
+        type: number
+      commission2:
+        example: 1.2101
+        type: number
+      futures_swap:
+        example: 101
+        type: number
+      group_id:
+        example: 100
+        type: integer
+      initial_open_dt:
+        example: "2025-01-03T06:05:52Z"
         type: string
-      tradeId:
-        example: "1234567890"
+      initial_trade_id:
+        example: 101
+        type: integer
+      instrument_id:
+        example: 1
+        type: integer
+      leader_uuid:
+        example: b1517997-5107-42cf-8289-84f303ad50f2
         type: string
-      type:
-        example: TRADE_CLOSE
+      markup:
+        example: 1.1
+        type: number
+      open_charge:
+        example: 101
+        type: number
+      open_dt:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      open_price:
+        example: 1.2101
+        type: number
+      order_parent_id:
+        example: 10123
+        type: integer
+      parent_trade_id:
+        example: 101
+        type: integer
+      primary_trade_id:
+        example: 101
+        type: integer
+      sell_buy:
+        example: S
+        type: string
+      strategy_id:
+        example: 101
+        type: integer
+      strategy_name:
+        example: AvrgMove
+        type: string
+      swap:
+        example: 1.2101
+        type: number
+      swap2:
+        example: 1.2101
+        type: number
+      trade_id:
+        example: 10124
+        type: integer
+    type: object
+  model.ApiOpenedTrades:
+    properties:
+      count:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiOpenTrade'
+        type: array
+      success:
+        type: boolean
+    type: object
+  model.ApiResponse:
+    properties:
+      data: {}
+      nextURI:
+        type: string
+      success:
+        type: boolean
+    type: object
+  model.ApiUser:
+    properties:
+      active:
+        example: true
+        type: boolean
+      created:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      department_id:
+        example: 1
+        type: integer
+      email:
+        example: john.doe@example.com
+        type: string
+      first_name:
+        example: John
+        type: string
+      last_name:
+        example: Doe
+        type: string
+      user_id:
+        example: 1
+        type: integer
+      user_type:
+        example: TRADER
         type: string
     type: object
-  models.NewSignalResponse:
+  model.ApiUsers:
     properties:
-      signal:
-        example: 8a67a268-0f9f-41dd-a88c-ed453ede218f
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiUser'
+        type: array
+      next_uri:
+        example: /users?uuid=b1517997-5107-42cf-8289-84f303ad50f2
         type: string
       success:
         example: true
         type: boolean
     type: object
-  models.RegisterFollower:
+  model.CreateInstrument:
     properties:
-      copyLeaderPositions:
-        type: boolean
-      instrumentList:
-        items:
-          type: string
-        type: array
-      investAmount:
+      contract_size:
+        example: 100000
         type: number
-      leader:
+      description:
+        example: Euro vs US Dollar
         type: string
-      leaderCondOrders:
-        type: boolean
-      lotsMethod:
+      figi:
+        example: BBG000B9XRY4
         type: string
-      lotsValue:
+      instrument_name:
+        example: EURUSD
+        type: string
+      instrument_type:
+        example: FX
+        type: string
+      isin:
+        example: US5949181045
+        type: string
+      market_currency:
+        example: EUR
+        type: string
+      min_increment:
+        example: 0.0001
         type: number
-      maxLots:
+      point_size:
+        example: 0.0001
         type: number
-      maxLotsPerMarket:
+      point_step:
+        example: 0.0001
         type: number
-      platform:
-        type: string
-      reverseSignal:
-        type: boolean
-      slOnCapital:
-        type: number
-      slPips:
-        type: integer
-      slTrail:
-        type: boolean
-      tpOnCapital:
-        type: number
-      tpPips:
-        type: integer
-      trader:
-        type: integer
-    type: object
-  models.Signal:
-    properties:
-      actTradeId:
-        type: integer
-      executions:
-        items:
-          $ref: '#/definitions/models.SignalResult'
-        type: array
-      leader:
-        type: string
-      lots:
-        type: number
-      market:
-        type: string
-      price:
-        type: number
-      quote:
-        type: string
-      sellbuy:
-        type: string
-      signal:
-        type: string
-      symbol:
-        type: string
-      tag:
-        type: string
-      time:
-        type: string
-      tradeId:
-        type: string
-      type:
-        type: string
-    type: object
-  models.SignalResult:
-    properties:
-      error:
-        type: string
-      follower:
-        type: string
-      lots:
-        type: number
-      order:
-        type: integer
-      price:
-        type: number
-      sellbuy:
-        type: string
-      timestamp:
-        type: string
-    type: object
-  models.Success:
-    properties:
-      success:
-        type: boolean
-    type: object
-  models.WsCloseTradePayload:
-    properties:
-      actTradeId:
-        example: 50
-        type: integer
-      follower:
-        example: d8fe1b86-a765-4f2d-ac47-65a79321a668
-        type: string
-      leader:
-        example: 061fb59e-1585-4ce8-9a2e-73472e3f9962
-        type: string
-      price:
-        example: 1.23456
-        type: number
-      signal:
-        example: 7c79793b-f35e-4023-9c37-b45af2055931
-        type: string
-      time:
-        example: "2020-09-29T23:59:59+08:00"
-        type: string
-      tradeId:
-        example: "123456789"
-        type: string
-      type:
-        example: TRADE_CLOSE
-        type: string
-    type: object
-  models.WsCloseTradeResponse:
-    properties:
-      payload:
-        $ref: '#/definitions/models.WsCloseTradePayload'
-      type:
-        example: signal
-        type: string
-    type: object
-  models.WsLimitOrderPayload:
-    properties:
-      actTradeId:
-        example: 50
-        type: integer
-      follower:
-        example: d8fe1b86-a765-4f2d-ac47-65a79321a668
-        type: string
-      leader:
-        example: 061fb59e-1585-4ce8-9a2e-73472e3f9962
-        type: string
-      signal:
-        example: 7c79793b-f35e-4023-9c37-b45af2055931
-        type: string
-      time:
-        example: "2020-09-29T23:59:59+08:00"
-        type: string
-      tradeId:
-        example: "123456789"
-        type: string
-      type:
-        example: LIMIT_UPDATE
-        type: string
-    type: object
-  models.WsLimitOrderResponse:
-    properties:
-      payload:
-        $ref: '#/definitions/models.WsLimitOrderPayload'
-      type:
-        example: signal
-        type: string
-    type: object
-  models.WsOpenTradePayload:
-    properties:
-      accountId:
-        example: 12345
-        type: integer
-      follower:
-        example: d8fe1b86-a765-4f2d-ac47-65a79321a668
-        type: string
-      leader:
-        example: 061fb59e-1585-4ce8-9a2e-73472e3f9962
-        type: string
-      leaderOrderId:
-        example: "123456"
-        type: string
-      lots:
+      precision:
         example: 0.01
         type: number
-      market:
-        example: EURUSD
-        type: string
-      price:
-        example: 1.23456
-        type: number
-      quote:
+      quote_currency:
         example: USD
         type: string
-      sellbuy:
-        example: B
-        type: string
-      signal:
-        example: 7c79793b-f35e-4023-9c37-b45af2055931
-        type: string
-      symbol:
+      ticker:
         example: EURUSD
         type: string
-      tag:
-        example: custom tag
-        type: string
-      time:
-        example: "2020-09-29T23:59:59+08:00"
-        type: string
-      type:
-        example: TRADE_OPEN
-        type: string
     type: object
-  models.WsOpenTradeResponse:
+  model.CreateInstrumentResponse:
     properties:
-      payload:
-        $ref: '#/definitions/models.WsOpenTradePayload'
-      type:
-        example: signal
-        type: string
-    type: object
-  models.WsStopOrderPayload:
-    properties:
-      actTradeId:
-        example: 50
+      instrument_id:
+        example: 1
         type: integer
-      follower:
-        example: d8fe1b86-a765-4f2d-ac47-65a79321a668
-        type: string
-      leader:
-        example: 061fb59e-1585-4ce8-9a2e-73472e3f9962
-        type: string
-      price:
-        example: 1.23456
-        type: number
-      signal:
-        example: 7c79793b-f35e-4023-9c37-b45af2055931
-        type: string
-      time:
-        example: "2020-09-29T23:59:59+08:00"
-        type: string
-      tradeId:
-        example: "123456789"
-        type: string
-      type:
-        example: STOP_UPDATE
-        type: string
+      success:
+        example: true
+        type: boolean
     type: object
-  models.WsStopOrderResponse:
+  model.ErrorJson:
     properties:
-      payload:
-        $ref: '#/definitions/models.WsStopOrderPayload'
-      type:
-        example: signal
+      message:
+        example: error message
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
+  model.Token:
+    properties:
+      jwt:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjE3MjE3MjEsInVzZXJfaWQiOjEsInVzZXJfdHlwZSI6IkRFQUxMIiwiYWNjb3VudF9pZCI6MX0.1234567890
+        type: string
+      refresh:
+        example: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTYyMTA5NjIsImlhdCI6MTc1MzYxODk2MiwiaXNzIjoiQUNUQVBJIiwicGxhdGZvcm0iOiJ0ZngwMyIsInJvbGUiOiJUUkFERVIiLCJ0eXBlIjoicmVmcmVzaCIsInVzZXIiOjIyMn0.rqaJV_BApFTwr80xq3_Qna6rTLkP05Y74CdVbryeQUbJRLvioS4K0afzxUwthtjWCtLxp_CvftKSz5fc9NbRAQ
         type: string
     type: object
-host: zulu-ftl.acttrader.com
+  model.UpdateInstrument:
+    properties:
+      contract_size:
+        example: 100000
+        type: number
+      description:
+        example: Euro vs US Dollar
+        type: string
+      figi:
+        example: BBG000B9XRY4
+        type: string
+      instrument_name:
+        example: EURUSD
+        type: string
+      instrument_type:
+        example: FX
+        type: string
+      isin:
+        example: US5949181045
+        type: string
+      market_currency:
+        example: EUR
+        type: string
+      min_increment:
+        example: 0.0001
+        type: number
+      point_size:
+        example: 0.0001
+        type: number
+      point_step:
+        example: 0.0001
+        type: number
+      precision:
+        example: 0.01
+        type: number
+      quote_currency:
+        example: USD
+        type: string
+      ticker:
+        example: EURUSD
+        type: string
+    type: object
+  model.UpdateInstrumentResponse:
+    properties:
+      success:
+        example: true
+        type: boolean
+    type: object
 info:
   contact:
     email: support@acttrader.com
-    name: ActTrader Support
-  description: This is a FTL API based on the OpenAPI 3.0 specification.
-  title: FTL for Zulu
-  version: "1.0"
+    name: API Support
+  description: This is a ActTrader API based on the OpenAPI 3.0 specification.
+  title: ActTrader API
+  version: "3.0"
 paths:
-  /account/execution:
-    post:
-      consumes:
-      - application/json
-      description: Account trade execution
-      parameters:
-      - description: Execution data JSON
-        in: body
-        name: execution
-        required: true
-        schema:
-          $ref: '#/definitions/models.AccountExecution'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.ExecutionResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.Error'
-      tags:
-      - account
-  /follower/execution:
-    post:
-      consumes:
-      - application/json
-      description: Register follower execution
-      parameters:
-      - description: Execution data JSON
-        in: body
-        name: execution
-        required: true
-        schema:
-          $ref: '#/definitions/models.Execution'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.ExecutionResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.Error'
-      tags:
-      - follower
-  /follower/list:
+  /accounts:
     get:
-      description: Get followers list
+      description: Get Accounts
       parameters:
-      - description: leader uuid
+      - description: Account ID
         in: query
-        name: leader
-        type: string
-      - description: follower uuid
+        name: account
+        type: integer
+      - description: Limit
         in: query
-        name: follower
+        name: limit
+        type: integer
+      - description: request UUID
+        in: query
+        name: uuid
         type: string
       produces:
       - application/json
@@ -569,166 +613,204 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/models.Follower'
-            type: array
+            $ref: '#/definitions/model.ApiAccounts'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
       tags:
-      - follower
-  /follower/modify:
+      - user
+  /history:
+    get:
+      description: Get History
+      parameters:
+      - description: Account ID
+        in: query
+        name: account
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: From date (2006-01-02T15:04:05)
+        in: query
+        name: from
+        type: string
+      - description: Till date (2006-01-02T15:04:05)
+        in: query
+        name: till
+        type: string
+      - description: request UUID
+        in: query
+        name: uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - user
+  /instrument:
+    post:
+      consumes:
+      - application/json
+      description: Create instrument (only for administrators)
+      parameters:
+      - description: Execution data JSON
+        in: body
+        name: execution
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateInstrument'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CreateInstrumentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      tags:
+      - market
+  /instrument/{id}:
     put:
       consumes:
       - application/json
-      description: Update follower
+      description: Create instrument (only for administrators)
       parameters:
-      - description: Follower settings JSON
+      - description: Instrument Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Execution data JSON
         in: body
-        name: follower
+        name: execution
         required: true
         schema:
-          $ref: '#/definitions/models.FollowRule'
+          $ref: '#/definitions/model.UpdateInstrument'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.FollowRule'
-      tags:
-      - follower
-  /follower/register:
-    post:
-      consumes:
-      - application/json
-      description: Register new follower
-      parameters:
-      - description: Follower settings JSON
-        in: body
-        name: follower
-        required: true
-        schema:
-          $ref: '#/definitions/models.RegisterFollower'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Follower'
-      tags:
-      - follower
-  /follower/signals:
-    get:
-      description: Get follower signals
-      parameters:
-      - description: follower uuid
-        in: query
-        name: follower
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.FollowerSignalResponse'
-            type: array
-      tags:
-      - follower
-  /follower/unregsiter:
-    delete:
-      description: Unregister follower
-      parameters:
-      - description: follower uuid
-        in: query
-        name: uuid
-        required: true
-        type: string
-      - description: 'closeAccount flag: Y or N'
-        in: query
-        name: closeAccount
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Success'
-      tags:
-      - follower
-  /leader/list:
-    get:
-      description: Get leaders list
-      parameters:
-      - description: 'Active flag: Y or N'
-        in: query
-        name: active
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.Leader'
-            type: array
-      tags:
-      - leader
-  /leader/register:
-    post:
-      description: Register new leader
-      parameters:
-      - description: ActTrader account ID
-        in: query
-        name: account
-        required: true
-        type: string
-      - description: Broker platform name
-        in: query
-        name: platform
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Leader'
-      tags:
-      - leader
-  /leader/signal:
-    post:
-      description: Register leader signal
-      parameters:
-      - description: Signal data JSON
-        in: body
-        name: signal
-        required: true
-        schema:
-          $ref: '#/definitions/models.NewSignal'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.NewSignalResponse'
+            $ref: '#/definitions/model.UpdateInstrumentResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/models.Error'
+            $ref: '#/definitions/model.ErrorJson'
       tags:
-      - leader
-  /leader/signals:
+      - market
+  /instruments:
     get:
-      description: Get leader signals
+      description: Get Instruments
       parameters:
-      - description: leader uuid
+      - description: Instrument ID
         in: query
-        name: leader
+        name: instrument_id
+        type: integer
+      - description: Instrument Name
+        in: query
+        name: instrument_name
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiInstruments'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - market
+  /journals:
+    get:
+      description: Get Journals for a trader (or all if dealer/system)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiJournalResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - user
+  /net:
+    get:
+      consumes:
+      - application/json
+      description: Get open trades net (offset) data. Available for dealers, traders,
+        administrators.
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Account ID
+        in: query
+        name: account
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiNet'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - trades
+  /shifts:
+    get:
+      description: Get Shifts
+      parameters:
+      - description: Instrument ID
+        in: query
+        name: instrument_id
+        type: integer
+      - description: Instrument Name
+        in: query
+        name: instrument_name
+        type: string
+      - description: request UUID
+        in: query
+        name: uuid
         type: string
       produces:
       - application/json
@@ -736,18 +818,40 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/models.Signal'
-            type: array
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
       tags:
-      - leader
-  /leader/unregister:
-    delete:
-      description: Unregister leader
+      - market
+  /token:
+    get:
+      description: Get JWT token by login and password through Basic Auth
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Token'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      tags:
+      - authentication
+  /token/refresh:
+    get:
+      description: Refresh JWT token using refresh token
       parameters:
-      - description: leader uuid
+      - description: Refresh token
         in: query
-        name: uuid
+        name: token
         required: true
         type: string
       produces:
@@ -756,31 +860,131 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Success'
+            $ref: '#/definitions/model.Token'
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
       tags:
-      - leader
-  /ws:
+      - authentication
+  /trades/opened:
     get:
-      description: WebSocket connection for real-time notifications
+      description: Get Opened Trades
+      parameters:
+      - description: Account ID
+        in: query
+        name: account_id
+        type: integer
+      produces:
+      - application/json
       responses:
         "200":
-          description: Example response for opening a trade
+          description: OK
           schema:
-            $ref: '#/definitions/models.WsOpenTradeResponse'
-        "201":
-          description: Example response for closing a trade
+            $ref: '#/definitions/model.ApiOpenedTrades'
+        "401":
+          description: Unauthorized
           schema:
-            $ref: '#/definitions/models.WsCloseTradeResponse'
-        "202":
-          description: Example response for limit order updates
-          schema:
-            $ref: '#/definitions/models.WsLimitOrderResponse'
-        "203":
-          description: Example response for stop order updates
-          schema:
-            $ref: '#/definitions/models.WsStopOrderResponse'
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
       tags:
-      - websocket
-schemes:
-- https
+      - trades
+  /transactions:
+    get:
+      description: Get Transactions
+      parameters:
+      - description: From date (2006-01-02T15:04:05)
+        in: query
+        name: from
+        type: string
+      - description: Till date (2006-01-02T15:04:05)
+        in: query
+        name: till
+        type: string
+      - description: Account ID
+        in: query
+        name: account
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - user
+  /users:
+    get:
+      description: Get Users (only for administrators)
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: request UUID
+        in: query
+        name: uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiUsers'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - user
+  /ws/accounts:
+    get:
+      description: Websocket for account states notifications (subscribe/unsubscribe
+        for DEALERs)
+      responses:
+        "200":
+          description: CBUQ3gEZrI+HWgZKdkEhbFtUl3hCdkEpJxb4agpJB0Exi/7QzAw33sA5BRN/FO5l3sBCFwjh3IgHEQAAAAAAtJXAGQAAAAAA3JXAQhcI5dyIBxEAAAAAALSVwBkAAAAAANyVwEIXCNrciAcRAAAAAAC0lcAZAAAAAADclcBCFwjj3IgHEQAAAAAAtJXAGQAAAAAA3JXA
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - ws
+  /ws/quotes:
+    get:
+      description: Websocket for quotes notifications (subscribe/unsubscribe)
+      responses:
+        "200":
+          description: <p v="2983;2500;7893.400000;12.000000;7915.900000;7863.400000;2500;7893.400000;12.000000;25.000000;25.000000;"/>
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - ws
 swagger: "2.0"
