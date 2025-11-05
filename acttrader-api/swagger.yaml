@@ -1,11 +1,51 @@
 definitions:
+  model.ApiAccount:
+    properties:
+      account_id:
+        example: 101
+        type: integer
+      balance:
+        example: 100000
+        type: number
+      currency:
+        example: USD
+        type: string
+      trader_id:
+        example: 101
+        type: integer
+    type: object
+  model.ApiAccounts:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiAccount'
+        type: array
+      next_uri:
+        example: /accounts?uuid=b1517997-5107-42cf-8289-84f303ad50f2
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
   model.ApiInstrument:
     properties:
+      access_orders:
+        example: true
+        type: boolean
+      access_prices:
+        example: true
+        type: boolean
       active:
         example: true
         type: boolean
       ask:
         example: 1.2102
+        type: number
+      ask_volume:
+        example: 1.01
         type: number
       autochartist_id:
         example: "1"
@@ -16,11 +56,38 @@ definitions:
       bid:
         example: 1.2101
         type: number
+      bid_volume:
+        example: 0.101
+        type: number
+      close_charge_value:
+        example: 0.1
+        type: number
+      commission:
+        example: 0.1
+        type: number
+      commission2:
+        example: 0.1
+        type: number
       contract_size:
         example: 100000
         type: number
+      dealer_range:
+        example: 0.01
+        type: number
       description:
         example: Euro vs US Dollar
+        type: string
+      end_day_bid:
+        example: 1.2101
+        type: number
+      external_ask:
+        example: 1.2102
+        type: number
+      external_bid:
+        example: 1.2101
+        type: number
+      external_rate_dt:
+        example: "2025-01-03T06:05:52Z"
         type: string
       feed_id:
         example: LMAX
@@ -37,6 +104,9 @@ definitions:
       futures_expire_dt:
         example: "2025-01-03T06:05:52Z"
         type: string
+      high_day_ask:
+        example: 1.2101
+        type: number
       icon_id:
         example: "1"
         type: string
@@ -55,6 +125,33 @@ definitions:
       long_only:
         example: true
         type: boolean
+      low_day_bid:
+        example: 1.2102
+        type: number
+      margin_coefficient:
+        example: 0.1
+        type: number
+      margin_day_coefficient:
+        example: 1
+        type: number
+      margin_limit1:
+        example: 1
+        type: number
+      margin_limit1_coefficient:
+        example: 1
+        type: number
+      margin_limit2:
+        example: 1
+        type: number
+      margin_limit2_coefficient:
+        example: 1
+        type: number
+      margin_percent_mode:
+        example: false
+        type: boolean
+      margin_requirement:
+        example: 0.01
+        type: number
       market_currency:
         example: EUR
         type: string
@@ -64,9 +161,24 @@ definitions:
       min_increment:
         example: 0.0001
         type: number
-      pips_shift:
-        example: 0.01
+      negotiation_mode:
+        example: auto
+        type: string
+      open_charge_value:
+        example: 0.1
         type: number
+      percent_charge:
+        example: false
+        type: boolean
+      percent_commission:
+        example: false
+        type: boolean
+      percent_commission2:
+        example: false
+        type: boolean
+      pips_shift:
+        example: 1
+        type: integer
       point_size:
         example: 0.0001
         type: number
@@ -74,10 +186,16 @@ definitions:
         example: 0.0001
         type: number
       precision:
-        example: 4
+        example: 0.01
         type: number
+      price_change_delay:
+        example: 1
+        type: integer
       quote_currency:
         example: USD
+        type: string
+      rate_dt:
+        example: "2025-01-03T06:05:52Z"
         type: string
       shift_ask:
         example: 0.01
@@ -85,18 +203,37 @@ definitions:
       shift_bid:
         example: 0.01
         type: number
+      shift_percent:
+        example: 0.1
+        type: number
       short_instrument_format:
         example: true
         type: boolean
       sort_order:
         example: 1
         type: integer
+      swap_ask:
+        example: 0.1
+        type: number
+      swap_bid:
+        example: 0.1
+        type: number
+      swap_mode:
+        enum:
+        - $
+        - p
+        - '%'
+        example: $
+        type: string
       ticker:
         example: EURUSD
         type: string
-      time:
-        example: "2025-01-03T06:05:52Z"
+      tradable:
+        example: "N"
         type: string
+      trade_step:
+        example: 0.01
+        type: number
     type: object
   model.ApiInstruments:
     properties:
@@ -107,8 +244,33 @@ definitions:
         items:
           $ref: '#/definitions/model.ApiInstrument'
         type: array
+      next_uri:
+        example: /instruments?uuid=b1517997-5107-42cf-8289-84f303ad50f2
+        type: string
       success:
         example: true
+        type: boolean
+    type: object
+  model.ApiJournal:
+    properties:
+      event:
+        type: string
+      id:
+        type: integer
+      info:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  model.ApiJournalResponse:
+    properties:
+      count:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiJournal'
+        type: array
+      success:
         type: boolean
     type: object
   model.ApiNet:
@@ -124,6 +286,9 @@ definitions:
     type: object
   model.ApiNetData:
     properties:
+      account_crncy:
+        example: EUR
+        type: string
       account_id:
         example: 101
         type: integer
@@ -196,6 +361,9 @@ definitions:
       instrument_id:
         example: 1
         type: integer
+      leader_uuid:
+        example: b1517997-5107-42cf-8289-84f303ad50f2
+        type: string
       markup:
         example: 1.1
         type: number
@@ -255,6 +423,100 @@ definitions:
       success:
         type: boolean
     type: object
+  model.ApiUser:
+    properties:
+      active:
+        example: true
+        type: boolean
+      created:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      department_id:
+        example: 1
+        type: integer
+      email:
+        example: john.doe@example.com
+        type: string
+      first_name:
+        example: John
+        type: string
+      last_name:
+        example: Doe
+        type: string
+      user_id:
+        example: 1
+        type: integer
+      user_type:
+        example: TRADER
+        type: string
+    type: object
+  model.ApiUsers:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiUser'
+        type: array
+      next_uri:
+        example: /users?uuid=b1517997-5107-42cf-8289-84f303ad50f2
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  model.CreateInstrument:
+    properties:
+      contract_size:
+        example: 100000
+        type: number
+      description:
+        example: Euro vs US Dollar
+        type: string
+      figi:
+        example: BBG000B9XRY4
+        type: string
+      instrument_name:
+        example: EURUSD
+        type: string
+      instrument_type:
+        example: FX
+        type: string
+      isin:
+        example: US5949181045
+        type: string
+      market_currency:
+        example: EUR
+        type: string
+      min_increment:
+        example: 0.0001
+        type: number
+      point_size:
+        example: 0.0001
+        type: number
+      point_step:
+        example: 0.0001
+        type: number
+      precision:
+        example: 0.01
+        type: number
+      quote_currency:
+        example: USD
+        type: string
+      ticker:
+        example: EURUSD
+        type: string
+    type: object
+  model.CreateInstrumentResponse:
+    properties:
+      instrument_id:
+        example: 1
+        type: integer
+      success:
+        example: true
+        type: boolean
+    type: object
   model.ErrorJson:
     properties:
       message:
@@ -272,6 +534,54 @@ definitions:
       refresh:
         example: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTYyMTA5NjIsImlhdCI6MTc1MzYxODk2MiwiaXNzIjoiQUNUQVBJIiwicGxhdGZvcm0iOiJ0ZngwMyIsInJvbGUiOiJUUkFERVIiLCJ0eXBlIjoicmVmcmVzaCIsInVzZXIiOjIyMn0.rqaJV_BApFTwr80xq3_Qna6rTLkP05Y74CdVbryeQUbJRLvioS4K0afzxUwthtjWCtLxp_CvftKSz5fc9NbRAQ
         type: string
+    type: object
+  model.UpdateInstrument:
+    properties:
+      contract_size:
+        example: 100000
+        type: number
+      description:
+        example: Euro vs US Dollar
+        type: string
+      figi:
+        example: BBG000B9XRY4
+        type: string
+      instrument_name:
+        example: EURUSD
+        type: string
+      instrument_type:
+        example: FX
+        type: string
+      isin:
+        example: US5949181045
+        type: string
+      market_currency:
+        example: EUR
+        type: string
+      min_increment:
+        example: 0.0001
+        type: number
+      point_size:
+        example: 0.0001
+        type: number
+      point_step:
+        example: 0.0001
+        type: number
+      precision:
+        example: 0.01
+        type: number
+      quote_currency:
+        example: USD
+        type: string
+      ticker:
+        example: EURUSD
+        type: string
+    type: object
+  model.UpdateInstrumentResponse:
+    properties:
+      success:
+        example: true
+        type: boolean
     type: object
 info:
   contact:
@@ -293,10 +603,6 @@ paths:
         in: query
         name: limit
         type: integer
-      - description: Offset
-        in: query
-        name: offset
-        type: integer
       - description: request UUID
         in: query
         name: uuid
@@ -307,7 +613,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.ApiResponse'
+            $ref: '#/definitions/model.ApiAccounts'
         "401":
           description: Unauthorized
           schema:
@@ -315,7 +621,7 @@ paths:
       security:
       - ApiKeyAuth: []
       tags:
-      - market
+      - user
   /history:
     get:
       description: Get History
@@ -327,10 +633,6 @@ paths:
       - description: Limit
         in: query
         name: limit
-        type: integer
-      - description: Offset
-        in: query
-        name: offset
         type: integer
       - description: From date (2006-01-02T15:04:05)
         in: query
@@ -358,6 +660,61 @@ paths:
       security:
       - ApiKeyAuth: []
       tags:
+      - user
+  /instrument:
+    post:
+      consumes:
+      - application/json
+      description: Create instrument (only for administrators)
+      parameters:
+      - description: Execution data JSON
+        in: body
+        name: execution
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateInstrument'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CreateInstrumentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      tags:
+      - market
+  /instrument/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Create instrument (only for administrators)
+      parameters:
+      - description: Instrument Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Execution data JSON
+        in: body
+        name: execution
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateInstrument'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UpdateInstrumentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      tags:
       - market
   /instruments:
     get:
@@ -371,6 +728,10 @@ paths:
         in: query
         name: instrument_name
         type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
       produces:
       - application/json
       responses:
@@ -386,6 +747,24 @@ paths:
       - ApiKeyAuth: []
       tags:
       - market
+  /journals:
+    get:
+      description: Get Journals for a trader (or all if dealer/system)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiJournalResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - user
   /net:
     get:
       consumes:
@@ -533,10 +912,6 @@ paths:
         in: query
         name: limit
         type: integer
-      - description: Offset
-        in: query
-        name: offset
-        type: integer
       produces:
       - application/json
       responses:
@@ -551,5 +926,65 @@ paths:
       security:
       - ApiKeyAuth: []
       tags:
-      - market
+      - user
+  /users:
+    get:
+      description: Get Users (only for administrators)
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: request UUID
+        in: query
+        name: uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiUsers'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - user
+  /ws/accounts:
+    get:
+      description: Websocket for account states notifications (subscribe/unsubscribe
+        for DEALERs)
+      responses:
+        "200":
+          description: CBUQ3gEZrI+HWgZKdkEhbFtUl3hCdkEpJxb4agpJB0Exi/7QzAw33sA5BRN/FO5l3sBCFwjh3IgHEQAAAAAAtJXAGQAAAAAA3JXAQhcI5dyIBxEAAAAAALSVwBkAAAAAANyVwEIXCNrciAcRAAAAAAC0lcAZAAAAAADclcBCFwjj3IgHEQAAAAAAtJXAGQAAAAAA3JXA
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - ws
+  /ws/quotes:
+    get:
+      description: Websocket for quotes notifications (subscribe/unsubscribe)
+      responses:
+        "200":
+          description: <p v="2983;2500;7893.400000;12.000000;7915.900000;7863.400000;2500;7893.400000;12.000000;25.000000;25.000000;"/>
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - ws
 swagger: "2.0"
