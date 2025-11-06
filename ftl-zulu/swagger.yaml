@@ -41,38 +41,55 @@ definitions:
   models.Execution:
     properties:
       accountId:
+        example: 1001
         type: integer
       error:
+        example: ""
         type: string
       follower:
+        example: 3a9c5e23-6eaf-4d39-a789-1f60b8fa0b9a
         type: string
       leaderId:
+        example: a7d3f241-5c0a-4fcb-8ef1-11fbe34798a9
         type: string
       leaderTradeId:
+        example: leadtrade-abc123
         type: string
       lots:
+        example: 1.5
         type: number
       market:
+        example: EUR
         type: string
       pl:
+        example: 12.34
         type: number
       price:
+        example: 1.0725
         type: number
       quote:
+        example: USD
         type: string
       sellbuy:
+        example: B
         type: string
       signal:
+        example: b3d2a4f0-9a82-4b51-bb28-8d7a8b15d2e1
         type: string
       symbol:
+        example: USD
         type: string
       tag:
+        example: follower-open
         type: string
       time:
+        example: "2025-11-06T10:15:30Z"
         type: string
       tradeId:
+        example: ft-7890
         type: string
       type:
+        example: TRADE_OPEN
         type: string
     type: object
   models.ExecutionResponse:
@@ -201,7 +218,7 @@ definitions:
   models.NewSignal:
     properties:
       actTradeId:
-        example: 123456789
+        example: 12345678
         type: integer
       leader:
         example: 061fb59e-1585-4ce8-9a2e-73472e3f9962
