@@ -4,6 +4,9 @@ definitions:
       accountId:
         example: 1234567890
         type: integer
+      actTradeId:
+        example: 12345678
+        type: integer
       lots:
         example: 0.1
         type: number
@@ -21,9 +24,6 @@ definitions:
         type: string
       symbol:
         example: EURUSD
-        type: string
-      tradeId:
-        example: "110101"
         type: string
       type:
         example: TRADE_OPEN
@@ -163,6 +163,9 @@ definitions:
     type: object
   models.NewExecution:
     properties:
+      actTradeId:
+        example: 50
+        type: integer
       error:
         example: ""
         type: string
@@ -198,9 +201,6 @@ definitions:
         type: string
       time:
         example: "2025-11-06T10:15:30Z"
-        type: string
-      tradeId:
-        example: ft-7890
         type: string
       type:
         example: TRADE_OPEN
