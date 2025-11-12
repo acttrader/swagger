@@ -25,6 +25,9 @@ definitions:
       symbol:
         example: EURUSD
         type: string
+      tag:
+        example: custom tag
+        type: string
       type:
         example: TRADE_OPEN
         type: string
