@@ -428,6 +428,9 @@ definitions:
       active:
         example: true
         type: boolean
+      country:
+        example: Cyprus
+        type: string
       created:
         example: "2025-01-03T06:05:52Z"
         type: string
@@ -931,6 +934,10 @@ paths:
     get:
       description: Get Users (only for administrators)
       parameters:
+      - description: user ID
+        in: query
+        name: user_id
+        type: integer
       - description: Limit
         in: query
         name: limit
