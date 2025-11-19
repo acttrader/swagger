@@ -683,7 +683,7 @@ paths:
             type: array
       tags:
       - follower
-  /follower/unregsiter:
+  /follower/unregister:
     delete:
       description: Unregister follower
       parameters:
