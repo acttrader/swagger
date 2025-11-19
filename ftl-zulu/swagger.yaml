@@ -734,6 +734,11 @@ paths:
         in: query
         name: platform
         type: string
+      - description: Brokerage true/false
+        in: query
+        name: brokerage
+        required: true
+        type: string
       produces:
       - application/json
       responses:
