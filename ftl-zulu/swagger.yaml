@@ -271,40 +271,54 @@ definitions:
   models.RegisterFollower:
     properties:
       copyLeaderPositions:
+        example: false
         type: boolean
       instrumentList:
+        example:
+        - '[]'
         items:
           type: string
         type: array
       investAmount:
+        example: 4000
         type: number
       leader:
+        example: 0d6c1fbd-9560-439c-94a2-09b8a74b75ab
         type: string
       leaderCondOrders:
+        example: true
         type: boolean
       lotsMethod:
+        example: FIXED
         type: string
       lotsValue:
+        example: 0.01
         type: number
       maxLots:
+        example: 100
         type: number
       maxLotsPerMarket:
+        example: 100
         type: number
       platform:
+        example: edforex281
         type: string
       reverseSignal:
+        example: false
         type: boolean
       slOnCapital:
         type: number
       slPips:
         type: integer
       slTrail:
+        example: false
         type: boolean
       tpOnCapital:
         type: number
       tpPips:
         type: integer
       trader:
+        example: 220
         type: integer
     type: object
   models.Signal:
@@ -630,9 +644,10 @@ paths:
     post:
       consumes:
       - application/json
-      description: Register new follower
+      description: Registers a new follower with provided settings. Example JSON is
+        auto-filled from struct field `example` tags.
       parameters:
-      - description: Follower settings JSON
+      - description: Follower settings payload
         in: body
         name: follower
         required: true
@@ -645,6 +660,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.Follower'
+      summary: Register new follower
       tags:
       - follower
   /follower/signals:
