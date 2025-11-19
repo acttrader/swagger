@@ -149,11 +149,25 @@ definitions:
       uuid:
         type: string
     type: object
+  models.FollowerUnregister:
+    properties:
+      algogems_account_address:
+        example: ALGO_DEMO_667_102
+        type: string
+      closeAccount:
+        example: "Y"
+        type: string
+      uuid:
+        example: b3d2a4f0-9a82-4b51-bb28-8d7a8b15d2e1
+        type: string
+    type: object
   models.Leader:
     properties:
       account:
         type: integer
       active:
+        type: boolean
+      brokerage:
         type: boolean
       firstName:
         type: string
@@ -657,15 +671,12 @@ paths:
     delete:
       description: Unregister follower
       parameters:
-      - description: follower uuid
-        in: query
-        name: uuid
+      - description: Execution data JSON
+        in: body
+        name: execution
         required: true
-        type: string
-      - description: 'closeAccount flag: Y or N'
-        in: query
-        name: closeAccount
-        type: string
+        schema:
+          $ref: '#/definitions/models.FollowerUnregister'
       produces:
       - application/json
       responses:
