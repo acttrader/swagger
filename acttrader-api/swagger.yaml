@@ -30,6 +30,77 @@ definitions:
         example: true
         type: boolean
     type: object
+  model.ApiDepartment:
+    properties:
+      id:
+        example: 2
+        type: integer
+      name:
+        example: Department name
+        type: string
+      parent_id:
+        example: 1
+        type: integer
+    type: object
+  model.ApiDepartmentInstrument:
+    properties:
+      commission:
+        example: 0.1
+        type: number
+      commission_mode:
+        example: F
+        type: string
+      department_id:
+        example: 2
+        type: integer
+      instrument_id:
+        example: 2
+        type: integer
+      shift_ask:
+        example: 0.01
+        type: number
+      shift_bid:
+        example: 0.01
+        type: number
+      swap_ask:
+        example: 0.01
+        type: number
+      swap_ask_shift:
+        example: 0.01
+        type: number
+      swap_bid:
+        example: 0.01
+        type: number
+      swap_bid_shift:
+        example: 0.01
+        type: number
+    type: object
+  model.ApiDepartmentInstruments:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiDepartmentInstrument'
+        type: array
+      success:
+        example: true
+        type: boolean
+    type: object
+  model.ApiDepartments:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiDepartment'
+        type: array
+      success:
+        example: true
+        type: boolean
+    type: object
   model.ApiInstrument:
     properties:
       access_orders:
@@ -234,6 +305,34 @@ definitions:
       trade_step:
         example: 0.01
         type: number
+    type: object
+  model.ApiInstrumentGroup:
+    properties:
+      id:
+        example: 2
+        type: integer
+      name:
+        example: Group name
+        type: string
+      order:
+        example: 1
+        type: integer
+      parent_id:
+        example: 1
+        type: integer
+    type: object
+  model.ApiInstrumentGroups:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.ApiInstrumentGroup'
+        type: array
+      success:
+        example: true
+        type: boolean
     type: object
   model.ApiInstruments:
     properties:
@@ -480,6 +579,9 @@ definitions:
       figi:
         example: BBG000B9XRY4
         type: string
+      group_id:
+        example: 101
+        type: integer
       instrument_name:
         example: EURUSD
         type: string
@@ -496,7 +598,7 @@ definitions:
         example: 0.0001
         type: number
       point_size:
-        example: 0.0001
+        example: 1
         type: number
       point_step:
         example: 0.0001
@@ -549,6 +651,9 @@ definitions:
       figi:
         example: BBG000B9XRY4
         type: string
+      group_id:
+        example: 101
+        type: integer
       instrument_name:
         example: EURUSD
         type: string
@@ -625,6 +730,77 @@ paths:
       - ApiKeyAuth: []
       tags:
       - user
+  /department_instruments:
+    get:
+      description: Get Department Instruments (only for administrators)
+      parameters:
+      - description: Department ID
+        in: path
+        name: department_id
+        required: true
+        type: integer
+      - description: Instrument ID
+        in: path
+        name: instrument_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiDepartmentInstruments'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - administration
+    put:
+      description: Update Department Instruments (only for administrators)
+      parameters:
+      - description: department instrument data JSON
+        in: body
+        name: execution
+        required: true
+        schema:
+          $ref: '#/definitions/model.ApiDepartmentInstrument'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiDepartmentInstrument'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - administration
+  /departments:
+    get:
+      description: Get Departments (only for administrators)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiDepartments'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - administration
   /history:
     get:
       description: Get History
@@ -670,7 +846,7 @@ paths:
       - application/json
       description: Create instrument (only for administrators)
       parameters:
-      - description: Execution data JSON
+      - description: instrument data JSON
         in: body
         name: execution
         required: true
@@ -688,7 +864,7 @@ paths:
           schema:
             $ref: '#/definitions/model.ErrorJson'
       tags:
-      - market
+      - administration
   /instrument/{id}:
     put:
       consumes:
@@ -718,7 +894,25 @@ paths:
           schema:
             $ref: '#/definitions/model.ErrorJson'
       tags:
-      - market
+      - administration
+  /instrument_groups:
+    get:
+      description: Get Instrument Groups (only for administrators)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiInstrumentGroups'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - administration
   /instruments:
     get:
       description: Get Instruments
