@@ -175,6 +175,9 @@ definitions:
       futures_expire_dt:
         example: "2025-01-03T06:05:52Z"
         type: string
+      group_id:
+        example: 1
+        type: integer
       high_day_ask:
         example: 1.2101
         type: number
@@ -928,6 +931,10 @@ paths:
       - description: Limit
         in: query
         name: limit
+        type: integer
+      - description: Instrument Group ID
+        in: query
+        name: group_id
         type: integer
       produces:
       - application/json
