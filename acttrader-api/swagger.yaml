@@ -548,6 +548,9 @@ definitions:
       last_name:
         example: Doe
         type: string
+      login_id:
+        example: johndoe
+        type: string
       user_id:
         example: 1
         type: integer
@@ -604,8 +607,8 @@ definitions:
         example: 1
         type: number
       point_step:
-        example: 0.0001
-        type: number
+        example: 1
+        type: integer
       precision:
         example: 0.01
         type: number
@@ -676,8 +679,8 @@ definitions:
         example: 0.0001
         type: number
       point_step:
-        example: 0.0001
-        type: number
+        example: 1
+        type: integer
       precision:
         example: 0.01
         type: number
@@ -709,6 +712,10 @@ paths:
       - description: Account ID
         in: query
         name: account
+        type: integer
+      - description: Trader ID
+        in: query
+        name: trader_id
         type: integer
       - description: Limit
         in: query
