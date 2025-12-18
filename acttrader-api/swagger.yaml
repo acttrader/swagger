@@ -30,6 +30,19 @@ definitions:
         example: true
         type: boolean
     type: object
+  model.ApiCurrencyResponse:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.Currency'
+        type: array
+      success:
+        example: true
+        type: boolean
+    type: object
   model.ApiDepartment:
     properties:
       id:
@@ -56,6 +69,9 @@ definitions:
       instrument_id:
         example: 2
         type: integer
+      min_commission:
+        example: 0.01
+        type: number
       shift_ask:
         example: 0.01
         type: number
@@ -257,8 +273,8 @@ definitions:
         example: 0.0001
         type: number
       point_step:
-        example: 0.0001
-        type: number
+        example: 1
+        type: integer
       precision:
         example: 0.01
         type: number
@@ -463,6 +479,9 @@ definitions:
       instrument_id:
         example: 1
         type: integer
+      instrument_name:
+        example: EURUSD
+        type: string
       leader_uuid:
         example: b1517997-5107-42cf-8289-84f303ad50f2
         type: string
@@ -628,6 +647,18 @@ definitions:
         example: true
         type: boolean
     type: object
+  model.Currency:
+    properties:
+      id:
+        example: USD
+        type: string
+      name:
+        example: US Dollar
+        type: string
+      type:
+        example: FX
+        type: string
+    type: object
   model.ErrorJson:
     properties:
       message:
@@ -637,6 +668,8 @@ definitions:
         example: false
         type: boolean
     type: object
+  model.NullableDecimal:
+    type: object
   model.Token:
     properties:
       jwt:
@@ -645,6 +678,8 @@ definitions:
       refresh:
         example: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTYyMTA5NjIsImlhdCI6MTc1MzYxODk2MiwiaXNzIjoiQUNUQVBJIiwicGxhdGZvcm0iOiJ0ZngwMyIsInJvbGUiOiJUUkFERVIiLCJ0eXBlIjoicmVmcmVzaCIsInVzZXIiOjIyMn0.rqaJV_BApFTwr80xq3_Qna6rTLkP05Y74CdVbryeQUbJRLvioS4K0afzxUwthtjWCtLxp_CvftKSz5fc9NbRAQ
         type: string
+    type: object
+  model.UpdateDepartmentInstrument:
     type: object
   model.UpdateInstrument:
     properties:
@@ -691,7 +726,7 @@ definitions:
         example: EURUSD
         type: string
     type: object
-  model.UpdateInstrumentResponse:
+  model.UpdateResponse:
     properties:
       success:
         example: true
@@ -740,6 +775,24 @@ paths:
       - ApiKeyAuth: []
       tags:
       - user
+  /currencies:
+    get:
+      description: Get Currencies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiCurrencyResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - market
   /department_instruments:
     get:
       description: Get Department Instruments (only for administrators)
@@ -777,14 +830,14 @@ paths:
         name: execution
         required: true
         schema:
-          $ref: '#/definitions/model.ApiDepartmentInstrument'
+          $ref: '#/definitions/model.UpdateDepartmentInstrument'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.ApiDepartmentInstrument'
+            $ref: '#/definitions/model.UpdateDepartmentInstrument'
         "401":
           description: Unauthorized
           schema:
@@ -898,7 +951,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.UpdateInstrumentResponse'
+            $ref: '#/definitions/model.UpdateResponse'
         "400":
           description: Bad Request
           schema:
