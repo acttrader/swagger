@@ -538,6 +538,9 @@ definitions:
     type: object
   model.ApiResponse:
     properties:
+      count:
+        example: 1
+        type: integer
       data: {}
       nextURI:
         type: string
@@ -807,6 +810,14 @@ paths:
         name: instrument_id
         required: true
         type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
       produces:
       - application/json
       responses:
@@ -875,6 +886,10 @@ paths:
       - description: Limit
         in: query
         name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
         type: integer
       - description: From date (2006-01-02T15:04:05)
         in: query
@@ -991,6 +1006,10 @@ paths:
       - description: Limit
         in: query
         name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
         type: integer
       - description: Instrument Group ID
         in: query
@@ -1140,6 +1159,14 @@ paths:
       - description: Account ID
         in: query
         name: account_id
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
         type: integer
       produces:
       - application/json
