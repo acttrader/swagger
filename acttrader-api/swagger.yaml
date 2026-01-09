@@ -875,49 +875,6 @@ paths:
       - ApiKeyAuth: []
       tags:
       - administration
-  /history:
-    get:
-      description: Get History
-      parameters:
-      - description: Account ID
-        in: query
-        name: account
-        type: integer
-      - description: Limit
-        in: query
-        name: limit
-        type: integer
-      - description: Offset
-        in: query
-        name: offset
-        type: integer
-      - description: From date (2006-01-02T15:04:05)
-        in: query
-        name: from
-        type: string
-      - description: Till date (2006-01-02T15:04:05)
-        in: query
-        name: till
-        type: string
-      - description: request UUID
-        in: query
-        name: uuid
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.ApiResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/model.ErrorJson'
-      security:
-      - ApiKeyAuth: []
-      tags:
-      - user
   /instrument:
     post:
       consumes:
@@ -1152,9 +1109,52 @@ paths:
       - ApiKeyAuth: []
       tags:
       - authentication
+  /trades/closed:
+    get:
+      description: Get closed trades
+      parameters:
+      - description: Account ID
+        in: query
+        name: account
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      - description: From date (2006-01-02T15:04:05)
+        in: query
+        name: from
+        type: string
+      - description: Till date (2006-01-02T15:04:05)
+        in: query
+        name: till
+        type: string
+      - description: request UUID
+        in: query
+        name: uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - trades
   /trades/opened:
     get:
-      description: Get Opened Trades
+      description: Get open trades
       parameters:
       - description: Account ID
         in: query
