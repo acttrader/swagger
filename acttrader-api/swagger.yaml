@@ -1005,37 +1005,6 @@ paths:
       - ApiKeyAuth: []
       tags:
       - user
-  /net:
-    get:
-      consumes:
-      - application/json
-      description: Get open trades net (offset) data. Available for dealers, traders,
-        administrators.
-      parameters:
-      - description: Bearer token
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: Account ID
-        in: query
-        name: account
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.ApiNet'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/model.ErrorJson'
-      security:
-      - ApiKeyAuth: []
-      tags:
-      - trades
   /shifts:
     get:
       description: Get Shifts
@@ -1144,6 +1113,37 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - trades
+  /trades/net:
+    get:
+      consumes:
+      - application/json
+      description: Get open trades net (offset) data. Available for dealers, traders,
+        administrators.
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Account ID
+        in: query
+        name: account
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiNet'
         "401":
           description: Unauthorized
           schema:
