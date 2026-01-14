@@ -30,6 +30,19 @@ definitions:
         example: true
         type: boolean
     type: object
+  model.ApiCanceledOrders:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.CanceledOrder'
+        type: array
+      success:
+        example: true
+        type: boolean
+    type: object
   model.ApiCurrencyResponse:
     properties:
       count:
@@ -596,6 +609,30 @@ definitions:
         example: true
         type: boolean
     type: object
+  model.CanceledOrder:
+    properties:
+      amount:
+        example: 10000
+        type: number
+      instrument_id:
+        example: 2
+        type: integer
+      message:
+        example: The order was rejected by the Clearing House.
+        type: string
+      order_id:
+        example: 101
+        type: integer
+      price:
+        example: 11.21
+        type: number
+      sellbuy:
+        example: B
+        type: string
+      time:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+    type: object
   model.CreateInstrument:
     properties:
       contract_size:
@@ -1005,6 +1042,37 @@ paths:
       - ApiKeyAuth: []
       tags:
       - user
+  /orders/canceled:
+    get:
+      description: Get canceled orders
+      parameters:
+      - description: Account ID
+        in: query
+        name: account_id
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiCanceledOrders'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - orders
   /shifts:
     get:
       description: Get Shifts
