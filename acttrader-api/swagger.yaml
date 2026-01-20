@@ -159,6 +159,9 @@ definitions:
       bid_volume:
         example: 0.101
         type: number
+      candle_start_time:
+        example: "2025-01-03T06:05:52Z"
+        type: string
       close_charge_value:
         example: 0.1
         type: number
@@ -177,6 +180,9 @@ definitions:
       description:
         example: Euro vs US Dollar
         type: string
+      end_day_ask:
+        example: 1.2101
+        type: number
       end_day_bid:
         example: 1.2101
         type: number
@@ -207,9 +213,6 @@ definitions:
       group_id:
         example: 1
         type: integer
-      high_day_ask:
-        example: 1.2101
-        type: number
       icon_id:
         example: "1"
         type: string
@@ -228,9 +231,6 @@ definitions:
       long_only:
         example: true
         type: boolean
-      low_day_bid:
-        example: 1.2102
-        type: number
       margin_coefficient:
         example: 0.1
         type: number
@@ -626,6 +626,9 @@ definitions:
       price:
         example: 11.21
         type: number
+      rejected:
+        example: true
+        type: boolean
       sellbuy:
         example: B
         type: string
@@ -796,10 +799,6 @@ paths:
         in: query
         name: limit
         type: integer
-      - description: request UUID
-        in: query
-        name: uuid
-        type: string
       produces:
       - application/json
       responses:
@@ -912,6 +911,29 @@ paths:
       - ApiKeyAuth: []
       tags:
       - administration
+  /highlow:
+    get:
+      description: Get High Low values
+      parameters:
+      - description: Instrument ID list separated by comma
+        in: query
+        name: instrument_list
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - market
   /instrument:
     post:
       consumes:
@@ -1085,10 +1107,6 @@ paths:
         in: query
         name: instrument_name
         type: string
-      - description: request UUID
-        in: query
-        name: uuid
-        type: string
       produces:
       - application/json
       responses:
@@ -1169,10 +1187,6 @@ paths:
       - description: Till date (2006-01-02T15:04:05)
         in: query
         name: till
-        type: string
-      - description: request UUID
-        in: query
-        name: uuid
         type: string
       produces:
       - application/json
