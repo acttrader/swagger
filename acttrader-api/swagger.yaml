@@ -1,4 +1,31 @@
 definitions:
+  model.AccountState:
+    properties:
+      account_id:
+        example: 101
+        type: integer
+      balance:
+        example: 1.23
+        type: number
+      currency:
+        example: USD
+        type: string
+      equity:
+        example: 1.23
+        type: number
+      timestamp:
+        example: "2025-01-03T06:05:52Z"
+        type: string
+      trader_id:
+        example: 1
+        type: integer
+      usable_margin:
+        example: 1.23
+        type: number
+      used_margin:
+        example: 1.23
+        type: number
+    type: object
   model.ApiAccount:
     properties:
       account_id:
@@ -13,6 +40,19 @@ definitions:
       trader_id:
         example: 101
         type: integer
+    type: object
+  model.ApiAccountStates:
+    properties:
+      count:
+        example: 1
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/model.AccountState'
+        type: array
+      success:
+        example: true
+        type: boolean
     type: object
   model.ApiAccounts:
     properties:
@@ -213,6 +253,9 @@ definitions:
       group_id:
         example: 1
         type: integer
+      high:
+        example: 1.2101
+        type: number
       icon_id:
         example: "1"
         type: string
@@ -231,6 +274,9 @@ definitions:
       long_only:
         example: true
         type: boolean
+      low:
+        example: 1.2101
+        type: number
       margin_coefficient:
         example: 0.1
         type: number
@@ -260,6 +306,9 @@ definitions:
         type: string
       max_amount:
         example: 100000000
+        type: number
+      min_commission:
+        example: 0.1
         type: number
       min_increment:
         example: 0.0001
@@ -1095,6 +1144,41 @@ paths:
       - ApiKeyAuth: []
       tags:
       - orders
+  /reports/accounts_end_off_day:
+    get:
+      description: End of day account state (only for administrators)
+      parameters:
+      - description: Account ID
+        in: query
+        name: account_id
+        type: integer
+      - description: date (2006-01-02)
+        in: query
+        name: date
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiAccountStates'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - reports
   /shifts:
     get:
       description: Get Shifts
