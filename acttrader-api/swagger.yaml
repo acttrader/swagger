@@ -1144,7 +1144,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - orders
-  /reports/accounts_end_off_day:
+  /reports/accounts_end_of_day:
     get:
       description: End of day account state (only for administrators)
       parameters:
