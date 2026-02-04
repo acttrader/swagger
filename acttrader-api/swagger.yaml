@@ -31,15 +31,39 @@ definitions:
       account_id:
         example: 101
         type: integer
+      account_type:
+        example: T
+        type: string
+      added_bonus:
+        example: 0.01
+        type: number
       balance:
         example: 100000
         type: number
+      bonus:
+        example: 0.01
+        type: number
+      clearing_id:
+        example: 1
+        type: integer
       currency:
         example: USD
         type: string
+      customer_id:
+        example: 100
+        type: integer
+      equity:
+        example: 1002.34
+        type: number
       trader_id:
         example: 101
         type: integer
+      usable_margin:
+        example: 902.11
+        type: number
+      used_margin:
+        example: 100.23
+        type: number
     type: object
   model.ApiAccountStates:
     properties:
