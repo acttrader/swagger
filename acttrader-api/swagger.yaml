@@ -784,8 +784,6 @@ definitions:
         example: false
         type: boolean
     type: object
-  model.NullableDecimal:
-    type: object
   model.Token:
     properties:
       jwt:
@@ -796,6 +794,48 @@ definitions:
         type: string
     type: object
   model.UpdateDepartmentInstrument:
+    properties:
+      commission:
+        example: 0.1
+        type: number
+        x-nullable: true
+      commission_mode:
+        example: F
+        type: string
+      department_id:
+        example: 2
+        type: integer
+      instrument_id:
+        example: 2
+        type: integer
+      min_commission:
+        example: 0.01
+        type: number
+        x-nullable: true
+      shift_ask:
+        example: 0.01
+        type: number
+        x-nullable: true
+      shift_bid:
+        example: 0.01
+        type: number
+        x-nullable: true
+      swap_ask:
+        example: 0.01
+        type: number
+        x-nullable: true
+      swap_ask_shift:
+        example: 0.01
+        type: number
+        x-nullable: true
+      swap_bid:
+        example: 0.01
+        type: number
+        x-nullable: true
+      swap_bid_shift:
+        example: 0.01
+        type: number
+        x-nullable: true
     type: object
   model.UpdateInstrument:
     properties:
@@ -1179,6 +1219,45 @@ paths:
       - description: date (2006-01-02)
         in: query
         name: date
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiAccountStates'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorJson'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - reports
+  /reports/executions:
+    get:
+      description: Executions (only for administrators and dealers)
+      parameters:
+      - description: Account ID
+        in: query
+        name: account_id
+        type: integer
+      - description: date (2006-01-02T15:04:05)
+        in: query
+        name: from
+        type: string
+      - description: date (2006-01-02T15:04:05)
+        in: query
+        name: till
         type: string
       - description: Limit
         in: query
