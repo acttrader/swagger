@@ -64,6 +64,9 @@ definitions:
             usable_margin:
                 example: 902.11
                 type: number
+            spot:
+                example: 100.23
+                type: number
         type: object
     model.ApiAccountStates:
         properties:
@@ -153,6 +156,9 @@ definitions:
                 example: 0.01
                 type: number
             shift_ask:
+                example: 0.01
+                type: number
+            distance:
                 example: 0.01
                 type: number
             swap_bid:
@@ -396,6 +402,9 @@ definitions:
             negotiation_mode:
                 example: auto
                 type: string
+            margin_enabled:
+                example: true
+                type: boolean
             margin_percent_mode:
                 example: false
                 type: boolean
@@ -1589,6 +1598,10 @@ paths:
                   in: query
                   name: user_id
                   type: integer
+                - description: email
+                  in: query
+                  name: email
+                  type: string
                 - description: Limit
                   in: query
                   name: limit
