@@ -25,6 +25,9 @@ definitions:
             timestamp:
                 example: "2025-01-03T06:05:52Z"
                 type: string
+            spot:
+                example: 120.01
+                type: number
         type: object
     model.ApiAccount:
         properties:
@@ -639,6 +642,9 @@ definitions:
             amount:
                 example: 10.01
                 type: number
+            contract_size:
+                example: 100000
+                type: number
             open_price:
                 example: 1.2101
                 type: number
@@ -850,6 +856,9 @@ definitions:
                 type: boolean
             message:
                 example: error message
+                type: string
+            error_id:
+                example: 550e8400-e29b-41d4-a716-446655440000
                 type: string
         type: object
     model.StpOrder:
