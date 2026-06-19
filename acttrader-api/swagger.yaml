@@ -896,6 +896,18 @@ definitions:
             ccp:
                 example: 635400MMGYK7HLRQGV31
                 type: string
+            bid_rate:
+                example: 1.23
+                type: number
+            ask_rate:
+                example: 1.23
+                type: number
+            rate_dt:
+                example: "2025-01-03T06:05:52Z"
+                type: string
+            order_state:
+                example: FILLED
+                type: string
         type: object
     model.Token:
         properties:
