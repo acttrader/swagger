@@ -1248,6 +1248,33 @@ paths:
                 - ApiKeyAuth: []
             tags:
                 - administration
+    /instrument_list:
+        post:
+            description: Get Instruments by list of instrument IDs
+            parameters:
+                - description: List of instrument IDs
+                  in: body
+                  name: instrument_list
+                  required: true
+                  schema:
+                    items:
+                        type: integer
+                    type: array
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: OK
+                    schema:
+                        $ref: '#/definitions/model.ApiInstruments'
+                "401":
+                    description: Unauthorized
+                    schema:
+                        $ref: '#/definitions/model.ErrorJson'
+            security:
+                - ApiKeyAuth: []
+            tags:
+                - market
     /instruments:
         get:
             description: Get Instruments
