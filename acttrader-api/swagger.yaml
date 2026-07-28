@@ -248,6 +248,18 @@ definitions:
                 items:
                     $ref: '#/definitions/model.StpOrder'
                 type: array
+            order_create_time:
+                example: "2025-01-03T06:05:52Z"
+                type: string
+            order_trigger_bid:
+                example: 1.2312
+                type: number
+            order_trigger_ask:
+                example: 1.2325
+                type: number
+            order_trigger_time:
+                example: "2025-01-03T06:05:52Z"
+                type: string
         type: object
     model.ApiExecutions:
         properties:
@@ -896,15 +908,6 @@ definitions:
             ccp:
                 example: 635400MMGYK7HLRQGV31
                 type: string
-            bid_rate:
-                example: 1.23
-                type: number
-            ask_rate:
-                example: 1.23
-                type: number
-            rate_dt:
-                example: "2025-01-03T06:05:52Z"
-                type: string
             order_state:
                 example: FILLED
                 type: string
@@ -1269,6 +1272,10 @@ paths:
                   in: query
                   name: group_id
                   type: integer
+                - description: Full or Short field list. The only possible value is 'short'. If field_list is not provided, the full field list will be returned.
+                  in: query
+                  name: field_list
+                  type: string
             produces:
                 - application/json
             responses:
