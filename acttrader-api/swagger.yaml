@@ -244,10 +244,6 @@ definitions:
             used_margin:
                 example: 1.23
                 type: number
-            routing:
-                items:
-                    $ref: '#/definitions/model.StpOrder'
-                type: array
             order_create_time:
                 example: "2025-01-03T06:05:52Z"
                 type: string
@@ -260,6 +256,10 @@ definitions:
             order_trigger_time:
                 example: "2025-01-03T06:05:52Z"
                 type: string
+            routing:
+                items:
+                    $ref: '#/definitions/model.StpOrder'
+                type: array
         type: object
     model.ApiExecutions:
         properties:
@@ -1248,33 +1248,6 @@ paths:
                 - ApiKeyAuth: []
             tags:
                 - administration
-    /instrument_list:
-        post:
-            description: Get Instruments by list of instrument IDs
-            parameters:
-                - description: List of instrument IDs
-                  in: body
-                  name: instrument_list
-                  required: true
-                  schema:
-                    items:
-                        type: integer
-                    type: array
-            produces:
-                - application/json
-            responses:
-                "200":
-                    description: OK
-                    schema:
-                        $ref: '#/definitions/model.ApiInstruments'
-                "401":
-                    description: Unauthorized
-                    schema:
-                        $ref: '#/definitions/model.ErrorJson'
-            security:
-                - ApiKeyAuth: []
-            tags:
-                - market
     /instruments:
         get:
             description: Get Instruments
@@ -1303,6 +1276,32 @@ paths:
                   in: query
                   name: field_list
                   type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: OK
+                    schema:
+                        $ref: '#/definitions/model.ApiInstruments'
+                "401":
+                    description: Unauthorized
+                    schema:
+                        $ref: '#/definitions/model.ErrorJson'
+            security:
+                - ApiKeyAuth: []
+            tags:
+                - market
+        post:
+            description: Get Instruments by list of instrument IDs
+            parameters:
+                - description: List of instrument IDs
+                  in: body
+                  name: instrument_list
+                  required: true
+                  schema:
+                    items:
+                        type: integer
+                    type: array
             produces:
                 - application/json
             responses:
