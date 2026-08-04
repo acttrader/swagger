@@ -660,6 +660,9 @@ definitions:
             open_price:
                 example: 1.2101
                 type: number
+            pl:
+                example: 124
+                type: number
             commission:
                 example: 1.2101
                 type: number
