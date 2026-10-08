@@ -1,4 +1,4 @@
-- [Authorization](auth/)(under constraction)
+ - [Authorization](auth/)(under constraction)
 - [ActTrader api 3.0](acttrader-api/)
 - [Alerts](alerts/)
 - [Charts](charts/)
